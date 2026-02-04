@@ -1,3 +1,10 @@
+/**
+ * @skymain.design
+ * fileKey: qz3ERP8jfbTpTHQrdPSawI
+ * nodeId: 2:1304
+ * specHash: sha256:app-shell-sidebar-v1
+ */
+
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
@@ -5,19 +12,19 @@ import { useState } from "react";
 import AppSidebarNav from "@/components/app/AppSidebarNav";
 
 // Figma assets for sidebar (node 2:1304)
-const imageManager = "https://www.figma.com/api/mcp/asset/33f59d94-828a-4bdd-9b3c-ed6a7bee9d45";
-const iconLogoVector = "https://www.figma.com/api/mcp/asset/68dd531d-abf9-4e4c-99cc-9c18277e8bc9";
-const iconClose = "https://www.figma.com/api/mcp/asset/eee31f60-7f3c-4651-b928-9ead5dd273b2";
-const iconDashboard = "https://www.figma.com/api/mcp/asset/d977b676-f352-4481-8c41-164bb86ea5f6";
-const iconDocs = "https://www.figma.com/api/mcp/asset/208c63e8-727c-413b-bf69-c41c01799eb7";
-const iconAlerts = "https://www.figma.com/api/mcp/asset/6d4b154a-efd3-4ce6-bd27-62e8225bbb25";
-const iconLogs = "https://www.figma.com/api/mcp/asset/2739dbf9-3109-4830-8e78-ab9e6106bcd7";
-const iconReports = "https://www.figma.com/api/mcp/asset/4b7c76e7-7ecd-417b-a918-088c3d086e23";
-const iconCompliance = "https://www.figma.com/api/mcp/asset/e9d6fedb-8bc9-4733-bf54-213016039ee5";
-const iconInsights = "https://www.figma.com/api/mcp/asset/09c2464d-9aa9-4676-9fbf-5a4334ffdac8";
-const iconSettings = "https://www.figma.com/api/mcp/asset/5b34140e-ca1f-4431-8422-6f868881b54f";
-const iconAdmin = "https://www.figma.com/api/mcp/asset/6d7cf294-c515-4b9a-a6e3-e35eccb279e9";
-const iconLogout = "https://www.figma.com/api/mcp/asset/92fe6bd1-e788-46bf-96ab-d7ff41a9ccc1";
+const imageManager = "https://www.figma.com/api/mcp/asset/24260c56-f8dd-4bdc-b2a8-85f82cd479e3";
+const iconLogoVector = "https://www.figma.com/api/mcp/asset/c2589429-cbca-4426-b243-ced142d20273";
+const iconClose = "https://www.figma.com/api/mcp/asset/edb5dc23-9416-4600-8b86-41177077c3a6";
+const iconDashboard = "https://www.figma.com/api/mcp/asset/08664ca8-e181-414c-a9b1-059aeb35b9b4";
+const iconDocs = "https://www.figma.com/api/mcp/asset/e4a4f705-46b6-4434-95c5-5a0c410927e0";
+const iconAlerts = "https://www.figma.com/api/mcp/asset/5ecccd57-97a3-4155-a235-6e53d9b821bf";
+const iconLogs = "https://www.figma.com/api/mcp/asset/ea746bb0-5784-499d-833b-29a86fa05446";
+const iconReports = "https://www.figma.com/api/mcp/asset/b9d22aec-8217-4a33-8d99-c3c83850139b";
+const iconCompliance = "https://www.figma.com/api/mcp/asset/5acc2a6a-13a2-4334-90e2-e2fb23c9b6c4";
+const iconInsights = "https://www.figma.com/api/mcp/asset/c1b2b94d-4a9e-4a24-8f5a-e8fa4a9f4cdb";
+const iconSettings = "https://www.figma.com/api/mcp/asset/d697a8f3-7c94-4d34-a5cf-fac0ebb940c6";
+const iconAdmin = "https://www.figma.com/api/mcp/asset/646de6d3-3bbb-42f1-92a3-3bf5f7daf229";
+const iconLogout = "https://www.figma.com/api/mcp/asset/33838f38-4cf8-4a76-8892-d866d4b75c45";
 
 const navItems = [
     { href: "/app/dashboard", label: "Dashboard", icon: <img alt="" className="h-5 w-5" src={iconDashboard} /> },
