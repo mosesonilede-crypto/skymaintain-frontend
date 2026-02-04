@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { useAuth } from "@/lib/AuthContext";
 
 type DataMode = "mock" | "live" | "hybrid";
 
@@ -53,6 +54,7 @@ async function loginRequest(payload: { email: string; password: string; orgName:
 
 export default function SignInPage() {
     const router = useRouter();
+    const { login } = useAuth();
 
     const [email, setEmail] = React.useState("");
     const [orgName, setOrgName] = React.useState("");
@@ -96,6 +98,9 @@ export default function SignInPage() {
             setError(result.error || "Sign in failed.");
             return;
         }
+
+        // Persist authentication state
+        login({ email: eTrim, orgName: oTrim, role: "fleet_manager" });
 
         router.push("/2fa");
     }

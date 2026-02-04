@@ -1,10 +1,16 @@
 import AppShellClient from "@/components/app/AppShellClient";
 import { AircraftProvider } from "@/lib/AircraftContext";
+import { AuthProvider } from "@/lib/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
-        <AircraftProvider>
-            <AppShellClient>{children}</AppShellClient>
-        </AircraftProvider>
+        <AuthProvider>
+            <ProtectedRoute>
+                <AircraftProvider>
+                    <AppShellClient>{children}</AppShellClient>
+                </AircraftProvider>
+            </ProtectedRoute>
+        </AuthProvider>
     );
 }
