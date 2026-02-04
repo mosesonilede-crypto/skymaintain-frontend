@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
 
@@ -11,30 +11,64 @@ export default function ReportsAnalyticsPage() {
     const { selectedAircraft } = useAircraft();
     const aircraftReg = selectedAircraft?.registration || "N123AB";
     const model = selectedAircraft?.model || "Boeing 737-800";
+    const [reportsData, setReportsData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Fetch live reports data
+    async function fetchReportsData() {
+        if (!selectedAircraft?.registration) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/reports/${selectedAircraft.registration}`);
+            if (response.ok) {
+                const data = await response.json();
+                setReportsData(data);
+            }
+        } catch (error) {
+            console.error("Error fetching reports:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchReportsData();
+    }, [selectedAircraft?.registration]);
 
     const aircraftOverview: KV[] = useMemo(
-        () => [
-            { k: "Registration:", v: aircraftReg },
-            { k: "Model:", v: model },
-            { k: "Health Status:", v: <Pill tone="success">95%</Pill> },
-            { k: "Flight Hours:", v: "N/A" },
-            { k: "Total Cycles:", v: "N/A" },
-        ],
-        [aircraftReg, model]
+        () => reportsData?.aircraftOverview?.map((item: any) => ({
+            k: item.label + ":",
+            v: item.label.includes("Health") || item.label.includes("Hours") || item.label.includes("Cycles")
+                ? item.value
+                : item.value
+        })) ?? [
+                { k: "Registration:", v: aircraftReg },
+                { k: "Model:", v: model },
+                { k: "Health Status:", v: <Pill tone="success">95%</Pill> },
+                { k: "Flight Hours:", v: "Loading..." },
+                { k: "Total Cycles:", v: "Loading..." },
+            ],
+        [reportsData, aircraftReg, model]
     );
 
     const maintenanceSummary: KV[] = useMemo(
-        () => [
-            { k: "Active Alerts:", v: <CountPill tone="danger">0</CountPill> },
-            { k: "Upcoming Tasks:", v: <CountPill tone="warning">0</CountPill> },
-            { k: "Last Inspection:", v: "N/A" },
-            { k: "Next Service:", v: "N/A" },
-        ],
-        []
+        () => reportsData?.maintenanceSummary?.map((item: any) => ({
+            k: item.label + ":",
+            v: item.label.includes("Active") || item.label.includes("Upcoming")
+                ? <CountPill tone={item.label.includes("Active") ? "danger" : "warning"}>{item.value}</CountPill>
+                : item.value
+        })) ?? [
+                { k: "Active Alerts:", v: <CountPill tone="danger">0</CountPill> },
+                { k: "Upcoming Tasks:", v: <CountPill tone="warning">0</CountPill> },
+                { k: "Last Inspection:", v: "Loading..." },
+                { k: "Next Service:", v: "Loading..." },
+            ],
+        [reportsData]
     );
 
     const systemHealth: HealthTile[] = useMemo(
-        () => [
+        () => reportsData?.systemHealth ?? [
             { label: "Engine", value: 94 },
             { label: "Landing Gear", value: 96 },
             { label: "Hydraulic", value: 88 },
@@ -43,7 +77,7 @@ export default function ReportsAnalyticsPage() {
             { label: "Electrical", value: 93 },
             { label: "APU", value: 91 },
         ],
-        []
+        [reportsData]
     );
 
     return (

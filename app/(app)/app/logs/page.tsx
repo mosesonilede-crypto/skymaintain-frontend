@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
 
@@ -11,35 +11,58 @@ type LogItem = {
     description: string;
     technician: string;
     dateISO: string;
-    durationHours: number;
+    durationHours?: number;
 };
 
 export default function MaintenanceLogsPage() {
     const { selectedAircraft } = useAircraft();
     const aircraftReg = selectedAircraft?.registration || "N123AB";
+    const [logsData, setLogsData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Fetch live logs data
+    async function fetchLogsData() {
+        if (!selectedAircraft?.registration) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/logs/${selectedAircraft.registration}`);
+            if (response.ok) {
+                const data = await response.json();
+                setLogsData(data);
+            }
+        } catch (error) {
+            console.error("Error fetching logs:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchLogsData();
+    }, [selectedAircraft?.registration]);
 
     const logs: LogItem[] = useMemo(
-        () => [
+        () => logsData?.logs?.map((log: any) => ({
+            id: log.id,
+            title: log.title,
+            status: log.status === "Completed" ? "COMPLETED" : "OPEN",
+            description: log.description,
+            technician: log.technician,
+            dateISO: new Date(log.date).toISOString().split('T')[0],
+            durationHours: 0,
+        })) ?? [
             {
                 id: "log-a-check",
                 title: "A-Check Inspection",
-                status: "COMPLETED",
-                description: "Complete A-Check including visual inspection, lubrication, and minor repairs",
-                technician: "John Anderson",
-                dateISO: "2025-12-10",
-                durationHours: 18,
-            },
-            {
-                id: "log-avionics-update",
-                title: "Avionics Software Update",
-                status: "COMPLETED",
-                description: "Critical avionics software update for FMS and TCAS systems",
-                technician: "Sarah Williams",
-                dateISO: "2025-11-05",
-                durationHours: 4,
+                status: "COMPLETED" as const,
+                description: "Loading...",
+                technician: "Loading...",
+                dateISO: new Date().toISOString().split('T')[0],
+                durationHours: 0,
             },
         ],
-        []
+        [logsData]
     );
 
     const upcomingTasks: LogItem[] = useMemo(() => [], []);

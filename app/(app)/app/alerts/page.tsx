@@ -6,7 +6,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
 
@@ -207,47 +207,59 @@ export default function PredictiveAlertsPage() {
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
     const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-    React.useEffect(() => {
-        setMounted(true);
-        const aircraftRegistration = selectedAircraft?.registration || "N872LM";
+    // Fetch live alerts data
+    async function fetchAlerts() {
+        if (!selectedAircraft?.registration) return;
 
-        let alertsToShow = getPredictedAlerts();
-        if (alertsToShow.length === 0) {
-            alertsToShow = MOCK_ALERTS.filter(a => a.aircraftRegistration === aircraftRegistration);
-        } else {
-            alertsToShow = alertsToShow.filter(a => a.aircraftRegistration === aircraftRegistration);
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/alerts/${selectedAircraft.registration}`);
+            if (response.ok) {
+                const data = await response.json();
+                const formattedAlerts = data.alerts.map((alert: any) => ({
+                    id: alert.id,
+                    severity: alert.severity,
+                    title: alert.type,
+                    description: alert.recommendation,
+                    component: alert.type,
+                    predictedDate: new Date(alert.predictedFailureDate).toLocaleDateString(),
+                    confidence: Math.round(alert.confidence * 100),
+                    source: "AI Predictive Engine",
+                    aircraftRegistration: selectedAircraft.registration,
+                    createdAt: new Date().toISOString(),
+                    recommendedAction: alert.recommendation
+                }));
+                setAlerts(formattedAlerts);
+                setLastRefresh(new Date());
+            }
+        } catch (error) {
+            console.error("Error fetching alerts:", error);
+            // Fall back to mock data on error
+            const aircraftRegistration = selectedAircraft?.registration || "N872LM";
+            let alertsToShow = getPredictedAlerts();
+            if (alertsToShow.length === 0) {
+                alertsToShow = MOCK_ALERTS.filter(a => a.aircraftRegistration === aircraftRegistration);
+            } else {
+                alertsToShow = alertsToShow.filter(a => a.aircraftRegistration === aircraftRegistration);
+            }
+            setAlerts(alertsToShow);
+        } finally {
+            setIsLoading(false);
         }
-        setAlerts(alertsToShow);
-    }, [selectedAircraft]);
+    }
+
+    useEffect(() => {
+        setMounted(true);
+        fetchAlerts();
+    }, [selectedAircraft?.registration]);
 
     const handleRefreshAlerts = useCallback(async () => {
         setIsRefreshing(true);
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        const reg = selectedAircraft?.registration || "N872LM";
-        const existingAlerts = alerts.filter(a => a.aircraftRegistration === reg);
-
-        const newAlert: PredictedAlert = {
-            id: `alert-${Date.now()}`,
-            severity: Math.random() > 0.6 ? "warning" : "info",
-            title: "System Health Check Completed",
-            description: "Predictive maintenance scan completed successfully. All systems nominal.",
-            component: "Aircraft - Overall Systems",
-            predictedDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-            confidence: 95,
-            source: "Automated Health Check",
-            aircraftRegistration: reg,
-            createdAt: new Date().toISOString(),
-            recommendedAction: "Continue normal operations with routine monitoring"
-        };
-
-        const updatedAlerts = [newAlert, ...existingAlerts];
-        setAlerts(updatedAlerts);
-        storePredictedAlerts(updatedAlerts);
-        setLastRefresh(new Date());
+        await fetchAlerts();
         setIsRefreshing(false);
-    }, [selectedAircraft?.registration, alerts]);
+    }, [selectedAircraft?.registration]);
 
     const handleGeneratePredictions = useCallback(() => {
         setIsGenerating(true);

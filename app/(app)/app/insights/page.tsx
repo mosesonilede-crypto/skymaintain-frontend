@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
 
@@ -15,10 +15,43 @@ type PredictiveAlert = {
 };
 
 export default function AIInsightsPage() {
+    const { selectedAircraft } = useAircraft();
     const [advancedOpen, setAdvancedOpen] = useState(false);
+    const [insightsData, setInsightsData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Fetch live insights data
+    async function fetchInsightsData() {
+        if (!selectedAircraft?.registration) return;
+
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/api/insights/${selectedAircraft.registration}`);
+            if (response.ok) {
+                const data = await response.json();
+                setInsightsData(data);
+            }
+        } catch (error) {
+            console.error("Error fetching insights:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchInsightsData();
+    }, [selectedAircraft?.registration]);
 
     const predictiveAlert: PredictiveAlert = useMemo(
-        () => ({
+        () => insightsData?.predictiveAlert ? {
+            severity: insightsData.predictiveAlert.severity === "High" ? "Critical" : "Warning",
+            title: insightsData.predictiveAlert.type,
+            probabilityPct: Math.round(insightsData.predictiveAlert.confidence * 100),
+            summary: insightsData.predictiveAlert.type,
+            timeframe: "2-3 months",
+            dataSources: "AI Predictive Engine, Sensor Data, Historical Analysis",
+            recommendedAction: insightsData.predictiveAlert.recommendation,
+        } : {
             severity: "Critical",
             title: "Hydraulic System - Left Main Gear",
             probabilityPct: 78,
@@ -26,8 +59,8 @@ export default function AIInsightsPage() {
             timeframe: "2-3 months",
             dataSources: "Pressure sensors, Visual inspection, Historical data",
             recommendedAction: "Schedule hydraulic seal replacement during next maintenance window",
-        }),
-        []
+        },
+        [insightsData]
     );
 
     return (

@@ -72,6 +72,43 @@ export default function DashboardPage() {
     const aircraftDropdownRef = useRef<HTMLDivElement>(null);
     const notificationDropdownRef = useRef<HTMLDivElement>(null);
 
+    // Live data states
+    const [dashboardData, setDashboardData] = useState<any>(null);
+    const [notifications, setNotifications] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    // Fetch live dashboard data
+    async function fetchDashboardData() {
+        if (!selectedAircraft?.registration) return;
+
+        setIsLoading(true);
+        try {
+            const [dashResponse, notifResponse] = await Promise.all([
+                fetch(`/api/dashboard/${selectedAircraft.registration}`),
+                fetch("/api/notifications"),
+            ]);
+
+            if (dashResponse.ok) {
+                const data = await dashResponse.json();
+                setDashboardData(data);
+            }
+
+            if (notifResponse.ok) {
+                const data = await notifResponse.json();
+                setNotifications(data.notifications);
+            }
+        } catch (error) {
+            console.error("Error fetching dashboard data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    // Fetch data when aircraft changes
+    useEffect(() => {
+        fetchDashboardData();
+    }, [selectedAircraft?.registration]);
+
     // Close dropdowns when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -231,7 +268,7 @@ export default function DashboardPage() {
                                 >
                                     <img alt="Notification bell" className="absolute left-[10px] top-[7px] h-4 w-4" src={headerBellIcon} />
                                     <div className="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-[#e7000b] text-[12px] text-white font-semibold">
-                                        {MOCK_NOTIFICATIONS.length}
+                                        {notifications.length}
                                     </div>
                                 </button>
 
@@ -242,8 +279,8 @@ export default function DashboardPage() {
                                             <h3 className="font-semibold text-[14px] text-[#0a0a0a]">Notifications</h3>
                                         </div>
                                         <div className="max-h-96 overflow-y-auto">
-                                            {MOCK_NOTIFICATIONS.length > 0 ? (
-                                                MOCK_NOTIFICATIONS.map((notification) => (
+                                            {notifications.length > 0 ? (
+                                                notifications.map((notification) => (
                                                     <div
                                                         key={notification.id}
                                                         className="px-4 py-3 border-b border-[#e5e7eb] last:border-b-0 hover:bg-gray-50 transition-colors cursor-pointer"
