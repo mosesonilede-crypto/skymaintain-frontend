@@ -1,0 +1,441 @@
+/* eslint-disable @next/next/no-img-element */
+import Link from "next/link";
+
+// Figma assets
+const imgIconScale = "https://www.figma.com/api/mcp/asset/5e6f098e-9f7d-4b06-af61-7d2f55059d3c";
+const imgIconWarning = "https://www.figma.com/api/mcp/asset/68faab1f-4609-4768-82b7-8d46bea3a6f7";
+const imgVector = "https://www.figma.com/api/mcp/asset/50acaea7-cd5c-4d5d-aed7-7f1e1090da0a";
+const imgVectorLarge = "https://www.figma.com/api/mcp/asset/5d0dcc28-708a-455e-ae54-9bf08946fc76";
+const imgIconArrow = "https://www.figma.com/api/mcp/asset/b6d5f83a-15d1-43b1-924a-0c14ed8be9db";
+
+export const metadata = {
+    title: "Terms of Service | SkyMaintain",
+    description:
+        "SkyMaintain Terms of Service for use of the Regulatory-Compliant AI Platform.",
+};
+
+type TermsPayload = {
+    lastUpdated: string;
+    sections: Array<{
+        number: number;
+        title: string;
+        paragraphs: string[];
+        bullets?: string[];
+    }>;
+    importantNoticeTitle: string;
+    importantNoticeBody: string;
+};
+
+function getEnv(name: string, fallback: string) {
+    const v = process.env[name];
+    return (v ?? fallback).trim();
+}
+
+function mockTerms(): TermsPayload {
+    return {
+        lastUpdated: "January 31, 2026",
+        sections: [
+            {
+                number: 1,
+                title: "Overview",
+                paragraphs: [
+                    "SkyMaintain is a software-as-a-service (SaaS) platform providing AI-assisted decision-support tools for aircraft maintenance professionals.",
+                    "SkyMaintain is a product of EncycloAMTs LLC.",
+                ],
+            },
+            {
+                number: 2,
+                title: "No Replacement of Certified Judgment",
+                paragraphs: ["SkyMaintain provides decision-support insights only.", "SkyMaintain does not:"],
+                bullets: [
+                    "Replace certified maintenance personnel",
+                    "Issue maintenance approvals or certifications",
+                    "Replace approved maintenance programs",
+                    "Make autonomous maintenance decisions",
+                ],
+            },
+            {
+                number: 3,
+                title: "Regulatory Disclaimer",
+                paragraphs: [
+                    "SkyMaintain is not certified, approved, or endorsed by the FAA, EASA, or any aviation authority.",
+                    "Use of SkyMaintain does not relieve users of their regulatory obligations.",
+                ],
+            },
+            {
+                number: 4,
+                title: "Limitation of Liability",
+                paragraphs: [
+                    'SkyMaintain is provided "as-is" for decision-support purposes only. EncycloAMTs LLC shall not be liable for operational decisions made based on platform outputs.',
+                ],
+            },
+            {
+                number: 5,
+                title: "Data Responsibility",
+                paragraphs: [
+                    "Users are responsible for ensuring that data entered into SkyMaintain is accurate, authorized, and compliant with applicable regulations.",
+                ],
+            },
+            {
+                number: 6,
+                title: "Termination",
+                paragraphs: [
+                    "Accounts may be suspended or terminated for misuse, violation of terms, or unauthorized use.",
+                ],
+            },
+            {
+                number: 7,
+                title: "Governing Law",
+                paragraphs: ["These terms are governed by the laws of the United States."],
+            },
+        ],
+        importantNoticeTitle: "Important Notice",
+        importantNoticeBody:
+            "By using SkyMaintain, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. If you do not agree to these terms, you must not use the platform.",
+    };
+}
+
+async function fetchTermsLive(baseUrl: string): Promise<TermsPayload> {
+    const url = `${baseUrl.replace(/\/+$/, "")}/v1/public/terms`;
+    const res = await fetch(url, {
+        method: "GET",
+        cache: "no-store",
+        headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) {
+        throw new Error(`GET /v1/public/terms failed: ${res.status}`);
+    }
+
+    const data = (await res.json()) as Partial<TermsPayload>;
+
+    if (
+        !data ||
+        typeof data.lastUpdated !== "string" ||
+        !Array.isArray(data.sections) ||
+        data.sections.length === 0 ||
+        typeof data.importantNoticeTitle !== "string" ||
+        typeof data.importantNoticeBody !== "string"
+    ) {
+        throw new Error("Invalid terms payload shape");
+    }
+
+    return data as TermsPayload;
+}
+
+async function loadTerms(): Promise<{ payload: TermsPayload; source: "mock" | "live" }> {
+    const mode = getEnv("NEXT_PUBLIC_DATA_MODE", "mock");
+    const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
+
+    if (mode === "mock") return { payload: mockTerms(), source: "mock" };
+
+    if (!baseUrl) return { payload: mockTerms(), source: "mock" };
+
+    if (mode === "live") {
+        const payload = await fetchTermsLive(baseUrl);
+        return { payload, source: "live" };
+    }
+
+    try {
+        const payload = await fetchTermsLive(baseUrl);
+        return { payload, source: "live" };
+    } catch {
+        return { payload: mockTerms(), source: "mock" };
+    }
+}
+
+function SectionBlock({
+    number,
+    title,
+    paragraphs,
+    bullets,
+}: {
+    number: number;
+    title: string;
+    paragraphs: string[];
+    bullets?: string[];
+}) {
+    return (
+        <section
+            className="rounded-2xl border bg-white p-8"
+            style={{ borderColor: "rgba(0,0,0,0.1)" }}
+        >
+            <h2
+                className="text-2xl font-bold"
+                style={{ color: "#101828", lineHeight: "32px" }}
+            >
+                {number}. {title}
+            </h2>
+
+            <div className="mt-6 space-y-4">
+                {paragraphs.map((p, idx) => (
+                    <p
+                        key={idx}
+                        className="text-base leading-relaxed"
+                        style={{ color: "#364153" }}
+                    >
+                        {p}
+                    </p>
+                ))}
+
+                {bullets && bullets.length > 0 ? (
+                    <ul className="ml-4 space-y-2">
+                        {bullets.map((b, idx) => (
+                            <li
+                                key={idx}
+                                className="flex items-start gap-3"
+                            >
+                                <span
+                                    className="text-base"
+                                    style={{ color: "#155dfc" }}
+                                >
+                                    •
+                                </span>
+                                <span
+                                    className="text-base leading-relaxed"
+                                    style={{ color: "#364153" }}
+                                >
+                                    {b}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                ) : null}
+
+                {number === 2 ? (
+                    <p
+                        className="text-base leading-relaxed"
+                        style={{ color: "#364153" }}
+                    >
+                        All maintenance actions remain the responsibility of appropriately certified personnel
+                        and organizations.
+                    </p>
+                ) : null}
+            </div>
+        </section>
+    );
+}
+
+export default async function TermsPage() {
+    const { payload, source } = await loadTerms();
+
+    return (
+        <div className="w-full bg-white">
+            {/* Header */}
+            <header
+                className="fixed left-0 right-0 top-0 z-50 border-b px-6 py-4"
+                style={{
+                    backgroundColor: "rgba(255,255,255,0.95)",
+                    borderColor: "#e5e7eb",
+                    boxShadow: "0px 1px 3px rgba(0,0,0,0.1), 0px 1px 2px rgba(0,0,0,0.1)",
+                }}
+            >
+                <div className="mx-auto flex max-w-6xl items-center justify-between">
+                    {/* Logo */}
+                    <Link href="/" className="flex items-center gap-3">
+                        <div
+                            className="flex h-12 w-12 items-center justify-center rounded-xl"
+                            style={{
+                                background: "linear-gradient(135deg, #155dfc 0%, #1447e6 100%)",
+                                boxShadow: "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
+                            }}
+                        >
+                            <img
+                                src={imgVectorLarge}
+                                alt="SkyMaintain"
+                                className="h-7 w-7"
+                            />
+                        </div>
+                        <div>
+                            <p
+                                className="text-2xl font-bold"
+                                style={{ color: "#101828", lineHeight: "32px" }}
+                            >
+                                SkyMaintain
+                            </p>
+                            <p
+                                className="text-xs"
+                                style={{ color: "#4a5565" }}
+                            >
+                                Regulatory-Compliant AI Platform
+                            </p>
+                        </div>
+                    </Link>
+
+                    {/* Back to Home button */}
+                    <Link
+                        href="/"
+                        className="flex items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-gray-100"
+                    >
+                        <img
+                            src={imgIconArrow}
+                            alt=""
+                            className="h-4 w-4"
+                        />
+                        <span
+                            className="text-sm"
+                            style={{ color: "#364153" }}
+                        >
+                            Back to Home
+                        </span>
+                    </Link>
+                </div>
+            </header>
+
+            {/* Hero Section */}
+            <section
+                className="px-6 pb-16 pt-32 text-center"
+                style={{
+                    background: "linear-gradient(158deg, #eff6ff 0%, #faf5ff 100%)",
+                }}
+            >
+                <div className="mx-auto max-w-4xl">
+                    {/* Scale Icon */}
+                    <img
+                        src={imgIconScale}
+                        alt=""
+                        className="mx-auto h-20 w-20"
+                    />
+
+                    {/* Legal Badge */}
+                    <div
+                        className="mx-auto mt-6 inline-flex items-center justify-center rounded-lg px-5 py-2"
+                        style={{ backgroundColor: "#155dfc" }}
+                    >
+                        <span
+                            className="text-sm font-medium"
+                            style={{ color: "#ffffff" }}
+                        >
+                            Legal
+                        </span>
+                    </div>
+
+                    {/* Title */}
+                    <h1
+                        className="mt-6 text-5xl font-bold tracking-tight"
+                        style={{ color: "#101828", lineHeight: "48px" }}
+                    >
+                        Terms of Service
+                    </h1>
+
+                    {/* Last Updated */}
+                    <p
+                        className="mt-6 text-lg"
+                        style={{ color: "#4a5565" }}
+                    >
+                        Last Updated: {payload.lastUpdated}
+                    </p>
+
+                    {/* Data source badge (for development) */}
+                    {source === "mock" && (
+                        <div className="mt-4">
+                            <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-700">
+                                Data: MOCK
+                            </span>
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* Content Section */}
+            <section className="bg-white px-6 py-20">
+                <div className="mx-auto max-w-4xl space-y-8">
+                    {payload.sections.map((s) => (
+                        <SectionBlock
+                            key={s.number}
+                            number={s.number}
+                            title={s.title}
+                            paragraphs={s.paragraphs}
+                            bullets={s.bullets}
+                        />
+                    ))}
+
+                    {/* Important Notice Card */}
+                    <section
+                        className="rounded-2xl border p-8"
+                        style={{
+                            backgroundColor: "#fffbeb",
+                            borderColor: "#fee685",
+                        }}
+                    >
+                        <div className="flex items-start gap-4">
+                            <img
+                                src={imgIconWarning}
+                                alt=""
+                                className="h-8 w-8 flex-shrink-0"
+                            />
+                            <div>
+                                <h3
+                                    className="text-xl font-bold"
+                                    style={{ color: "#101828", lineHeight: "28px" }}
+                                >
+                                    {payload.importantNoticeTitle}
+                                </h3>
+                                <p
+                                    className="mt-2 text-base leading-relaxed"
+                                    style={{ color: "#364153" }}
+                                >
+                                    {payload.importantNoticeBody}
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer
+                className="px-6 py-6"
+                style={{ backgroundColor: "#101828" }}
+            >
+                <div className="mx-auto max-w-4xl text-center">
+                    {/* Logo */}
+                    <div className="flex items-center justify-center gap-2">
+                        <div
+                            className="flex h-9 w-9 items-center justify-center rounded-lg"
+                            style={{ backgroundColor: "#155dfc" }}
+                        >
+                            <img
+                                src={imgVector}
+                                alt="SkyMaintain"
+                                className="h-5 w-5"
+                            />
+                        </div>
+                        <span
+                            className="text-lg font-bold"
+                            style={{ color: "#ffffff" }}
+                        >
+                            SkyMaintain
+                        </span>
+                    </div>
+
+                    {/* Tagline */}
+                    <p
+                        className="mt-3 text-sm"
+                        style={{ color: "#99a1af" }}
+                    >
+                        AI-powered aircraft maintenance platform ensuring safety, compliance, and efficiency.
+                    </p>
+
+                    {/* Copyright */}
+                    <p
+                        className="mt-2 text-sm"
+                        style={{ color: "#d1d5dc" }}
+                    >
+                        © 2026{" "}
+                        <span style={{ color: "#51a2ff" }}>SkyMaintain</span>
+                        . All Rights Reserved.
+                    </p>
+
+                    {/* EncycloAMTs */}
+                    <p
+                        className="mt-2 text-sm"
+                        style={{ color: "#6a7282" }}
+                    >
+                        SkyMaintain is a product of EncycloAMTs LLC.
+                    </p>
+                </div>
+            </footer>
+        </div>
+    );
+}
