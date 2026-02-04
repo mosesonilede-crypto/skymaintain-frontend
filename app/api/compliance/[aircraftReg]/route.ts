@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 function generateComplianceData(aircraftReg: string) {
     // Generate aircraft-specific compliance data
     const timestamp = new Date();
-    
+
     return {
         airworthiness: {
             status: "Airworthy",

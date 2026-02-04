@@ -125,6 +125,13 @@ export default function RegulatoryCompliancePage() {
         },
     ]);
 
+    const [annualInspection, setAnnualInspection] = useState({
+        status: "Current",
+        last: "6/9/2025",
+        nextDue: "6/9/2026",
+        inspector: "Michael Roberts (FAA IA-45678)",
+    });
+
     const [applicableUpdates, setApplicableUpdates] = useState<RegulatoryUpdate[]>([
         {
             kind: "New AD",
@@ -595,11 +602,10 @@ function ADRow({ item }: { item: ADItem }) {
                                 key={s}
                                 disabled={isLoading}
                                 onClick={() => handleStatusChange(s as "Compliant" | "Pending" | "Overdue")}
-                                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${
-                                    status === s
+                                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${status === s
                                         ? "bg-blue-600 text-white"
                                         : "border border-slate-200 text-slate-600 hover:bg-slate-50"
-                                } disabled:opacity-50`}
+                                    } disabled:opacity-50`}
                             >
                                 {s}
                             </button>
@@ -650,11 +656,10 @@ function SBRow({ item }: { item: SBItem }) {
                                 key={s}
                                 disabled={isLoading}
                                 onClick={() => handleStatusChange(s as "Compliant" | "Pending" | "Overdue")}
-                                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${
-                                    status === s
+                                className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${status === s
                                         ? "bg-blue-600 text-white"
                                         : "border border-slate-200 text-slate-600 hover:bg-slate-50"
-                                } disabled:opacity-50`}
+                                    } disabled:opacity-50`}
                             >
                                 {s}
                             </button>
@@ -758,11 +763,11 @@ function ExternalLinkIcon() {
 
 function RefreshIcon({ animate }: { animate?: boolean }) {
     return (
-        <svg 
-            viewBox="0 0 24 24" 
+        <svg
+            viewBox="0 0 24 24"
             className={`h-4 w-4 text-slate-700 ${animate ? "animate-spin" : ""}`}
-            fill="none" 
-            stroke="currentColor" 
+            fill="none"
+            stroke="currentColor"
             strokeWidth="1.8"
         >
             <path d="M20 12a8 8 0 1 1-2.3-5.7" />
