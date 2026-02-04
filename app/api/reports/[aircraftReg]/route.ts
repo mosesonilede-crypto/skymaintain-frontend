@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
     request: NextRequest,
-    { params }: { params: { aircraftReg: string } }
+    { params }: { params: Promise<{ aircraftReg: string }> }
 ) {
     try {
-        const aircraftReg = params.aircraftReg.toUpperCase();
+        const { aircraftReg: reg } = await params;
+        const aircraftReg = reg.toUpperCase();
 
         // Generate mock reports data - replace with real database queries
         const mockData = {
