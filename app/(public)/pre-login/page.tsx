@@ -706,10 +706,10 @@ export default function PreLoginPage() {
                                 <p className="text-[#6a7282]">
                                     Join our network of industry partners and reach aviation maintenance professionals worldwide.
                                 </p>
-                                <button className="w-full py-2 bg-[#4a5565] text-white text-sm rounded-lg flex items-center justify-center gap-2">
+                                <Link href="/become-partner" className="w-full py-2 bg-[#4a5565] text-white text-sm rounded-lg flex items-center justify-center gap-2 hover:bg-[#3d4654] transition-colors">
                                     Become a Partner
                                     <img alt="" className="size-4" src={imgIconArrowRightWhite2} />
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -493,9 +493,9 @@ export default function GetStartedPage() {
                             <p className="mt-6 text-center text-[#6a7282]">
                                 Join our network of industry partners and reach aviation maintenance professionals worldwide.
                             </p>
-                            <button className="mt-6 w-full rounded-lg bg-[#4a5565] py-3 text-sm font-medium text-white hover:bg-[#3d4654] transition-colors">
+                            <Link href="/become-partner" className="mt-6 inline-flex w-full justify-center rounded-lg bg-[#4a5565] py-3 text-sm font-medium text-white hover:bg-[#3d4654] transition-colors">
                                 Become a Partner <ArrowRight className="inline h-4 w-4 ml-1" />
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
