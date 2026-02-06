@@ -220,6 +220,17 @@ export default function AdminPanelPage() {
     const [loading, setLoading] = useState<boolean>(mode !== "mock");
     const [error, setError] = useState<string>("");
 
+    const [userList, setUserList] = useState<AdminUser[]>(() => mockPayload().users);
+    const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+    const [userFormError, setUserFormError] = useState<string>("");
+    const [editingUserIndex, setEditingUserIndex] = useState<number | null>(null);
+    const [userForm, setUserForm] = useState<AdminUser>({
+        name: "",
+        email: "",
+        role: "Fleet Manager",
+        status: "Active",
+    });
+
     const aircraftTypeChips = ["Commercial", "Cargo", "Private", "Military", "Charter", "Turboprop"];
     const categoryChips = ["Narrow-body", "Wide-body", "Regional", "Business Jet", "Other"];
     const manufacturerQuick = ["Bombardier", "Embraer", "Gulfstream", "Cessna", "Boeing", "Airbus"];
@@ -321,9 +332,50 @@ export default function AdminPanelPage() {
         };
     }, [mode, baseUrl]);
 
+    useEffect(() => {
+        setUserList(payload.users);
+    }, [payload.users]);
+
     const used = payload.system.storageUsedGb;
     const total = payload.system.storageTotalGb;
     const pct = total > 0 ? Math.min(100, Math.max(0, (used / total) * 100)) : 0;
+
+    function openAddUser() {
+        setEditingUserIndex(null);
+        setUserForm({ name: "", email: "", role: "Fleet Manager", status: "Active" });
+        setUserFormError("");
+        setIsUserModalOpen(true);
+    }
+
+    function openEditUser(index: number) {
+        setEditingUserIndex(index);
+        setUserForm(userList[index]);
+        setUserFormError("");
+        setIsUserModalOpen(true);
+    }
+
+    function saveUser() {
+        const name = userForm.name.trim();
+        const email = userForm.email.trim();
+        if (!name || !email) {
+            setUserFormError("Name and email are required.");
+            return;
+        }
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            setUserFormError("Enter a valid email address.");
+            return;
+        }
+
+        setUserList((prev) => {
+            if (editingUserIndex === null) {
+                return [...prev, { ...userForm, name, email }];
+            }
+
+            return prev.map((u, idx) => (idx === editingUserIndex ? { ...userForm, name, email } : u));
+        });
+
+        setIsUserModalOpen(false);
+    }
 
     function resetForm() {
         setSelectedManufacturerQuick("");
@@ -549,6 +601,7 @@ export default function AdminPanelPage() {
 
                         <button
                             type="button"
+                            onClick={openAddUser}
                             className="inline-flex items-center gap-2 rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 transition-colors"
                         >
                             <span aria-hidden="true">+</span>
@@ -568,7 +621,7 @@ export default function AdminPanelPage() {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-slate-200 bg-white">
-                                {payload.users.map((u, idx) => (
+                                {userList.map((u, idx) => (
                                     <tr key={`${u.email}-${idx}`} className="hover:bg-slate-50/50">
                                         <td className="px-4 py-3 text-slate-900">{u.name}</td>
                                         <td className="px-4 py-3 text-slate-700">{u.email}</td>
@@ -581,6 +634,7 @@ export default function AdminPanelPage() {
                                         <td className="px-4 py-3">
                                             <button
                                                 type="button"
+                                                onClick={() => openEditUser(idx)}
                                                 className="text-sm font-medium text-slate-700 hover:text-slate-900"
                                             >
                                                 Edit
@@ -588,7 +642,7 @@ export default function AdminPanelPage() {
                                         </td>
                                     </tr>
                                 ))}
-                                {payload.users.length === 0 ? (
+                                {userList.length === 0 ? (
                                     <tr>
                                         <td className="px-4 py-6 text-sm text-slate-600" colSpan={5}>
                                             No users found.
@@ -598,6 +652,9 @@ export default function AdminPanelPage() {
                             </tbody>
                         </table>
                     </div>
+                    <p className="mt-3 text-xs text-slate-500">
+                        Changes made here update the local list for this session.
+                    </p>
                 </section>
 
                 <section className="lg:col-span-12 rounded-2xl border border-slate-200 bg-white p-5 md:p-6">
@@ -631,6 +688,91 @@ export default function AdminPanelPage() {
                     </div>
                 </section>
             </div>
+
+            {isUserModalOpen ? (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 p-4"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="User Management"
+                    onMouseDown={(e) => {
+                        if (e.target === e.currentTarget) {
+                            setIsUserModalOpen(false);
+                        }
+                    }}
+                >
+                    <div className="w-full max-w-lg rounded-2xl border border-slate-200 bg-white shadow-xl">
+                        <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-5">
+                            <div>
+                                <div className="text-sm font-semibold text-slate-900">
+                                    {editingUserIndex === null ? "Add User" : "Edit User"}
+                                </div>
+                                <div className="mt-1 text-sm text-slate-600">Manage organization access</div>
+                            </div>
+                            <button
+                                type="button"
+                                className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50"
+                                aria-label="Close"
+                                onClick={() => setIsUserModalOpen(false)}
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <div className="space-y-4 px-5 py-4">
+                            <div>
+                                <FieldLabel required>Name</FieldLabel>
+                                <Input value={userForm.name} onChange={(v) => setUserForm((f) => ({ ...f, name: v }))} />
+                            </div>
+                            <div>
+                                <FieldLabel required>Email</FieldLabel>
+                                <Input value={userForm.email} onChange={(v) => setUserForm((f) => ({ ...f, email: v }))} />
+                            </div>
+                            <div>
+                                <FieldLabel required>Role</FieldLabel>
+                                <Select
+                                    value={userForm.role}
+                                    onChange={(v) => setUserForm((f) => ({ ...f, role: v }))}
+                                    options={["Admin", "Fleet Manager", "Maintenance Engineer", "Viewer"]}
+                                    placeholder="Select role"
+                                />
+                            </div>
+                            <div>
+                                <FieldLabel required>Status</FieldLabel>
+                                <Select
+                                    value={userForm.status}
+                                    onChange={(v) => setUserForm((f) => ({ ...f, status: v }))}
+                                    options={["Active", "Suspended"]}
+                                    placeholder="Select status"
+                                />
+                            </div>
+
+                            {userFormError ? (
+                                <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+                                    {userFormError}
+                                </div>
+                            ) : null}
+                        </div>
+
+                        <div className="flex justify-end gap-2 border-t border-slate-200 px-5 py-4">
+                            <button
+                                type="button"
+                                onClick={() => setIsUserModalOpen(false)}
+                                className="rounded-xl border border-slate-200 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={saveUser}
+                                className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+                            >
+                                {editingUserIndex === null ? "Add User" : "Save Changes"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
 
             {isRegisterOpen && registerPanel === "manufacturer" ? (
                 <div className="fixed inset-0 z-50 bg-white">
