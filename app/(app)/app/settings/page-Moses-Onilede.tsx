@@ -3,6 +3,7 @@
 
 import { useMemo, useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAircraft, type Aircraft } from "@/lib/AircraftContext";
 
 /* ----------------------------- Icon Fallbacks ----------------------------- */
 const makeLetterIcon = (label: string, bg = "#e2e8f0", fg = "#0f172a") => {
@@ -110,6 +111,11 @@ export default function SettingsPage() {
     );
 
     const [active, setActive] = useState<SettingsSection>("Account & Profile");
+
+    const { selectedAircraft } = useAircraft();
+    const aircraftRegistration = selectedAircraft?.registration ?? "N872LM";
+    const aircraftModel = selectedAircraft?.model ?? "Airbus A320";
+    const aircraftLastService = selectedAircraft?.lastService ?? "2026-01-15";
 
     const [fullName, setFullName] = useState("John Mitchell");
     const [email, setEmail] = useState("manager@skywings.com");
@@ -343,10 +349,10 @@ export default function SettingsPage() {
         totalLLPs: 156,
         criticalLLPs: 2,
         complianceRate: 98.5,
-        nextDueItem: "AD 2024-15-08 - Landing Gear Inspection",
+        nextDueItem: `AD 2024-15-08 - Landing Gear Inspection (${aircraftRegistration})`,
         nextDueHours: 45,
         lastAuditDate: "2026-01-15",
-    }), []);
+    }), [aircraftRegistration]);
 
     // AI Assistant recommendations for Regulatory Compliance
     const aiComplianceRecommendations = useMemo(() => [
@@ -371,11 +377,11 @@ export default function SettingsPage() {
             id: "COMP-003",
             type: "critical",
             title: "2 LLPs Approaching Limits",
-            description: "Engine disk #2 (N123AB) and Landing Gear actuator (N456CD) are within 500 cycles of their limits.",
+            description: `Engine disk #2 (${aircraftRegistration}) and Landing Gear actuator (${aircraftRegistration}) are within 500 cycles of their limits.`,
             confidence: 100,
             impact: "Schedule replacement within 60 days",
         },
-    ], []);
+    ], [aircraftRegistration]);
 
     // Toggle for showing compliance AI recommendations
     const [showComplianceAI, setShowComplianceAI] = useState(true);
@@ -888,6 +894,14 @@ export default function SettingsPage() {
                     className="flex-1 rounded-xl bg-white p-6"
                     style={{ border: "1px solid rgba(0,0,0,0.1)" }}
                 >
+                    <ActiveAircraftBanner
+                        aircraft={selectedAircraft}
+                        fallback={{
+                            registration: aircraftRegistration,
+                            model: aircraftModel,
+                            lastService: aircraftLastService,
+                        }}
+                    />
                     {active === "Account & Profile" ? (
                         <div className="flex flex-col gap-6">
                             {/* Section header */}
@@ -4840,6 +4854,42 @@ export default function SettingsPage() {
                 }
             </div >
         </div >
+    );
+}
+
+function ActiveAircraftBanner({
+    aircraft,
+    fallback,
+}: {
+    aircraft: Aircraft | null;
+    fallback: Pick<Aircraft, "registration" | "model" | "lastService">;
+}) {
+    const active = aircraft ?? fallback;
+    return (
+        <div
+            className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-xl px-4 py-3"
+            style={{ backgroundColor: "#f8fafc", border: "1px solid #e5e7eb" }}
+        >
+            <div className="flex items-center gap-3">
+                <div
+                    className="flex h-10 w-10 items-center justify-center rounded-lg"
+                    style={{ backgroundColor: "#e0e7ff", color: "#1d4ed8" }}
+                >
+                    ✈
+                </div>
+                <div>
+                    <div className="text-xs" style={{ color: "#64748b" }}>
+                        Active Aircraft
+                    </div>
+                    <div className="text-sm font-semibold" style={{ color: "#0a0a0a" }}>
+                        {active.registration} · {active.model}
+                    </div>
+                </div>
+            </div>
+            <div className="text-xs" style={{ color: "#64748b" }}>
+                Last service: <span style={{ color: "#0a0a0a", fontWeight: 600 }}>{active.lastService ?? "—"}</span>
+            </div>
+        </div>
     );
 }
 
