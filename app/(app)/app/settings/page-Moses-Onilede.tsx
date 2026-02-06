@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAircraft, type Aircraft } from "@/lib/AircraftContext";
 
@@ -111,11 +111,22 @@ export default function SettingsPage() {
     );
 
     const [active, setActive] = useState<SettingsSection>("Account & Profile");
+    const contentRef = useRef<HTMLDivElement | null>(null);
 
     const { selectedAircraft } = useAircraft();
     const aircraftRegistration = selectedAircraft?.registration ?? "N872LM";
     const aircraftModel = selectedAircraft?.model ?? "Airbus A320";
     const aircraftLastService = selectedAircraft?.lastService ?? "2026-01-15";
+
+    useEffect(() => {
+        if (contentRef.current) {
+            contentRef.current.scrollTop = 0;
+            contentRef.current.scrollIntoView({ block: "start" });
+        }
+        if (typeof window !== "undefined") {
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }
+    }, [active]);
 
     const [fullName, setFullName] = useState("John Mitchell");
     const [email, setEmail] = useState("manager@skywings.com");
@@ -891,6 +902,7 @@ export default function SettingsPage() {
 
                 {/* Main content */}
                 <section
+                    ref={contentRef}
                     className="flex-1 rounded-xl bg-white p-6"
                     style={{ border: "1px solid rgba(0,0,0,0.1)" }}
                 >

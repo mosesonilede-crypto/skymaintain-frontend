@@ -681,7 +681,7 @@ export default function AdminPanelPage() {
                         }
                     }}
                 >
-                    <div className="w-full max-w-3xl rounded-2xl border border-slate-200 bg-white shadow-xl">
+                    <div className="w-full max-w-3xl max-h-[85vh] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-xl">
                         <div className="flex items-start justify-between gap-4 border-b border-slate-200 p-5">
                             <div>
                                 <div className="text-sm font-semibold text-slate-900">Register New Aircraft</div>
