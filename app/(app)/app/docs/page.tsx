@@ -44,8 +44,8 @@ export default function DocumentationPage() {
         fetchDocsData();
     }, []);
 
-    const uploadedDocs: UploadedDoc[] = useMemo(
-        () => docsData?.uploadedDocs || [
+    const uploadedDocs: UploadedDoc[] = useMemo(() => {
+        const base = docsData?.uploadedDocs || [
             {
                 filename: "Engine_Inspection_Report_2025.pdf",
                 date: "1/19/2025",
@@ -64,9 +64,16 @@ export default function DocumentationPage() {
                 size: "856 KB",
                 category: "Compliance",
             },
-        ],
-        [docsData]
-    );
+        ];
+
+        const merged = [...localUploads, ...base].filter(
+            (doc) => doc && doc.filename
+        );
+
+        return merged.filter(
+            (doc, idx, arr) => arr.findIndex((d) => d.filename === doc.filename) === idx
+        );
+    }, [docsData, localUploads]);
 
     const discrepancyReports: Discrepancy[] = useMemo(
         () => docsData?.discrepancies || [
@@ -103,6 +110,35 @@ export default function DocumentationPage() {
     const [discDesc, setDiscDesc] = useState("");
     const [discRemedy, setDiscRemedy] = useState("");
     const [discManual, setDiscManual] = useState("");
+    const [localUploads, setLocalUploads] = useState<UploadedDoc[]>([]);
+
+    function formatFileSize(bytes: number) {
+        if (!Number.isFinite(bytes)) return "0 KB";
+        if (bytes < 1024) return `${bytes} B`;
+        const kb = bytes / 1024;
+        if (kb < 1024) return `${kb.toFixed(0)} KB`;
+        const mb = kb / 1024;
+        return `${mb.toFixed(1)} MB`;
+    }
+
+    function handleUploadFiles(files: FileList | File[]) {
+        const list = Array.from(files || []);
+        if (!list.length) return;
+
+        const newUploads: UploadedDoc[] = list.map((file) => ({
+            filename: file.name,
+            date: new Date().toLocaleDateString(),
+            size: formatFileSize(file.size),
+            category: "Maintenance Records",
+        }));
+
+        setLocalUploads((prev) => {
+            const merged = [...newUploads, ...prev];
+            return merged.filter(
+                (doc, idx, arr) => arr.findIndex((d) => d.filename === doc.filename) === idx
+            );
+        });
+    }
 
     function saveDocumentationToReservoir() {
         if (typeof window === "undefined") return;
@@ -283,7 +319,9 @@ export default function DocumentationPage() {
                         <Dropzone
                             title="Click to upload or drag and drop"
                             subtitle="PDF, DOC, DOCX, JPG, PNG (Max 10MB per file)"
-                            onClick={() => alert("Open file picker (wire to upload)")}
+                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                            multiple
+                            onFilesSelected={handleUploadFiles}
                         />
                     </div>
 
@@ -492,26 +530,66 @@ function SelectField({
 function Dropzone({
     title,
     subtitle,
-    onClick,
+    accept,
+    multiple,
+    onFilesSelected,
 }: {
     title: string;
     subtitle: string;
-    onClick: () => void;
+    accept?: string;
+    multiple?: boolean;
+    onFilesSelected: (files: FileList) => void;
 }) {
+    const inputRef = React.useRef<HTMLInputElement | null>(null);
+
+    function handleClick() {
+        inputRef.current?.click();
+    }
+
+    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        if (event.target.files && event.target.files.length) {
+            onFilesSelected(event.target.files);
+            event.target.value = "";
+        }
+    }
+
+    function handleDrop(event: React.DragEvent<HTMLButtonElement>) {
+        event.preventDefault();
+        if (event.dataTransfer.files && event.dataTransfer.files.length) {
+            onFilesSelected(event.dataTransfer.files);
+        }
+    }
+
+    function handleDragOver(event: React.DragEvent<HTMLButtonElement>) {
+        event.preventDefault();
+    }
+
     return (
-        <button
-            type="button"
-            onClick={onClick}
-            className="w-full rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-8 text-left hover:bg-slate-100"
-        >
-            <div className="flex items-start gap-3">
-                <UploadIcon />
-                <div>
-                    <div className="text-sm font-semibold text-slate-900">{title}</div>
-                    <div className="mt-1 text-sm text-slate-600">{subtitle}</div>
+        <div>
+            <input
+                ref={inputRef}
+                type="file"
+                className="sr-only"
+                accept={accept}
+                multiple={multiple}
+                onChange={handleChange}
+            />
+            <button
+                type="button"
+                onClick={handleClick}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                className="w-full rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-6 py-8 text-left hover:bg-slate-100"
+            >
+                <div className="flex items-start gap-3">
+                    <UploadIcon />
+                    <div>
+                        <div className="text-sm font-semibold text-slate-900">{title}</div>
+                        <div className="mt-1 text-sm text-slate-600">{subtitle}</div>
+                    </div>
                 </div>
-            </div>
-        </button>
+            </button>
+        </div>
     );
 }
 
