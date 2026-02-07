@@ -117,26 +117,26 @@ async function fetchTermsLive(baseUrl: string): Promise<TermsPayload> {
 }
 
 async function loadTerms(): Promise<{ payload: TermsPayload; source: "mock" | "live" }> {
-    const mode = getEnv("NEXT_PUBLIC_DATA_MODE", "mock");
+    // const mode = getEnv("NEXT_PUBLIC_DATA_MODE", "mock");
+    // const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
+
+
+
+
+    const rawMode = getEnv("NEXT_PUBLIC_DATA_MODE", "").toLowerCase();
+    const mode = (rawMode === "mock" || rawMode === "live" || rawMode === "hybrid")
+        ? rawMode
+        : "mock";
     const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
 
+    if (mode === "mock" || !baseUrl) return { payload: mockTerms(), source: "mock" };
 
-
-
-        const rawMode = getEnv("NEXT_PUBLIC_DATA_MODE", "").toLowerCase();
-        const mode = (rawMode === "mock" || rawMode === "live" || rawMode === "hybrid")
-            ? rawMode
-            : "mock";
-        const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
-
-        if (mode === "mock" || !baseUrl) return { payload: mockTerms(), source: "mock" };
-
-        try {
-            const payload = await fetchTermsLive(baseUrl);
-            return { payload, source: "live" };
-        } catch {
-            return { payload: mockTerms(), source: "mock" };
-        }
+    try {
+        const payload = await fetchTermsLive(baseUrl);
+        return { payload, source: "live" };
+    } catch {
+        return { payload: mockTerms(), source: "mock" };
+    }
 }
 
 function SectionBlock({
