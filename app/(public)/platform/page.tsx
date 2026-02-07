@@ -14,7 +14,7 @@ const fallbackHighlights: PlatformHighlight[] = [
         title: "Unified Maintenance Intelligence",
         description:
             "Consolidate inspections, defect reports, and maintenance logs into a single operational view.",
-        bullets: ["Centralized documentation", "Cross-fleet visibility", "Data-driven insights"],
+        bullets: ["Centralized documentation", "Multi-aircraft fleet visibility", "Per-aircraft drilldowns"],
     },
     {
         title: "Regulatory-Ready Workflows",

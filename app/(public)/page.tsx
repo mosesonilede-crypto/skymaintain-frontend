@@ -69,7 +69,8 @@ export default function MainLandingPage() {
                 {/* Subheadline */}
                 <p className="mx-auto mt-8 max-w-3xl text-xl leading-relaxed text-slate-600">
                     Deterministic, auditable, and policy-aligned decision support for airlines, MROs, and other
-                    regulated aircraft maintenance organizations.
+                    regulated aircraft maintenance organizations—built for multi-aircraft fleet operations with
+                    per-aircraft drilldowns.
                 </p>
 
                 {/* Supporting text */}
