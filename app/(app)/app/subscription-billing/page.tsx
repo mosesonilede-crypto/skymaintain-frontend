@@ -359,7 +359,7 @@ export default function SubscriptionBillingPage() {
     }
 
     function onAddPaymentMethod() {
-        return;
+        window.location.assign(CONTACT_SUPPORT);
     }
 
     function onContactSupport() {
