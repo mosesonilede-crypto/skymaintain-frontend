@@ -12,7 +12,6 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
   },
   // Optimize for Vercel
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
