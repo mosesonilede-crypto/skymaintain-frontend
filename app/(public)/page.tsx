@@ -77,6 +77,10 @@ export default function MainLandingPage() {
                     Designed to support compliance-driven maintenance workflows without replacing certificated
                     personnel or compromising human authority, safety, or regulatory accountability.
                 </p>
+                <p className="mx-auto mt-2 max-w-2xl text-xs leading-relaxed text-slate-500">
+                    SkyMaintain does not issue maintenance instructions or approvals and does not replace
+                    certificated personnel or regulatory authority.
+                </p>
 
                 {/* CTA Buttons */}
                 <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
