@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CONTACT_SUPPORT } from "@/lib/routes";
 
 type DataMode = "mock" | "live" | "hybrid";
@@ -272,6 +273,7 @@ function PlanCard({
 }
 
 export default function SubscriptionBillingPage() {
+    const router = useRouter();
     const mode = useMemo(() => normalizeMode(getPublicEnv("NEXT_PUBLIC_DATA_MODE", "mock")), []);
     const baseUrl = useMemo(() => getPublicEnv("NEXT_PUBLIC_API_BASE_URL", ""), []);
 
@@ -359,7 +361,7 @@ export default function SubscriptionBillingPage() {
     }
 
     function onAddPaymentMethod() {
-        window.location.assign(CONTACT_SUPPORT);
+        router.push("/app/subscription-billing/add-payment");
     }
 
     function onContactSupport() {
