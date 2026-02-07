@@ -71,6 +71,19 @@ export default function WelcomePage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 py-12">
             <div className="w-full max-w-[1200px] mx-auto px-6">
+                {/* Back to Main Site Link */}
+                <div className="mb-6 flex justify-end">
+                    <Link
+                        href="/"
+                        className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-600 shadow-sm hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all"
+                    >
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        Visit Main Site
+                    </Link>
+                </div>
+
                 {/* Header */}
                 <div className="mb-12 text-center">
                     <h1 className="text-[42px] font-bold leading-[52px] text-[#101828]">
