@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, ChevronUp, ArrowRight, Check, Plane, Shield, TrendingDown, DollarSign, Zap, FileCheck, Activity, ClipboardList, Star, ExternalLink, Tag } from "lucide-react";
+import { startTrialIfMissing } from "@/lib/trial";
 
 // Image assets from Figma
 const imgGlobalAeroFleet = "https://www.figma.com/api/mcp/asset/d3926b89-b96a-4544-93f0-14aa7cf8b92f";
@@ -163,6 +164,7 @@ export default function GetStartedPage() {
                         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
                             <Link
                                 href="/signin"
+                                onClick={() => startTrialIfMissing()}
                                 className="inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-lg font-bold text-[#8200db] shadow-xl hover:bg-gray-50 transition-colors"
                             >
                                 Start Your Free Trial

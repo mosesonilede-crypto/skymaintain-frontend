@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useAuth } from "@/lib/AuthContext";
+import { getTrialStatus, startTrialIfMissing } from "@/lib/trial";
 
 type DataMode = "mock" | "live" | "hybrid";
 
@@ -85,6 +86,12 @@ export default function SignInPage() {
         e.preventDefault();
         setError(null);
 
+        const trial = getTrialStatus();
+        if (trial?.expired) {
+            setError("Your 14-day trial has ended. Please contact sales to continue.");
+            return;
+        }
+
         const eTrim = email.trim();
         const oTrim = orgName.trim();
         const lTrim = licenseCode.trim();
@@ -105,6 +112,7 @@ export default function SignInPage() {
 
         // Persist authentication state
         login({ email: eTrim, orgName: oTrim, role: "fleet_manager" });
+        startTrialIfMissing();
 
         router.push("/2fa");
     }
