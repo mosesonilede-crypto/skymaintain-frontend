@@ -3,14 +3,100 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
+type PlatformFeature = {
+    title: string;
+    description: string;
+    bullets?: string[];
+};
+
+const fallbackFeatures: PlatformFeature[] = [
+    {
+        title: "Predictive Maintenance Intelligence",
+        description:
+            "SkyMaintain analyzes maintenance data to identify recurring issues, emerging risks, and performance trends across aircraft systems.",
+        bullets: [
+            "AI-assisted pattern recognition",
+            "Early identification of high-risk components",
+            "Trend analysis across maintenance events",
+            "Decision-support insights",
+        ],
+    },
+    {
+        title: "Maintenance Data Integration",
+        description:
+            "Designed to work with structured maintenance records and operational data for consistent analysis across systems.",
+        bullets: [
+            "Supports inspection records, defect reports, and maintenance logs",
+            "Modular architecture for system-specific analysis",
+            "Built to evolve with operator data maturity",
+        ],
+    },
+    {
+        title: "Regulatory-Aligned Architecture",
+        description:
+            "Built with regulatory awareness to support traceability, documentation, and audit readiness.",
+        bullets: [
+            "Architecture informed by FAA and EASA maintenance principles",
+            "Supports compliance documentation workflows",
+            "Designed to complement approved maintenance programs",
+        ],
+    },
+    {
+        title: "Technician & Engineer Support",
+        description:
+            "Clear, intuitive dashboards reduce cognitive load and improve troubleshooting workflows.",
+        bullets: [
+            "Human-centered design for maintenance professionals",
+            "Visual insights to support planning",
+            "Encourages consistent decision-making",
+        ],
+    },
+    {
+        title: "Secure, Scalable SaaS Platform",
+        description:
+            "Enterprise-ready foundation designed for growth, security, and role-based access.",
+        bullets: [
+            "Role-based access control",
+            "Secure cloud-native architecture",
+            "Audit-friendly system design",
+            "Scalable for operators and MROs",
+        ],
+    },
+];
+
 export default function PlatformFeaturesPage() {
-    const [features, setFeatures] = useState<any[]>([]);
+    const [features, setFeatures] = useState<PlatformFeature[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // TODO: Replace with live API endpoint
-        // fetch('/api/features').then(res => res.json()).then(setFeatures)
-        setLoading(false);
+        let isActive = true;
+
+        async function loadFeatures() {
+            try {
+                const response = await fetch("/api/features");
+                if (response.ok) {
+                    const data = await response.json();
+                    if (isActive && Array.isArray(data)) {
+                        setFeatures(data as PlatformFeature[]);
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to load platform features:", error);
+            }
+
+            if (isActive) {
+                setFeatures(fallbackFeatures);
+            }
+        }
+
+        loadFeatures().finally(() => {
+            if (isActive) setLoading(false);
+        });
+
+        return () => {
+            isActive = false;
+        };
     }, []);
 
     return (
@@ -28,7 +114,24 @@ export default function PlatformFeaturesPage() {
                 {loading ? (
                     <div className="text-center">Loading features...</div>
                 ) : features.length > 0 ? (
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">{/* Render live data here */}</div>
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        {features.map((feature) => (
+                            <div
+                                key={feature.title}
+                                className="rounded-lg border border-slate-200 bg-white p-6 text-left"
+                            >
+                                <h3 className="text-lg font-semibold text-slate-900">{feature.title}</h3>
+                                <p className="mt-3 text-sm text-slate-600">{feature.description}</p>
+                                {feature.bullets && feature.bullets.length > 0 ? (
+                                    <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-600">
+                                        {feature.bullets.map((bullet) => (
+                                            <li key={bullet}>{bullet}</li>
+                                        ))}
+                                    </ul>
+                                ) : null}
+                            </div>
+                        ))}
+                    </div>
                 ) : (
                     <div className="rounded-lg border border-slate-200 bg-slate-50 p-8 text-center">
                         <p className="text-slate-600">Features data will load from live API</p>
