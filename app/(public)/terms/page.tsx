@@ -120,21 +120,23 @@ async function loadTerms(): Promise<{ payload: TermsPayload; source: "mock" | "l
     const mode = getEnv("NEXT_PUBLIC_DATA_MODE", "mock");
     const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
 
-    if (mode === "mock") return { payload: mockTerms(), source: "mock" };
 
-    if (!baseUrl) return { payload: mockTerms(), source: "mock" };
 
-    if (mode === "live") {
-        const payload = await fetchTermsLive(baseUrl);
-        return { payload, source: "live" };
-    }
 
-    try {
-        const payload = await fetchTermsLive(baseUrl);
-        return { payload, source: "live" };
-    } catch {
-        return { payload: mockTerms(), source: "mock" };
-    }
+        const rawMode = getEnv("NEXT_PUBLIC_DATA_MODE", "").toLowerCase();
+        const mode = (rawMode === "mock" || rawMode === "live" || rawMode === "hybrid")
+            ? rawMode
+            : "mock";
+        const baseUrl = getEnv("NEXT_PUBLIC_API_BASE_URL", "");
+
+        if (mode === "mock" || !baseUrl) return { payload: mockTerms(), source: "mock" };
+
+        try {
+            const payload = await fetchTermsLive(baseUrl);
+            return { payload, source: "live" };
+        } catch {
+            return { payload: mockTerms(), source: "mock" };
+        }
 }
 
 function SectionBlock({
