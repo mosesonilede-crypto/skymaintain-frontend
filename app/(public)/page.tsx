@@ -55,27 +55,27 @@ export default function MainLandingPage() {
                 <div className="mx-auto inline-flex items-center gap-3 rounded-full bg-blue-50 px-4 py-1.5">
                     <img src={imgBadgeIcon} alt="" className="h-4 w-4" />
                     <span className="text-sm font-medium text-blue-600">
-                        Enterprise Aircraft Maintenance Intelligence
+                        Enterprise Aircraft Maintenance Decision Intelligence
                     </span>
                 </div>
 
                 {/* Headline */}
                 <h1 className="mt-10 text-5xl font-bold leading-tight text-slate-900 md:text-6xl">
-                    Regulatory-Grade AI for
+                    Regulatory-Grade AI Decision Support for
                     <br />
                     Aircraft Maintenance Operations
                 </h1>
 
                 {/* Subheadline */}
                 <p className="mx-auto mt-8 max-w-3xl text-xl leading-relaxed text-slate-600">
-                    Deterministic, auditable, and policy-aligned decision support for airlines, MROs, and regulated
-                    maintenance environments.
+                    Deterministic, auditable, and policy-aligned decision support for airlines, MROs, and other
+                    regulated aircraft maintenance organizations.
                 </p>
 
                 {/* Supporting text */}
                 <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-500">
-                    Designed to support compliance-driven maintenance workflows without compromising human authority,
-                    safety, or regulatory accountability.
+                    Designed to support compliance-driven maintenance workflows without replacing certificated
+                    personnel or compromising human authority, safety, or regulatory accountability.
                 </p>
 
                 {/* CTA Buttons */}
@@ -94,6 +94,7 @@ export default function MainLandingPage() {
                         Request Enterprise Demo
                     </Link>
                 </div>
+                <p className="mt-3 text-xs text-slate-500">For regulated aviation organizations only</p>
             </section>
 
             {/* Built for Aviation Section */}
