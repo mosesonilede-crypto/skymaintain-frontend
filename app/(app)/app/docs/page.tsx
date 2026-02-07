@@ -44,37 +44,6 @@ export default function DocumentationPage() {
         fetchDocsData();
     }, []);
 
-    const uploadedDocs: UploadedDoc[] = useMemo(() => {
-        const base = docsData?.uploadedDocs || [
-            {
-                filename: "Engine_Inspection_Report_2025.pdf",
-                date: "1/19/2025",
-                size: "2.4 MB",
-                category: "Inspection Reports",
-            },
-            {
-                filename: "Hydraulic_System_Maintenance.pdf",
-                date: "1/17/2025",
-                size: "1.8 MB",
-                category: "Maintenance Records",
-            },
-            {
-                filename: "A-Check_Compliance_Certificate.pdf",
-                date: "1/14/2025",
-                size: "856 KB",
-                category: "Compliance",
-            },
-        ];
-
-        const merged = [...localUploads, ...base].filter(
-            (doc) => doc && doc.filename
-        );
-
-        return merged.filter(
-            (doc, idx, arr) => arr.findIndex((d) => d.filename === doc.filename) === idx
-        );
-    }, [docsData, localUploads]);
-
     const discrepancyReports: Discrepancy[] = useMemo(
         () => docsData?.discrepancies || [
             {
@@ -111,6 +80,37 @@ export default function DocumentationPage() {
     const [discRemedy, setDiscRemedy] = useState("");
     const [discManual, setDiscManual] = useState("");
     const [localUploads, setLocalUploads] = useState<UploadedDoc[]>([]);
+
+    const uploadedDocs: UploadedDoc[] = useMemo(() => {
+        const base = docsData?.uploadedDocs || [
+            {
+                filename: "Engine_Inspection_Report_2025.pdf",
+                date: "1/19/2025",
+                size: "2.4 MB",
+                category: "Inspection Reports",
+            },
+            {
+                filename: "Hydraulic_System_Maintenance.pdf",
+                date: "1/17/2025",
+                size: "1.8 MB",
+                category: "Maintenance Records",
+            },
+            {
+                filename: "A-Check_Compliance_Certificate.pdf",
+                date: "1/14/2025",
+                size: "856 KB",
+                category: "Compliance",
+            },
+        ];
+
+        const merged = [...localUploads, ...base].filter(
+            (doc) => doc && doc.filename
+        );
+
+        return merged.filter(
+            (doc, idx, arr) => arr.findIndex((d) => d.filename === doc.filename) === idx
+        );
+    }, [docsData, localUploads]);
 
     function formatFileSize(bytes: number) {
         if (!Number.isFinite(bytes)) return "0 KB";
