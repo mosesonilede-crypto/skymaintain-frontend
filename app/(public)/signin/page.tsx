@@ -96,8 +96,19 @@ export default function SignInPage() {
         const oTrim = orgName.trim();
         const lTrim = licenseCode.trim();
 
-        if (!eTrim || !oTrim || !lTrim || !password) {
-            setError("Enter your email, organization name, license code, and password.");
+        if (!trial && !lTrim) {
+            startTrialIfMissing();
+        }
+
+        const activeTrial = getTrialStatus();
+        const trialActive = Boolean(activeTrial && !activeTrial.expired);
+
+        if (!eTrim || !oTrim || !password || (!lTrim && !trialActive)) {
+            setError(
+                trialActive
+                    ? "Enter your email, organization name, and password. License code is required after trial."
+                    : "Enter your email, organization name, license code, and password."
+            );
             return;
         }
 
@@ -193,7 +204,7 @@ export default function SignInPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-700">License Code</label>
+                                <label className="block text-sm font-medium text-slate-700">License Code (required after trial)</label>
                                 <input
                                     value={licenseCode}
                                     onChange={(e) => setLicenseCode(e.target.value)}
