@@ -85,26 +85,30 @@ async function apiGetAbout(signal?: AbortSignal): Promise<AboutDoc> {
         return structuredClone(mockStore);
     }
 
-    const res = await fetch(`${base}/v1/public/about`, {
-        method: "GET",
-        credentials: "include",
-        headers: { Accept: "application/json" },
-        signal,
-    });
+    try {
+        const res = await fetch(`${base}/v1/public/about`, {
+            method: "GET",
+            credentials: "include",
+            headers: { Accept: "application/json" },
+            signal,
+        });
 
-    if (!res.ok) {
-        if (mode === "hybrid") return structuredClone(mockStore);
-        throw new Error(`GET /v1/public/about failed (${res.status})`);
+        if (!res.ok) {
+            if (mode === "hybrid") return structuredClone(mockStore);
+            return structuredClone(mockStore);
+        }
+
+        const json = (await res.json()) as ApiEnvelope<AboutDoc>;
+        if (!json?.ok || !json?.data) {
+            if (mode === "hybrid") return structuredClone(mockStore);
+            return structuredClone(mockStore);
+        }
+
+        if (mode === "hybrid") mockStore = structuredClone(json.data);
+        return json.data;
+    } catch {
+        return structuredClone(mockStore);
     }
-
-    const json = (await res.json()) as ApiEnvelope<AboutDoc>;
-    if (!json?.ok || !json?.data) {
-        if (mode === "hybrid") return structuredClone(mockStore);
-        throw new Error("Unexpected response shape from GET /v1/public/about");
-    }
-
-    if (mode === "hybrid") mockStore = structuredClone(json.data);
-    return json.data;
 }
 
 function BulletIcon(): React.ReactElement {

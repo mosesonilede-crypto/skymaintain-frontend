@@ -322,26 +322,30 @@ async function apiGetPolicy(signal?: AbortSignal): Promise<PrivacyPolicyDoc> {
         return structuredClone(mockStore);
     }
 
-    const res = await fetch(`${base}/v1/public/privacy`, {
-        method: "GET",
-        credentials: "include",
-        headers: { Accept: "application/json" },
-        signal,
-    });
+    try {
+        const res = await fetch(`${base}/v1/public/privacy`, {
+            method: "GET",
+            credentials: "include",
+            headers: { Accept: "application/json" },
+            signal,
+        });
 
-    if (!res.ok) {
-        if (mode === "hybrid") return structuredClone(mockStore);
-        throw new Error(`GET /v1/public/privacy failed (${res.status})`);
+        if (!res.ok) {
+            if (mode === "hybrid") return structuredClone(mockStore);
+            return structuredClone(mockStore);
+        }
+
+        const json = (await res.json()) as ApiEnvelope<PrivacyPolicyDoc>;
+        if (!json?.ok || !json?.data) {
+            if (mode === "hybrid") return structuredClone(mockStore);
+            return structuredClone(mockStore);
+        }
+
+        if (mode === "hybrid") mockStore = structuredClone(json.data);
+        return json.data;
+    } catch {
+        return structuredClone(mockStore);
     }
-
-    const json = (await res.json()) as ApiEnvelope<PrivacyPolicyDoc>;
-    if (!json?.ok || !json?.data) {
-        if (mode === "hybrid") return structuredClone(mockStore);
-        throw new Error("Unexpected response shape from GET /v1/public/privacy");
-    }
-
-    if (mode === "hybrid") mockStore = structuredClone(json.data);
-    return json.data;
 }
 
 function SectionBlock({ section }: { section: PolicySection }): React.ReactElement {
