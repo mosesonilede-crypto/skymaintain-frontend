@@ -1,86 +1,230 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
+
+type LogStatus = "COMPLETED" | "IN_PROGRESS" | "SCHEDULED";
 
 type LogItem = {
     id: string;
     title: string;
-    status: "COMPLETED" | "IN_PROGRESS" | "OPEN";
+    status: LogStatus;
     description: string;
     technician: string;
     dateISO: string;
-    durationHours?: number;
+    durationHours: number;
+    category?: string;
+    parts?: string[];
+    notes?: string;
 };
+
+type UpcomingTask = {
+    id: string;
+    title: string;
+    description: string;
+    dueDate: string;
+    estimatedHours: number;
+    priority: "HIGH" | "MEDIUM" | "LOW";
+    category: string;
+};
+
+// Mock maintenance logs data - used as fallback or when API unavailable
+function generateMockLogs(aircraftReg: string): LogItem[] {
+    return [
+        {
+            id: "log-1",
+            title: "A-Check Inspection",
+            description: "Complete A-Check including visual inspection, lubrication, and minor repairs",
+            technician: "John Anderson",
+            dateISO: "2026-02-08",
+            durationHours: 18,
+            status: "COMPLETED",
+            category: "A-Check",
+            parts: ["Oil Filter", "Brake Pads"],
+            notes: "All inspections passed. Aircraft cleared for service.",
+        },
+        {
+            id: "log-2",
+            title: "Avionics Software Update",
+            description: "Critical avionics software update for FMS and TCAS systems",
+            technician: "Sarah Williams",
+            dateISO: "2026-01-15",
+            durationHours: 4,
+            status: "COMPLETED",
+            category: "Avionics",
+            parts: [],
+            notes: "FMS updated to v3.2.1, TCAS updated to v2.1.0",
+        },
+        {
+            id: "log-3",
+            title: "Landing Gear Inspection",
+            description: "Routine landing gear inspection and hydraulic fluid check",
+            technician: "Mike Chen",
+            dateISO: "2026-02-05",
+            durationHours: 6,
+            status: "COMPLETED",
+            category: "Landing Gear",
+            parts: ["Hydraulic Fluid MIL-PRF-5606"],
+            notes: "Hydraulic seals replaced. Gear retraction test passed.",
+        },
+        {
+            id: "log-4",
+            title: "Engine Oil Analysis",
+            description: "Scheduled engine oil sampling and analysis for wear metal detection",
+            technician: "Emily Davis",
+            dateISO: "2026-02-01",
+            durationHours: 2,
+            status: "COMPLETED",
+            category: "Engine",
+            parts: ["Oil Sample Kit"],
+            notes: "Oil analysis results normal. No abnormal wear patterns detected.",
+        },
+        {
+            id: "log-5",
+            title: "Cabin Pressure System Check",
+            description: "Inspection of cabin pressurization system and outflow valves",
+            technician: "Robert Martinez",
+            dateISO: "2026-01-28",
+            durationHours: 5,
+            status: "COMPLETED",
+            category: "Pressurization",
+            parts: [],
+            notes: "System functioning within specifications. Outflow valve cleaned.",
+        },
+    ];
+}
+
+// Mock upcoming maintenance tasks
+function generateUpcomingTasks(aircraftReg: string): UpcomingTask[] {
+    return [
+        {
+            id: "task-1",
+            title: "Engine Borescope Inspection",
+            description: "Scheduled borescope inspection of both engines (CFM56-7B)",
+            dueDate: "2026-02-20",
+            estimatedHours: 8,
+            priority: "HIGH",
+            category: "Engine",
+        },
+        {
+            id: "task-2",
+            title: "APU Maintenance",
+            description: "APU 500-hour service including oil change and filter replacement",
+            dueDate: "2026-02-25",
+            estimatedHours: 4,
+            priority: "MEDIUM",
+            category: "APU",
+        },
+        {
+            id: "task-3",
+            title: "Wheel and Brake Assembly",
+            description: "Main gear wheel replacement and brake assembly inspection",
+            dueDate: "2026-03-01",
+            estimatedHours: 6,
+            priority: "MEDIUM",
+            category: "Landing Gear",
+        },
+    ];
+}
 
 export default function MaintenanceLogsPage() {
     const { selectedAircraft } = useAircraft();
-    const aircraftReg = selectedAircraft?.registration || "N123AB";
-    const [logsData, setLogsData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const aircraftReg = selectedAircraft?.registration || "N123XY";
 
-    // Fetch live logs data
-    async function fetchLogsData() {
-        if (!selectedAircraft?.registration) return;
+    const [logs, setLogs] = useState<LogItem[]>(() => generateMockLogs(aircraftReg));
+    const [upcomingTasks, setUpcomingTasks] = useState<UpcomingTask[]>(() => generateUpcomingTasks(aircraftReg));
+    const [isLoading, setIsLoading] = useState(true);
+    const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+
+    // Fetch logs data from API
+    const fetchLogsData = useCallback(async () => {
+        if (!aircraftReg) return;
 
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/logs/${selectedAircraft.registration}`);
+            const response = await fetch(`/api/logs/${aircraftReg}`);
             if (response.ok) {
                 const data = await response.json();
-                setLogsData(data);
+
+                // Map API response to LogItem format
+                if (data.logs && data.logs.length > 0) {
+                    const mappedLogs: LogItem[] = data.logs.map((log: any) => ({
+                        id: log.id,
+                        title: log.title,
+                        description: log.description || "Maintenance work completed",
+                        technician: log.technician,
+                        dateISO: new Date(log.date).toISOString().split('T')[0],
+                        durationHours: log.durationHours || 0,
+                        status: mapStatus(log.status),
+                        category: log.type || log.category || "General",
+                        parts: log.parts || [],
+                        notes: log.notes || "",
+                    }));
+                    setLogs(mappedLogs);
+                }
+
+                setLastUpdated(new Date(data.lastUpdated || Date.now()));
             }
         } catch (error) {
             console.error("Error fetching logs:", error);
+            // Keep using mock data on error
         } finally {
             setIsLoading(false);
         }
+    }, [aircraftReg]);
+
+    // Map API status to our status type
+    function mapStatus(status: string): LogStatus {
+        const normalized = status?.toLowerCase();
+        if (normalized === "completed" || normalized === "complete") return "COMPLETED";
+        if (normalized === "in_progress" || normalized === "in progress" || normalized === "pending") return "IN_PROGRESS";
+        return "SCHEDULED";
     }
 
+    // Fetch data when aircraft changes
     useEffect(() => {
+        // Update mock data for the selected aircraft
+        setLogs(generateMockLogs(aircraftReg));
+        setUpcomingTasks(generateUpcomingTasks(aircraftReg));
+
+        // Then try to fetch live data
         fetchLogsData();
-    }, [selectedAircraft?.registration]);
-
-    const logs: LogItem[] = useMemo(
-        () => logsData?.logs?.map((log: any) => ({
-            id: log.id,
-            title: log.title,
-            status: log.status === "Completed" ? "COMPLETED" : "OPEN",
-            description: log.description,
-            technician: log.technician,
-            dateISO: new Date(log.date).toISOString().split('T')[0],
-            durationHours: 0,
-        })) ?? [
-                {
-                    id: "log-a-check",
-                    title: "A-Check Inspection",
-                    status: "COMPLETED" as const,
-                    description: "Loading...",
-                    technician: "Loading...",
-                    dateISO: new Date().toISOString().split('T')[0],
-                    durationHours: 0,
-                },
-            ],
-        [logsData]
-    );
-
-    const upcomingTasks: LogItem[] = useMemo(() => [], []);
+    }, [aircraftReg, fetchLogsData]);
 
     return (
         <section className="flex flex-col gap-6">
             <BackToHub title="Maintenance Logs" />
-            <div className="pt-1">
-                <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-                    Maintenance Logs - {aircraftReg}
-                </h1>
+            <div className="flex items-center justify-between pt-1">
+                <div>
+                    <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
+                        Maintenance Logs - {aircraftReg}
+                    </h1>
+                    {lastUpdated && (
+                        <p className="mt-1 text-xs text-slate-500">
+                            Last updated: {lastUpdated.toLocaleString()}
+                        </p>
+                    )}
+                </div>
+                {isLoading && (
+                    <div className="flex items-center gap-2 text-sm text-slate-500">
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-300 border-t-blue-600" />
+                        Refreshing...
+                    </div>
+                )}
             </div>
 
             <Panel title="Maintenance Logs">
                 <div className="space-y-4">
-                    {logs.map((item) => (
-                        <LogCard key={item.id} item={item} />
-                    ))}
+                    {logs.length === 0 ? (
+                        <div className="py-4 text-center text-sm text-slate-500">
+                            No maintenance logs found for {aircraftReg}
+                        </div>
+                    ) : (
+                        logs.map((item) => (
+                            <LogCard key={item.id} item={item} />
+                        ))
+                    )}
                 </div>
             </Panel>
 
@@ -92,8 +236,8 @@ export default function MaintenanceLogsPage() {
                     </div>
                 ) : (
                     <div className="space-y-4">
-                        {upcomingTasks.map((item) => (
-                            <LogCard key={item.id} item={item} />
+                        {upcomingTasks.map((task) => (
+                            <UpcomingTaskCard key={task.id} task={task} />
                         ))}
                     </div>
                 )}
@@ -119,8 +263,15 @@ function LogCard({ item }: { item: LogItem }) {
     return (
         <div className="rounded-2xl border border-slate-200 bg-white p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-                <div className="min-w-0">
-                    <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                        <div className="text-sm font-semibold text-slate-900">{item.title}</div>
+                        {item.category && (
+                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+                                {item.category}
+                            </span>
+                        )}
+                    </div>
                     <p className="mt-2 text-sm text-slate-600">{item.description}</p>
 
                     <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-600">
@@ -133,9 +284,63 @@ function LogCard({ item }: { item: LogItem }) {
                         <span className="text-slate-300">•</span>
                         <span>{item.durationHours} hrs</span>
                     </div>
+
+                    {item.parts && item.parts.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-1">
+                            {item.parts.map((part, idx) => (
+                                <span
+                                    key={idx}
+                                    className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700"
+                                >
+                                    {part}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {item.notes && (
+                        <p className="mt-2 text-xs italic text-slate-500">{item.notes}</p>
+                    )}
                 </div>
 
                 <StatusPill status={item.status} />
+            </div>
+        </div>
+    );
+}
+
+function UpcomingTaskCard({ task }: { task: UpcomingTask }) {
+    const priorityColors = {
+        HIGH: "bg-red-50 text-red-700 ring-red-200",
+        MEDIUM: "bg-amber-50 text-amber-700 ring-amber-200",
+        LOW: "bg-slate-100 text-slate-700 ring-slate-200",
+    };
+
+    return (
+        <div className="rounded-2xl border border-slate-200 bg-white p-5">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2">
+                        <div className="text-sm font-semibold text-slate-900">{task.title}</div>
+                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600">
+                            {task.category}
+                        </span>
+                    </div>
+                    <p className="mt-2 text-sm text-slate-600">{task.description}</p>
+
+                    <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-600">
+                        <span>
+                            Due:{" "}
+                            <span className="font-semibold text-slate-900">{task.dueDate}</span>
+                        </span>
+                        <span className="text-slate-300">•</span>
+                        <span>Est. {task.estimatedHours} hrs</span>
+                    </div>
+                </div>
+
+                <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ${priorityColors[task.priority]}`}>
+                    {task.priority}
+                </span>
             </div>
         </div>
     );
@@ -153,16 +358,5 @@ function StatusPill({ status }: { status: LogItem["status"] }) {
         <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1 ${cls}`}>
             {status}
         </span>
-    );
-}
-
-function RobotIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="8" width="16" height="12" rx="3" />
-            <path d="M12 4v4" />
-            <circle cx="9" cy="14" r="1" />
-            <circle cx="15" cy="14" r="1" />
-        </svg>
     );
 }
