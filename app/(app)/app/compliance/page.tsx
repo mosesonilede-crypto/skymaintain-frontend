@@ -43,26 +43,152 @@ type CertificateItem = {
     authority: string;
 };
 
+type AirworthinessData = {
+    status: string;
+    certificate: string;
+    certificateStatus: string;
+    certificateExpiry: string;
+    registration: string;
+    annualInspection: string;
+    issuingAuthority: string;
+    nextRenewal: string;
+};
+
+type AnnualInspectionData = {
+    status: string;
+    last: string;
+    nextDue: string;
+    inspector: string;
+};
+
+type AircraftComplianceData = {
+    airworthiness: AirworthinessData;
+    certificates: CertificateItem[];
+    ads: ADItem[];
+    sbs: SBItem[];
+    annualInspection: AnnualInspectionData;
+};
+
 export default function RegulatoryCompliancePage() {
     const { selectedAircraft } = useAircraft();
-    const aircraftReg = selectedAircraft?.registration || "N123AB";
-    const aircraftModel = selectedAircraft?.model || "Boeing 737-800";
+    const aircraftReg = selectedAircraft?.registration || "N872LM";
+    const aircraftModel = selectedAircraft?.model || "Airbus A320";
 
     const [lastChecked, setLastChecked] = useState("Loading...");
     const [isLoading, setIsLoading] = useState(false);
     const [complianceData, setComplianceData] = useState<any>(null);
 
-    // Real data structures for live compliance data
-    const [airworthiness, setAirworthiness] = useState({
-        status: "Airworthy",
-        certificate: "AWC-2018-N123AB",
-        certificateStatus: "Valid",
-        certificateExpiry: "6/14/2026",
-        registration: "Valid",
-        annualInspection: "Current",
-        issuingAuthority: "FAA",
-        nextRenewal: "6/9/2026",
-    });
+    // Mock compliance data per aircraft (would come from API in production)
+    const mockComplianceByAircraft: Record<string, AircraftComplianceData> = useMemo(() => ({
+        "N872LM": {
+            airworthiness: {
+                status: "Airworthy",
+                certificate: "AWC-2018-N872LM",
+                certificateStatus: "Valid",
+                certificateExpiry: "6/14/2026",
+                registration: "Valid",
+                annualInspection: "Current",
+                issuingAuthority: "FAA",
+                nextRenewal: "6/9/2026",
+            },
+            certificates: [
+                { type: "Airworthiness Certificate", status: "Valid", number: "AWC-2018-N872LM", expires: "6/14/2026", authority: "FAA" },
+                { type: "Registration Certificate", status: "Valid", number: "REG-N872LM", expires: "6/9/2029", authority: "FAA" },
+                { type: "Insurance Certificate", status: "Valid", number: "INS-SKY-2025-872", expires: "12/31/2026", authority: "SkyInsure LLC" },
+            ],
+            ads: [
+                { id: "FAA-2025-0234", title: "Wing Spar Inspection", authority: "FAA", effective: "4/14/2025", complianceDate: "4/11/2025", status: "Compliant" },
+                { id: "FAA-2025-0189", title: "Engine Mount Inspection", authority: "FAA", effective: "3/20/2025", complianceDate: "3/15/2025", status: "Compliant" },
+            ],
+            sbs: [
+                { id: "SB-A320-32-1234", title: "Hydraulic System Enhancement", category: "Mandatory", issueDate: "6/14/2025", compliance: "8/19/2025", status: "Compliant" },
+                { id: "SB-A320-28-5678", title: "Fuel Tank Access Panel Inspection", category: "Recommended", issueDate: "10/31/2025", compliance: "—", status: "Pending" },
+            ],
+            annualInspection: { status: "Current", last: "6/9/2025", nextDue: "6/9/2026", inspector: "Michael Roberts (FAA IA-45678)" },
+        },
+        "N451KJ": {
+            airworthiness: {
+                status: "Airworthy",
+                certificate: "AWC-2019-N451KJ",
+                certificateStatus: "Valid",
+                certificateExpiry: "3/22/2026",
+                registration: "Valid",
+                annualInspection: "Current",
+                issuingAuthority: "FAA",
+                nextRenewal: "3/15/2026",
+            },
+            certificates: [
+                { type: "Airworthiness Certificate", status: "Valid", number: "AWC-2019-N451KJ", expires: "3/22/2026", authority: "FAA" },
+                { type: "Registration Certificate", status: "Valid", number: "REG-N451KJ", expires: "3/15/2028", authority: "FAA" },
+                { type: "Insurance Certificate", status: "Expiring Soon", number: "INS-SKY-2025-451", expires: "2/28/2026", authority: "SkyInsure LLC" },
+            ],
+            ads: [
+                { id: "FAA-2025-0156", title: "Rudder Control Check", authority: "FAA", effective: "2/10/2025", complianceDate: "2/8/2025", status: "Compliant" },
+            ],
+            sbs: [
+                { id: "SB-737-32-9012", title: "Landing Gear Inspection", category: "Mandatory", issueDate: "5/20/2025", compliance: "7/10/2025", status: "Compliant" },
+                { id: "SB-737-28-3456", title: "Avionics Software Update", category: "Recommended", issueDate: "11/15/2025", compliance: "—", status: "Pending" },
+            ],
+            annualInspection: { status: "Current", last: "3/15/2025", nextDue: "3/15/2026", inspector: "Sarah Johnson (FAA IA-12345)" },
+        },
+        "N789QW": {
+            airworthiness: {
+                status: "Airworthy",
+                certificate: "AWC-2020-N789QW",
+                certificateStatus: "Valid",
+                certificateExpiry: "9/30/2026",
+                registration: "Valid",
+                annualInspection: "Current",
+                issuingAuthority: "EASA",
+                nextRenewal: "9/15/2026",
+            },
+            certificates: [
+                { type: "Airworthiness Certificate", status: "Valid", number: "AWC-2020-N789QW", expires: "9/30/2026", authority: "EASA" },
+                { type: "Registration Certificate", status: "Valid", number: "REG-N789QW", expires: "9/15/2030", authority: "EASA" },
+                { type: "Insurance Certificate", status: "Valid", number: "INS-EU-2025-789", expires: "8/31/2026", authority: "EuroAviation Insurance" },
+            ],
+            ads: [
+                { id: "EASA-2025-0078", title: "Cabin Pressure Sensor Check", authority: "EASA", effective: "5/1/2025", complianceDate: "4/28/2025", status: "Compliant" },
+                { id: "EASA-2025-0092", title: "Wing Tip Inspection", authority: "EASA", effective: "6/15/2025", complianceDate: "6/10/2025", status: "Compliant" },
+            ],
+            sbs: [
+                { id: "SB-A380-32-7890", title: "Engine Cowling Reinforcement", category: "Mandatory", issueDate: "4/1/2025", compliance: "6/1/2025", status: "Compliant" },
+            ],
+            annualInspection: { status: "Current", last: "9/15/2025", nextDue: "9/15/2026", inspector: "Hans Mueller (EASA IA-78901)" },
+        },
+        "N123XY": {
+            airworthiness: {
+                status: "Airworthy",
+                certificate: "AWC-2017-N123XY",
+                certificateStatus: "Valid",
+                certificateExpiry: "11/20/2026",
+                registration: "Valid",
+                annualInspection: "Due Soon",
+                issuingAuthority: "FAA",
+                nextRenewal: "2/28/2026",
+            },
+            certificates: [
+                { type: "Airworthiness Certificate", status: "Valid", number: "AWC-2017-N123XY", expires: "11/20/2026", authority: "FAA" },
+                { type: "Registration Certificate", status: "Valid", number: "REG-N123XY", expires: "11/15/2027", authority: "FAA" },
+                { type: "Insurance Certificate", status: "Valid", number: "INS-SKY-2025-123", expires: "10/31/2026", authority: "SkyInsure LLC" },
+            ],
+            ads: [
+                { id: "FAA-2025-0201", title: "Fuel Line Inspection", authority: "FAA", effective: "1/20/2025", complianceDate: "1/18/2025", status: "Compliant" },
+                { id: "FAA-2026-0012", title: "APU Fire Suppression Check", authority: "FAA", effective: "2/15/2026", complianceDate: "—", status: "Pending" },
+            ],
+            sbs: [
+                { id: "SB-777-32-4567", title: "Flap Actuator Replacement", category: "Mandatory", issueDate: "8/10/2025", compliance: "10/5/2025", status: "Compliant" },
+                { id: "SB-777-28-8901", title: "Cockpit Display Upgrade", category: "Recommended", issueDate: "12/1/2025", compliance: "—", status: "Pending" },
+            ],
+            annualInspection: { status: "Due Soon", last: "2/28/2025", nextDue: "2/28/2026", inspector: "James Wilson (FAA IA-34567)" },
+        },
+    }), []);
+
+    // Get current aircraft data or default to N872LM
+    const currentMockData = mockComplianceByAircraft[aircraftReg] || mockComplianceByAircraft["N872LM"];
+
+    // Real data structures for live compliance data - initialized from mock based on selected aircraft
+    const [airworthiness, setAirworthiness] = useState(currentMockData.airworthiness);
 
     const [complianceScore, setComplianceScore] = useState({
         percent: 67,
@@ -71,66 +197,13 @@ export default function RegulatoryCompliancePage() {
         overdue: 0,
     });
 
-    const [ads, setAds] = useState<ADItem[]>([
-        {
-            id: "FAA-2025-0234",
-            title: "Wing Spar Inspection",
-            authority: "FAA",
-            effective: "4/14/2025",
-            complianceDate: "4/11/2025",
-            status: "Compliant",
-        },
-    ]);
+    const [ads, setAds] = useState<ADItem[]>(currentMockData.ads);
 
-    const [sbs, setSbs] = useState<SBItem[]>([
-        {
-            id: "SB-737-32-1234",
-            title: "Hydraulic System Enhancement",
-            category: "Mandatory",
-            issueDate: "6/14/2025",
-            compliance: "8/19/2025",
-            status: "Compliant",
-        },
-        {
-            id: "SB-737-28-5678",
-            title: "Fuel Tank Access Panel Inspection",
-            category: "Recommended",
-            issueDate: "10/31/2025",
-            compliance: "—",
-            status: "Pending",
-        },
-    ]);
+    const [sbs, setSbs] = useState<SBItem[]>(currentMockData.sbs);
 
-    const [certificates, setCertificates] = useState<CertificateItem[]>([
-        {
-            type: "airworthiness Certificate",
-            status: "Valid",
-            number: "AWC-2018-N123AB",
-            expires: "6/14/2026",
-            authority: "FAA",
-        },
-        {
-            type: "registration Certificate",
-            status: "Valid",
-            number: "REG-N123AB",
-            expires: "6/9/2029",
-            authority: "FAA",
-        },
-        {
-            type: "insurance Certificate",
-            status: "Expiring Soon",
-            number: "INS-SKY-2025-1234",
-            expires: "12/31/2025",
-            authority: "SkyInsure LLC",
-        },
-    ]);
+    const [certificates, setCertificates] = useState<CertificateItem[]>(currentMockData.certificates);
 
-    const [annualInspection, setAnnualInspection] = useState({
-        status: "Current",
-        last: "6/9/2025",
-        nextDue: "6/9/2026",
-        inspector: "Michael Roberts (FAA IA-45678)",
-    });
+    const [annualInspection, setAnnualInspection] = useState(currentMockData.annualInspection);
 
     const [applicableUpdates, setApplicableUpdates] = useState<RegulatoryUpdate[]>([
         {
@@ -138,7 +211,7 @@ export default function RegulatoryCompliancePage() {
             date: "2026-01-20",
             effective: "2026-02-15",
             title: "New Airworthiness Directive FAA-2026-0124",
-            subtitle: "Wing spar inspection requirement for Boeing 737-800 series",
+            subtitle: "Wing spar inspection requirement for selected aircraft type",
         },
         {
             kind: "SB Update",
@@ -148,6 +221,26 @@ export default function RegulatoryCompliancePage() {
             subtitle: "Updated procedures for hydraulic seal replacement",
         },
     ]);
+
+    // Update all state when aircraft changes
+    useEffect(() => {
+        const data = mockComplianceByAircraft[aircraftReg] || mockComplianceByAircraft["N872LM"];
+        setAirworthiness(data.airworthiness);
+        setAds(data.ads);
+        setSbs(data.sbs);
+        setCertificates(data.certificates);
+        setAnnualInspection(data.annualInspection);
+
+        // Update compliance score based on current data
+        const compliant = data.ads.filter(a => a.status === "Compliant").length + data.sbs.filter(s => s.status === "Compliant").length;
+        const pending = data.ads.filter(a => a.status === "Pending").length + data.sbs.filter(s => s.status === "Pending").length;
+        const overdue = data.ads.filter(a => a.status === "Overdue").length + data.sbs.filter(s => s.status === "Overdue").length;
+        const total = compliant + pending + overdue;
+        const percent = total > 0 ? Math.round((compliant / total) * 100) : 100;
+        setComplianceScore({ percent, compliant, pending, overdue });
+
+        updateLastChecked();
+    }, [aircraftReg, mockComplianceByAircraft]);
 
     // Fetch real compliance data
     async function fetchComplianceData() {
@@ -163,9 +256,24 @@ export default function RegulatoryCompliancePage() {
                 setSbs(data.sbs);
                 setCertificates(data.certificates);
                 setApplicableUpdates(data.updates);
+            } else {
+                // If API fails, use mock data for the selected aircraft
+                const mockData = mockComplianceByAircraft[aircraftReg] || mockComplianceByAircraft["N872LM"];
+                setAirworthiness(mockData.airworthiness);
+                setAds(mockData.ads);
+                setSbs(mockData.sbs);
+                setCertificates(mockData.certificates);
+                setAnnualInspection(mockData.annualInspection);
             }
         } catch (error) {
             console.error("Error fetching compliance data:", error);
+            // Fallback to mock data on error
+            const mockData = mockComplianceByAircraft[aircraftReg] || mockComplianceByAircraft["N872LM"];
+            setAirworthiness(mockData.airworthiness);
+            setAds(mockData.ads);
+            setSbs(mockData.sbs);
+            setCertificates(mockData.certificates);
+            setAnnualInspection(mockData.annualInspection);
         } finally {
             setIsLoading(false);
             updateLastChecked();
@@ -186,12 +294,6 @@ export default function RegulatoryCompliancePage() {
     async function refresh() {
         await fetchComplianceData();
     }
-
-    // Initial load
-    useEffect(() => {
-        updateLastChecked();
-        fetchComplianceData();
-    }, [aircraftReg]);
 
     const authoritySources: AuthoritySource[] = useMemo(
         () => [
@@ -603,8 +705,8 @@ function ADRow({ item }: { item: ADItem }) {
                                 disabled={isLoading}
                                 onClick={() => handleStatusChange(s as "Compliant" | "Pending" | "Overdue")}
                                 className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${status === s
-                                        ? "bg-blue-600 text-white"
-                                        : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    ? "bg-blue-600 text-white"
+                                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                                     } disabled:opacity-50`}
                             >
                                 {s}
@@ -657,8 +759,8 @@ function SBRow({ item }: { item: SBItem }) {
                                 disabled={isLoading}
                                 onClick={() => handleStatusChange(s as "Compliant" | "Pending" | "Overdue")}
                                 className={`rounded-lg px-3 py-1 text-xs font-semibold transition-colors ${status === s
-                                        ? "bg-blue-600 text-white"
-                                        : "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                                    ? "bg-blue-600 text-white"
+                                    : "border border-slate-200 text-slate-600 hover:bg-slate-50"
                                     } disabled:opacity-50`}
                             >
                                 {s}

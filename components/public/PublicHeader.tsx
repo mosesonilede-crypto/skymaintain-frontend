@@ -40,7 +40,7 @@ export default function PublicHeader() {
                     <Link href="/contact" className="text-base text-slate-600 hover:text-slate-900">
                         Contact
                     </Link>
-                    
+
                     {/* Auth-aware Sign In / Log Out button */}
                     {isLoading ? (
                         <span className="text-sm text-slate-400">...</span>
@@ -57,7 +57,7 @@ export default function PublicHeader() {
                             Sign In
                         </Link>
                     )}
-                    
+
                     <Link
                         href="/get-started"
                         className="rounded-lg bg-slate-950 px-4 py-2 text-sm font-medium text-white"
