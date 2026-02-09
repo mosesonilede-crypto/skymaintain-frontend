@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CONTACT_SUPPORT } from "@/lib/routes";
 
 type DataMode = "mock" | "live" | "hybrid";
@@ -211,12 +211,20 @@ function Badge({ label }: { label: string }) {
 
 function PlanCard({
     plan,
-    onContactPricing,
+    billingCycle,
+    onSelectPlan,
+    isLoading,
 }: {
     plan: Plan;
-    onContactPricing: () => void;
+    billingCycle: BillingCycle;
+    onSelectPlan: (planId: string, interval: "monthly" | "yearly") => void;
+    isLoading: boolean;
 }) {
     const isCurrent = !!plan.isCurrent;
+    const interval = billingCycle === "Annual" ? "yearly" : "monthly";
+    const displayPrice = billingCycle === "Annual" 
+        ? `$${(plan.priceYear / 100).toFixed(0)}`
+        : `$${Math.round(plan.priceYear / 12 / 100)}`;
 
     return (
         <div
@@ -234,8 +242,12 @@ function PlanCard({
             </div>
 
             <div className="mt-4">
-                <div className="text-lg font-semibold text-slate-900">Custom Pricing</div>
-                <div className="text-sm text-slate-600">Tailored to your fleet size</div>
+                <div className="text-lg font-semibold text-slate-900">
+                    {displayPrice}<span className="text-sm font-normal text-slate-500">/{billingCycle === "Annual" ? "year" : "month"}</span>
+                </div>
+                {billingCycle === "Annual" && plan.savePerYear > 0 && (
+                    <div className="text-sm text-emerald-600">Save ${(plan.savePerYear / 100).toFixed(0)}/year</div>
+                )}
             </div>
 
             <ul className="mt-4 space-y-2 text-sm text-slate-700">
@@ -261,10 +273,11 @@ function PlanCard({
                 ) : (
                     <button
                         type="button"
-                        className="w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 active:bg-slate-700 transition-colors cursor-pointer"
-                        onClick={onContactPricing}
+                        className="w-full rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 active:bg-slate-700 transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                        onClick={() => onSelectPlan(plan.id, interval)}
+                        disabled={isLoading}
                     >
-                        Contact for Pricing
+                        {isLoading ? "Processing..." : plan.id === "enterprise" ? "Contact Sales" : "Subscribe"}
                     </button>
                 )}
             </div>
@@ -274,6 +287,7 @@ function PlanCard({
 
 export default function SubscriptionBillingPage() {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const mode = useMemo(() => normalizeMode(getPublicEnv("NEXT_PUBLIC_DATA_MODE", "mock")), []);
     const baseUrl = useMemo(() => getPublicEnv("NEXT_PUBLIC_API_BASE_URL", ""), []);
 
@@ -281,8 +295,24 @@ export default function SubscriptionBillingPage() {
     const [payload, setPayload] = useState<SubscriptionBillingPayload>(() => mockPayload());
     const [loading, setLoading] = useState<boolean>(mode !== "mock");
     const [error, setError] = useState<string>("");
+    const [successMessage, setSuccessMessage] = useState<string>("");
 
     const [cycle, setCycle] = useState<BillingCycle>(() => mockPayload().billingCycle);
+
+    // Handle checkout success/cancel from URL params
+    useEffect(() => {
+        const success = searchParams.get("success");
+        const canceled = searchParams.get("canceled");
+        
+        if (success === "true") {
+            setSuccessMessage("🎉 Subscription successful! Thank you for your purchase.");
+            // Clear URL params after showing message
+            router.replace("/app/subscription-billing");
+        } else if (canceled === "true") {
+            setError("Checkout was canceled. No charges were made.");
+            router.replace("/app/subscription-billing");
+        }
+    }, [searchParams, router]);
 
     useEffect(() => {
         let cancelled = false;
@@ -356,6 +386,68 @@ export default function SubscriptionBillingPage() {
         };
     }, [mode, baseUrl]);
 
+    const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+    async function onSelectPlan(planId: string, interval: "monthly" | "yearly") {
+        // Enterprise plan goes to contact sales
+        if (planId === "enterprise") {
+            window.location.assign(CONTACT_SUPPORT);
+            return;
+        }
+
+        setCheckoutLoading(true);
+        try {
+            const res = await fetch("/api/billing/checkout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    plan: planId,
+                    interval,
+                    // Add customerEmail if available from auth context
+                }),
+            });
+
+            const data = await res.json();
+            
+            if (data.ok && data.url) {
+                // Redirect to Stripe Checkout
+                window.location.href = data.url;
+            } else {
+                setError(data.error || "Failed to create checkout session");
+            }
+        } catch (e) {
+            setError(e instanceof Error ? e.message : "Checkout failed");
+        } finally {
+            setCheckoutLoading(false);
+        }
+    }
+
+    async function onManageBilling() {
+        setCheckoutLoading(true);
+        try {
+            const res = await fetch("/api/billing/portal", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    // In production, get customerId from your auth/user context
+                    customerId: "cus_placeholder", // Replace with actual customer ID
+                }),
+            });
+
+            const data = await res.json();
+            
+            if (data.ok && data.url) {
+                window.location.href = data.url;
+            } else {
+                setError(data.error || "Failed to open billing portal");
+            }
+        } catch (e) {
+            setError(e instanceof Error ? e.message : "Portal access failed");
+        } finally {
+            setCheckoutLoading(false);
+        }
+    }
+
     function onContactPricing() {
         window.location.assign(CONTACT_SUPPORT);
     }
@@ -384,6 +476,11 @@ export default function SubscriptionBillingPage() {
                     {error ? (
                         <div className="mt-2 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
                             {error}
+                        </div>
+                    ) : null}
+                    {successMessage ? (
+                        <div className="mt-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
+                            {successMessage}
                         </div>
                     ) : null}
                 </div>
@@ -449,10 +546,28 @@ export default function SubscriptionBillingPage() {
             </div>
 
             <div className="mt-6">
-                <div className="text-sm font-semibold text-slate-900">Available Plans</div>
+                <div className="flex items-center justify-between">
+                    <div className="text-sm font-semibold text-slate-900">Available Plans</div>
+                    {payload.status === "Active" && (
+                        <button
+                            type="button"
+                            className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                            onClick={onManageBilling}
+                            disabled={checkoutLoading}
+                        >
+                            Manage Subscription →
+                        </button>
+                    )}
+                </div>
                 <div className="mt-4 grid gap-4 lg:grid-cols-3">
                     {payload.plans.map((p) => (
-                        <PlanCard key={p.id} plan={p} onContactPricing={onContactPricing} />
+                        <PlanCard 
+                            key={p.id} 
+                            plan={p} 
+                            billingCycle={cycle}
+                            onSelectPlan={onSelectPlan}
+                            isLoading={checkoutLoading}
+                        />
                     ))}
                 </div>
             </div>
