@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getDataMode } from "@/lib/dataService";
 
 type BillingCycle = "Monthly" | "Annual";
 
@@ -150,8 +151,44 @@ function generateMockBillingData(): SubscriptionBillingPayload {
     };
 }
 
+// Stripe integration placeholder - when STRIPE_SECRET_KEY is set, fetch real data
+async function fetchStripeBillingData(): Promise<SubscriptionBillingPayload | null> {
+    const stripeKey = process.env.STRIPE_SECRET_KEY;
+    if (!stripeKey) return null;
+
+    // TODO: Implement Stripe API integration
+    // const stripe = new Stripe(stripeKey);
+    // const subscriptions = await stripe.subscriptions.list({ customer: customerId });
+    // const invoices = await stripe.invoices.list({ customer: customerId });
+    // Transform and return data...
+
+    return null;
+}
+
 export async function GET(request: NextRequest) {
+    const mode = getDataMode();
+
     try {
+        // In live mode, try to fetch from Stripe first
+        if (mode === "live") {
+            const stripeData = await fetchStripeBillingData();
+            if (stripeData) {
+                return NextResponse.json(stripeData, {
+                    headers: {
+                        "Cache-Control": "private, no-cache",
+                    },
+                });
+            }
+            // If Stripe not configured in live mode, return error
+            if (!process.env.STRIPE_SECRET_KEY) {
+                return NextResponse.json(
+                    { error: "Billing provider not configured" },
+                    { status: 503 }
+                );
+            }
+        }
+
+        // Mock/hybrid mode: return mock data
         const billingData = generateMockBillingData();
 
         return NextResponse.json(billingData, {

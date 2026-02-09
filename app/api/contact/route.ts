@@ -34,26 +34,41 @@ async function sendEmail(
     htmlBody: string,
     replyTo: string
 ): Promise<void> {
-    // Log submission (in production, integrate with SendGrid, Resend, AWS SES, etc.)
-    console.log(`\n✉️  NEW CONTACT FORM SUBMISSION`);
+    const host = process.env.SMTP_HOST;
+    const port = Number(process.env.SMTP_PORT || 587);
+    const user = process.env.SMTP_USER;
+    const pass = process.env.SMTP_PASS;
+    const from = process.env.SMTP_FROM || 'noreply@skymaintain.ai';
+
+    // If SMTP is configured, send real email
+    if (host && user && pass) {
+        const { createTransport } = await import("nodemailer");
+        const transport = createTransport({
+            host,
+            port,
+            secure: port === 465,
+            auth: { user, pass },
+        });
+
+        await transport.sendMail({
+            from,
+            to,
+            replyTo,
+            subject,
+            html: htmlBody,
+        });
+
+        console.log(`✉️ Email sent to ${to}: ${subject}`);
+        return;
+    }
+
+    // Fallback: Log to console in development/when SMTP not configured
+    console.log(`\n✉️  CONTACT FORM (SMTP not configured - logged only)`);
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
     console.log(`To: ${to}`);
     console.log(`Subject: ${subject}`);
     console.log(`Reply-To: ${replyTo}`);
-    console.log(`Body:\n${htmlBody}`);
     console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
-
-    // In production, uncomment and use your email service:
-    // Example with Resend:
-    // import { Resend } from 'resend';
-    // const resend = new Resend(process.env.RESEND_API_KEY);
-    // await resend.emails.send({
-    //     from: 'noreply@skymaintain.ai',
-    //     to,
-    //     replyTo,
-    //     subject,
-    //     html: htmlBody,
-    // });
 }
 
 export async function POST(request: NextRequest) {
