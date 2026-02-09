@@ -93,6 +93,15 @@ export default function MainLandingPage() {
                         <img src={imgArrowIcon} alt="" className="h-4 w-4" />
                     </Link>
                     <Link
+                        href="/demo"
+                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-8 py-5 text-lg font-medium text-slate-900 transition-colors hover:bg-slate-50"
+                    >
+                        <svg className="h-5 w-5 text-slate-700" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        Watch Demo
+                    </Link>
+                    <Link
                         href="/contact?intent=demo"
                         className="inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-8 py-5 text-lg font-medium text-slate-900 transition-colors hover:bg-slate-50"
                     >
