@@ -41,7 +41,7 @@ export default function SkyMaintainLogo({
                 aria-hidden="true"
             >
                 <Image
-                    src="/brand/skymaintain-logo.png"
+                    src="/brand/SkyMaintain_logo.png"
                     alt="SkyMaintain"
                     fill
                     sizes={`${px}px`}

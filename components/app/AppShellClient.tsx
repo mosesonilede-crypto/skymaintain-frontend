@@ -110,10 +110,8 @@ export default function AppShellClient({ children }: AppShellClientProps) {
                             <div className="px-6 pt-6 pb-[0.8px]">
                                 <div className="flex items-center justify-between">
                                     <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                                        <div className="size-9 rounded-[10px] shadow-lg" style={{ background: "linear-gradient(135deg, #155dfc 0%, #1447e6 100%)" }}>
-                                            <div className="flex h-full w-full items-center justify-center">
-                                                <img src={iconLogoVector} alt="" className="h-5 w-5" />
-                                            </div>
+                                        <div className="size-9 rounded-[10px] overflow-hidden shadow-lg">
+                                            <img src="/brand/SkyMaintain_logo.png" alt="SkyMaintain" className="h-full w-full object-contain" />
                                         </div>
                                         <div>
                                             <div className="text-[18px] leading-7 text-[#0a0a0a]">SkyMaintain</div>

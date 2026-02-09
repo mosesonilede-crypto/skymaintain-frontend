@@ -4,8 +4,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const logoImage = "https://www.figma.com/api/mcp/asset/c03d14cf-e548-404a-a66c-76e7da02cc37";
-
 export default function PublicChrome({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const hideChrome = pathname === "/get-started" || pathname === "/";
@@ -16,7 +14,7 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
                 <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
                     <div className="mx-auto flex max-w-[1148px] items-center justify-between px-8 py-4">
                         <Link href="/" className="flex items-center gap-2">
-                            <img src={logoImage} alt="" className="h-8 w-12 object-cover" />
+                            <img src="/brand/SkyMaintain_logo.png" alt="SkyMaintain" className="h-8 w-8 object-contain" />
                             <span className="text-xl font-bold text-slate-900">SkyMaintain</span>
                         </Link>
 
@@ -56,7 +54,7 @@ export default function PublicChrome({ children }: { children: React.ReactNode }
                 <footer className="bg-slate-900">
                     <div className="mx-auto flex max-w-[1084px] flex-col items-center gap-4 px-8 py-10 text-center">
                         <div className="flex items-center gap-2">
-                            <img src={logoImage} alt="" className="h-8 w-12 object-cover" />
+                            <img src="/brand/SkyMaintain_logo.png" alt="SkyMaintain" className="h-8 w-8 object-contain" />
                             <span className="text-2xl font-bold text-white">SkyMaintain</span>
                         </div>
                         <p className="text-base text-slate-300">
