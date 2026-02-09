@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { generateOtp, getOtpExpiry, signPayload } from "@/lib/twoFactor";
+import { checkRateLimit, getRateLimitHeaders, RATE_LIMITS } from "@/lib/rateLimit";
 
 export const runtime = "nodejs";
 
@@ -72,6 +73,18 @@ async function sendSms(code: string, destination: string) {
 }
 
 export async function POST(req: Request) {
+    // Rate limit by IP or destination
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+    const rateCheck = checkRateLimit(`2fa:${ip}`, RATE_LIMITS.twoFa);
+
+    if (!rateCheck.allowed) {
+        return NextResponse.json(
+            { ok: false, error: "Too many requests. Please try again later." },
+            { status: 429, headers: getRateLimitHeaders(rateCheck, RATE_LIMITS.twoFa) }
+        );
+    }
+
     const body = (await req.json()) as SendBody;
 
     if (!body?.destination || !body?.method) {

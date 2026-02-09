@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, getRateLimitHeaders, RATE_LIMITS } from "@/lib/rateLimit";
 
 type ContactFormPayload = {
     intent: string;
@@ -72,6 +73,18 @@ async function sendEmail(
 }
 
 export async function POST(request: NextRequest) {
+    // Rate limit by IP
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+    const rateCheck = checkRateLimit(`contact:${ip}`, RATE_LIMITS.contact);
+
+    if (!rateCheck.allowed) {
+        return NextResponse.json(
+            { ok: false, error: "Too many requests. Please try again later." },
+            { status: 429, headers: getRateLimitHeaders(rateCheck, RATE_LIMITS.contact) }
+        );
+    }
+
     try {
         const payload: ContactFormPayload = await request.json();
 
