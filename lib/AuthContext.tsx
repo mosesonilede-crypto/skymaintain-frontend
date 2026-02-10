@@ -2,10 +2,21 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
+// Extended role types for role-based views
+export type UserRole =
+    | "technician"           // Front-line maintenance personnel
+    | "supervisor"           // Shift supervisors, team leads
+    | "maintenance_manager"  // Maintenance managers, commanders
+    | "safety_qa"            // Safety officers, QA inspectors
+    | "fleet_manager"        // Fleet operations (legacy support)
+    | "maintenance_engineer"; // Engineers (legacy support)
+
 export interface User {
     email: string;
     orgName: string;
-    role?: "fleet_manager" | "maintenance_engineer";
+    role?: UserRole;
+    displayName?: string;
+    hasCompletedOnboarding?: boolean;
 }
 
 interface AuthContextType {

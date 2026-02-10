@@ -748,11 +748,10 @@ export default function AIMechanicPanel({
                     <img src={imgIconInfo} alt="" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-relaxed min-w-0" style={{ color: "#1e2939" }}>
-                    <span className="font-bold">
-                        SkyMaintain AI Assistant uses only the manuals you are authorized to
-                        upload, combined with official regulatory sources (FAA, EASA, ICAO, Transport Canada).
+                    <span className="font-bold text-amber-800">
+                        ⚠️ AI Insight – advisory only. Final decisions remain with certified personnel.
                     </span>{" "}
-                    <span className="hidden sm:inline">All answers are grounded in your documents with full revision traceability for technical accuracy.</span>
+                    <span className="hidden sm:inline">Uses your authorized manuals and official regulatory sources (FAA, EASA, ICAO, Transport Canada) with full traceability.</span>
                 </div>
                 <button
                     type="button"

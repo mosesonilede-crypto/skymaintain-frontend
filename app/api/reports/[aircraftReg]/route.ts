@@ -13,7 +13,7 @@ export async function GET(
             aircraftOverview: [
                 { label: "Tail Number", value: aircraftReg },
                 { label: "Model", value: "Boeing 737-800" },
-                { label: "Airline", value: "SkyWings Airlines" },
+                { label: "Operator", value: "SkyWings Fleet" },
                 { label: "Registration", value: `N/A-${aircraftReg}` },
                 { label: "Manufactured", value: "2015" },
             ],

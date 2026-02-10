@@ -13,7 +13,7 @@ export async function GET(
             aircraft: {
                 tailNumber: aircraftReg,
                 model: "Boeing 737-800",
-                airline: "SkyWings Airlines",
+                operator: "SkyWings Fleet",
                 status: "Operational",
                 health: "Excellent",
                 location: "Airport Gate B12",

@@ -16,10 +16,10 @@ const headerBellIcon = "https://www.figma.com/api/mcp/asset/98216d52-73a3-4ff1-a
 
 // Mock data for aircraft selection
 const MOCK_AIRCRAFT = [
-    { id: 1, tailNumber: "N123AB", model: "Boeing 737-800", airline: "SkyWings Airlines" },
-    { id: 2, tailNumber: "N456CD", model: "Boeing 787-9", airline: "SkyWings Airlines" },
-    { id: 3, tailNumber: "N789EF", model: "Airbus A320", airline: "SkyWings Airlines" },
-    { id: 4, tailNumber: "N101GH", model: "Boeing 777-300ER", airline: "SkyWings Airlines" },
+    { id: 1, tailNumber: "N123AB", model: "Boeing 737-800", operator: "SkyWings Fleet" },
+    { id: 2, tailNumber: "N456CD", model: "Boeing 787-9", operator: "SkyWings Fleet" },
+    { id: 3, tailNumber: "N789EF", model: "Airbus A320", operator: "SkyWings Fleet" },
+    { id: 4, tailNumber: "N101GH", model: "Boeing 777-300ER", operator: "SkyWings Fleet" },
 ];
 
 const MOCK_NOTIFICATIONS = [
@@ -182,11 +182,11 @@ export default function DashboardPage() {
                                 Menu
                             </button>
 
-                            {/* Airline Info */}
+                            {/* Operator/Fleet Info */}
                             <div className="flex items-center gap-2 pr-3 border-r border-[#e5e7eb]">
-                                <img alt="Airline icon" className="h-4 w-4" src={headerAirlineIcon} />
+                                <img alt="Fleet icon" className="h-4 w-4" src={headerAirlineIcon} />
                                 <div className="text-[14px] text-[#0a0a0a]">
-                                    SkyWings Airlines
+                                    SkyWings Fleet
                                     <div className="text-[12px] text-[#6a7282]">License: Active</div>
                                 </div>
                             </div>
