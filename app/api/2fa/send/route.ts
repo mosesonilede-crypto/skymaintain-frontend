@@ -25,7 +25,9 @@ async function sendEmail(code: string, destination: string) {
     const pass = process.env.SMTP_PASS;
     const from = process.env.SMTP_FROM;
 
-    if (!host || !from) return;
+    if (!host || !from) {
+        throw new Error("Email provider not configured. Missing SMTP_HOST or SMTP_FROM.");
+    }
 
     const { createTransport } = await import("nodemailer");
     const transport = createTransport({
@@ -35,11 +37,14 @@ async function sendEmail(code: string, destination: string) {
         auth: user && pass ? { user, pass } : undefined,
     });
 
+    await transport.verify();
+
     await transport.sendMail({
         from,
         to: destination,
         subject: "Your SkyMaintain verification code",
         text: `Your SkyMaintain verification code is ${code}. It expires in 5 minutes.`,
+        html: `<p>Your SkyMaintain verification code is <strong>${code}</strong>.</p><p>This code expires in 5 minutes.</p>`,
     });
 }
 
@@ -97,10 +102,11 @@ export async function POST(req: Request) {
 
     const mode = (process.env.NEXT_PUBLIC_DATA_MODE ?? "mock").toLowerCase();
     const allowMockFallback = mode === "mock" || mode === "hybrid";
+    const allowMockEmail = mode === "mock";
     let usedMock = false;
 
     if (!isConfigured(body.method)) {
-        if (!allowMockFallback) {
+        if (body.method === "email" ? !allowMockEmail : !allowMockFallback) {
             return NextResponse.json({ ok: false, error: "2FA provider not configured." }, { status: 500 });
         }
         usedMock = true;
@@ -114,7 +120,7 @@ export async function POST(req: Request) {
                 await sendSms(code, body.destination);
             }
         } catch (error) {
-            if (allowMockFallback) {
+            if (body.method === "email" ? allowMockEmail : allowMockFallback) {
                 usedMock = true;
             } else {
                 return NextResponse.json(

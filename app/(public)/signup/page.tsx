@@ -71,13 +71,16 @@ export default function SignUpPage() {
             return;
         }
 
+        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+            || (typeof window !== "undefined" ? window.location.origin : "");
+
         setSubmitting(true);
         const { error } = await supabase.auth.signUp({
             email: eTrim,
             password,
             options: {
                 data: { full_name: nTrim, org_name: oTrim },
-                emailRedirectTo: `${window.location.origin}/signin?verified=1`,
+                emailRedirectTo: siteUrl ? `${siteUrl}/signin?verified=1` : undefined,
             },
         });
         setSubmitting(false);
