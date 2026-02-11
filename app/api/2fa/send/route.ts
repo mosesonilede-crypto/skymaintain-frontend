@@ -5,6 +5,7 @@ import { checkRateLimit, getRateLimitHeaders, RATE_LIMITS } from "@/lib/rateLimi
 export const runtime = "nodejs";
 
 const COOKIE_NAME = "sm2fa";
+const COOKIE_DOMAIN = process.env.TWO_FA_COOKIE_DOMAIN || undefined;
 
 type SendBody = {
     method: "email" | "sms";
@@ -39,8 +40,12 @@ async function sendEmail(code: string, destination: string) {
 
     await transport.verify();
 
+    const formattedFrom = from.includes("<") ? from : `SkyMaintain <${from}>`;
+    const replyTo = process.env.SMTP_REPLY_TO;
+
     const result = await transport.sendMail({
-        from,
+        from: formattedFrom,
+        replyTo: replyTo || undefined,
         to: destination,
         subject: "Your SkyMaintain verification code",
         text: `Your SkyMaintain verification code is ${code}. It expires in 5 minutes.`,
@@ -124,6 +129,13 @@ export async function POST(req: Request) {
         try {
             if (body.method === "email") {
                 emailResult = await sendEmail(code, body.destination);
+                // eslint-disable-next-line no-console
+                console.info("2FA email send result", {
+                    destination: body.destination,
+                    messageId: emailResult?.messageId,
+                    accepted: emailResult?.accepted,
+                    rejected: emailResult?.rejected,
+                });
             } else {
                 await sendSms(code, body.destination);
             }
@@ -137,6 +149,22 @@ export async function POST(req: Request) {
                 );
             }
         }
+    }
+
+    if (
+        body.method === "email"
+        && emailResult
+        && Array.isArray(emailResult.accepted)
+        && emailResult.accepted.length === 0
+    ) {
+        return NextResponse.json(
+            {
+                ok: false,
+                error: "Email was not accepted by the provider. Check SMTP sender verification and logs.",
+                email: emailResult,
+            },
+            { status: 502 }
+        );
     }
 
     const response = NextResponse.json({
@@ -153,6 +181,7 @@ export async function POST(req: Request) {
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
         maxAge: 300,
+        domain: COOKIE_DOMAIN,
         path: "/",
     });
     return response;
