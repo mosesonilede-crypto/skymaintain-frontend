@@ -3,6 +3,7 @@
 import Link from "next/link";
 import * as React from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { getPublicSiteUrl } from "@/lib/siteUrl";
 
 export default function LandingSignupForm() {
     const [fullName, setFullName] = React.useState("");
@@ -43,8 +44,8 @@ export default function LandingSignupForm() {
             return;
         }
 
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-            || (typeof window !== "undefined" ? window.location.origin : "");
+        const siteUrl = getPublicSiteUrl();
+        const emailRedirectTo = siteUrl ? `${siteUrl}/signin?verified=1` : undefined;
 
         setSubmitting(true);
         const { error: signUpError } = await supabase.auth.signUp({
@@ -52,7 +53,7 @@ export default function LandingSignupForm() {
             password,
             options: {
                 data: { full_name: nTrim, org_name: oTrim },
-                emailRedirectTo: siteUrl ? `${siteUrl}/signin?verified=1` : undefined,
+                emailRedirectTo,
             },
         });
         setSubmitting(false);

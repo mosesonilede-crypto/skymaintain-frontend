@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { getPublicSiteUrl } from "@/lib/siteUrl";
 
 export default function SignUpPage() {
     const router = useRouter();
@@ -26,8 +27,14 @@ export default function SignUpPage() {
             setError("Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.");
             return;
         }
+        const siteUrl = getPublicSiteUrl();
+        const emailRedirectTo = siteUrl ? `${siteUrl}/signin?verified=1` : undefined;
         setSubmitting(true);
-        const { error } = await supabase.auth.resend({ type: "signup", email: eTrim });
+        const { error } = await supabase.auth.resend({
+            type: "signup",
+            email: eTrim,
+            options: emailRedirectTo ? { emailRedirectTo } : undefined,
+        });
         setSubmitting(false);
         if (error) {
             setError(error.message);
@@ -71,8 +78,8 @@ export default function SignUpPage() {
             return;
         }
 
-        const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-            || (typeof window !== "undefined" ? window.location.origin : "");
+        const siteUrl = getPublicSiteUrl();
+        const emailRedirectTo = siteUrl ? `${siteUrl}/signin?verified=1` : undefined;
 
         setSubmitting(true);
         const { error } = await supabase.auth.signUp({
@@ -80,7 +87,7 @@ export default function SignUpPage() {
             password,
             options: {
                 data: { full_name: nTrim, org_name: oTrim },
-                emailRedirectTo: siteUrl ? `${siteUrl}/signin?verified=1` : undefined,
+                emailRedirectTo,
             },
         });
         setSubmitting(false);
