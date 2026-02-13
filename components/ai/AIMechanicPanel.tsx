@@ -1,19 +1,7 @@
 "use client";
 
 import * as React from "react";
-
-// Figma assets for SkyMaintain AI Assistant Panel - Updated to match Figma design node 131:1308
-const iconBot = (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 4C11.4477 4 11 4.44772 11 5V6H13V5C13 4.44772 12.5523 4 12 4Z" fill="white" />
-        <path d="M4 12C4 9.79086 5.79086 8 8 8H16C18.2091 8 20 9.79086 20 12V16C20 18.2091 18.2091 20 16 20H8C5.79086 20 4 18.2091 4 16V12Z" fill="white" />
-        <circle cx="9" cy="13" r="1.5" fill="currentColor" />
-        <circle cx="15" cy="13" r="1.5" fill="currentColor" />
-        <path d="M10 16H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M2 14V12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M22 14V12" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-);
+import { Bot } from "lucide-react";
 
 // Figma asset icons from design node 131:1308
 const imgIconAdvisory = "https://www.figma.com/api/mcp/asset/dec716d7-ff14-4a49-9e48-a2b90f54c1d8";
@@ -677,7 +665,7 @@ export default function AIMechanicPanel({
                         className="relative flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-[10px] shrink-0"
                         style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
                     >
-                        <div className="relative h-5 w-5 sm:h-6 sm:w-6 text-[#155dfc]">{iconBot}</div>
+                        <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" aria-hidden="true" />
                         <div
                             className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full border-[1.6px] border-white opacity-50"
                             style={{ backgroundColor: "#05df72" }}
