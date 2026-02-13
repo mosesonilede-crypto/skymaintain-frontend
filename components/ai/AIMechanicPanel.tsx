@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bot, Info } from "lucide-react";
+import { Bot, Eraser, FileText, Info, Send } from "lucide-react";
 
 // Figma asset icons from design node 131:1308
 const imgIconAdvisory = "https://www.figma.com/api/mcp/asset/dec716d7-ff14-4a49-9e48-a2b90f54c1d8";
@@ -10,14 +10,11 @@ const imgIconExplainable = "https://www.figma.com/api/mcp/asset/d4fcef94-bc4b-4d
 const imgIconExpand = "https://www.figma.com/api/mcp/asset/956ef066-e300-447e-a022-ec8bec2ebec0";
 const imgIconClose = "https://www.figma.com/api/mcp/asset/d9b0181c-bde6-461e-b92a-d7c542969443";
 const imgIconDismiss = "https://www.figma.com/api/mcp/asset/5966d923-2b3a-46c2-af4e-570abfad559e";
-const imgIconSummary = "https://www.figma.com/api/mcp/asset/36d0cba2-dc6e-4a77-9960-92bbef7c61ff";
 const imgIconEvidence = "https://www.figma.com/api/mcp/asset/8db10ccd-95f8-442e-a5c7-aa5df471edd1";
 const imgIconChevron = "https://www.figma.com/api/mcp/asset/91155f08-d4b4-4908-94c1-abc6c1bc1022";
 const imgIconRecommend = "https://www.figma.com/api/mcp/asset/40479525-01b9-43d3-90b1-b461526c9016";
 const imgIconRef = "https://www.figma.com/api/mcp/asset/e25e9c75-9ed3-4083-ab47-9157717e314d";
 const imgIconExternal = "https://www.figma.com/api/mcp/asset/c63112a2-8552-4410-9cc7-456d1d07eaec";
-const imgIconSend = "https://www.figma.com/api/mcp/asset/bc22097c-000c-4303-9fd1-61ce8d67fc2f";
-const imgIconMic = "https://www.figma.com/api/mcp/asset/c36e4a72-3a99-4be7-be84-4eefe76cf69a";
 const imgIconInfo = "https://www.figma.com/api/mcp/asset/7221853e-0725-44cb-af37-9c3a4e11472c";
 
 // Note: Most icons now use Figma asset images (imgIcon* constants above)
@@ -802,8 +799,7 @@ export default function AIMechanicPanel({
                             {message.summary && (
                                 <div className="mb-3 sm:mb-4">
                                     <div className="mb-1.5 sm:mb-2 flex items-center gap-1.5 sm:gap-2">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={imgIconSummary} alt="" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                                        <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#155dfc]" />
                                         <span
                                             className="text-xs sm:text-sm font-bold"
                                             style={{ color: "#101828" }}
@@ -1035,8 +1031,7 @@ export default function AIMechanicPanel({
                         style={{ backgroundColor: "#155dfc" }}
                         title="Send message"
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={imgIconSend} alt="" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <Send className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-white" />
                     </button>
                     {/* Mic/Voice Button - Matches Figma node 131:1458 */}
                     <button
@@ -1047,8 +1042,7 @@ export default function AIMechanicPanel({
                         style={{ borderColor: "rgba(0,0,0,0.1)", color: "#364153" }}
                         title="Clear conversation"
                     >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={imgIconMic} alt="" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        <Eraser className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                     </button>
                 </div>
             </div>
