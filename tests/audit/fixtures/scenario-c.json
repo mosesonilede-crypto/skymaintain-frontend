@@ -1,0 +1,39 @@
+{
+    "advisory": {
+        "label": "ADVISORY_ONLY",
+        "advisoryId": "adv_c",
+        "title": "Corrupted input",
+        "summary": "Payload corrupted; advisory suppressed.",
+        "confidenceDescriptor": "LOW",
+        "confidenceScore": 0.1,
+        "sourceDataReferences": [
+            {
+                "source": "CMC/CMS Faults",
+                "referenceId": "CMC-ERR-0001",
+                "capturedAt": "2026-02-11T02:20:00Z"
+            }
+        ],
+        "noAutomaticExecutionRights": true,
+        "aircraftId": "N123AB",
+        "generatedAt": "2026-02-11T02:25:00Z"
+    },
+    "authoritativeSources": [
+        "AMM 00-00-00"
+    ],
+    "acknowledgement": {
+        "acknowledgedBy": "audit.bot",
+        "acknowledgedAt": "2026-02-11T02:30:00Z"
+    },
+    "disposition": "NO_ACTION",
+    "overrideRationale": "Ingestion corruption detected; advisory suppressed and logged.",
+    "userAction": "record_decision",
+    "canCreateWorkorder": false,
+    "ruleInputs": {
+        "aircraftId": "N123AB",
+        "remainingHours": 9000,
+        "hardTimeThresholdHours": 1000,
+        "remainingCycles": 7000,
+        "hardTimeThresholdCycles": 800,
+        "mandatedIntervalHit": false
+    }
+}

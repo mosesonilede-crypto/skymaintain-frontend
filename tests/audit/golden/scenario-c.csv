@@ -1,0 +1,2 @@
+scenario,disposition,ruleOutcome,acknowledged,ingestionSuppressed
+C,NO_ACTION,ADVISORY_ONLY,true,true

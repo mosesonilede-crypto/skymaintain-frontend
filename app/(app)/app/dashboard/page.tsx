@@ -3,16 +3,33 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import {
+    Activity,
+    AlertTriangle,
+    Bell,
+    Building2,
+    Calendar,
+    CalendarClock,
+    ChevronDown,
+    ClipboardCheck,
+    DollarSign,
+    FileText,
+    Gauge,
+    ListChecks,
+    MapPin,
+    Menu,
+    Plane,
+    Printer,
+    RotateCw,
+    Settings,
+    ShieldCheck,
+    User,
+    Wrench,
+    EyeOff,
+    Clock,
+} from "lucide-react";
 import { useAircraft } from "@/lib/AircraftContext";
 import BackToHub from "@/components/app/BackToHub";
-
-const headerMenuIcon = "https://www.figma.com/api/mcp/asset/1ba02178-1448-48df-9234-3cb753a781f9";
-const headerAirlineIcon = "https://www.figma.com/api/mcp/asset/c5e0050e-5e2b-46dd-aaff-bc62e8570799";
-const headerTailNumberIcon = "https://www.figma.com/api/mcp/asset/d9e35576-6fba-441c-9cc1-8927c29fba41";
-const headerChevronIcon = "https://www.figma.com/api/mcp/asset/e61bf922-5b7b-4466-b25f-dbfff5899853";
-const headerPrintIcon = "https://www.figma.com/api/mcp/asset/f060b66f-c7c9-45f0-bc6f-aed7233cfe64";
-const headerPrivacyIcon = "https://www.figma.com/api/mcp/asset/85dff433-29e0-4aae-bd2a-afc2ec938029";
-const headerBellIcon = "https://www.figma.com/api/mcp/asset/98216d52-73a3-4ff1-a1af-8de593febec3";
 
 // Mock data for aircraft selection
 const MOCK_AIRCRAFT = [
@@ -30,40 +47,6 @@ const MOCK_NOTIFICATIONS = [
     { id: 5, text: "Landing gear inspection passed", severity: "success" },
 ];
 
-const kpiCriticalVector = "https://www.figma.com/api/mcp/asset/0434e497-f396-4a32-97ac-dc557bc87b82";
-const kpiCriticalVector2 = "https://www.figma.com/api/mcp/asset/16a66917-0756-40b2-9311-ca084bc3721c";
-const kpiCriticalVector3 = "https://www.figma.com/api/mcp/asset/da1a62e3-eb2f-44bf-9b51-9a9ffbf3af75";
-const kpiScheduledVector1 = "https://www.figma.com/api/mcp/asset/943519eb-d62b-40cb-be70-60d04b4020ca";
-const kpiScheduledVector2 = "https://www.figma.com/api/mcp/asset/ea271b81-e949-4e0f-a86e-8386fe24a8ca";
-const kpiScheduledVector3 = "https://www.figma.com/api/mcp/asset/3303456a-7771-4d09-b46c-9d04bf6ba4d0";
-const kpiScheduledVector4 = "https://www.figma.com/api/mcp/asset/130e6951-dfa4-4dd1-9deb-46129aa548dc";
-const kpiGoodVector1 = "https://www.figma.com/api/mcp/asset/e81f497b-3548-4317-a7ae-cb35e64b0c12";
-const kpiGoodVector2 = "https://www.figma.com/api/mcp/asset/dd2916d5-b363-4c82-bfb1-20135f4d0efa";
-const kpiGoodVector3 = "https://www.figma.com/api/mcp/asset/045f4626-8111-4eeb-adc8-60daecce9570";
-const kpiGoodVector4 = "https://www.figma.com/api/mcp/asset/00cf569e-72b2-4909-9fdb-022057f87575";
-
-const aircraftLogoVector = "https://www.figma.com/api/mcp/asset/4c3ba46d-c68d-4694-9b8f-5f491fbea055";
-const aircraftDetailsIcon = "https://www.figma.com/api/mcp/asset/5d5634c9-7f6d-49ec-b7b3-d61a9c6c29d4";
-const aircraftHealthIcon = "https://www.figma.com/api/mcp/asset/445abd25-9075-45cc-aea5-02b2fa77ef2c";
-const aircraftLocationIcon = "https://www.figma.com/api/mcp/asset/6c58086d-0ec6-40f8-ac07-d9b93e979245";
-const aircraftStatusIcon = "https://www.figma.com/api/mcp/asset/5598ab0c-da41-49cc-8ae2-d4f67bdffe03";
-const aircraftHoursIcon = "https://www.figma.com/api/mcp/asset/117f3207-2b92-42c4-b3c5-567e49a4bb2e";
-const aircraftCyclesIcon = "https://www.figma.com/api/mcp/asset/0d167f3b-d2ab-48c9-95d7-ef62e525933b";
-const aircraftEngineIcon = "https://www.figma.com/api/mcp/asset/de41db1f-a63b-4099-a746-f65360be3b23";
-const aircraftUpcomingIcon = "https://www.figma.com/api/mcp/asset/4586edce-d80a-4b37-bcf4-062029c56459";
-
-const systemHealthIcon = "https://www.figma.com/api/mcp/asset/e09c000f-5d31-47c6-ad8e-c18c30aec412";
-
-const maintenanceLogoVector = "https://www.figma.com/api/mcp/asset/e6ed3b45-67b1-4a34-b32b-861a2eecce83";
-const maintenanceCriticalIcon = "https://www.figma.com/api/mcp/asset/e9ed0ba7-855b-490f-9065-7a88c7fb1a32";
-const maintenanceTimeIcon = "https://www.figma.com/api/mcp/asset/d5199cc0-b26c-4d5e-9826-63d32b2d24c8";
-const maintenanceScheduleIcon = "https://www.figma.com/api/mcp/asset/cfee61ac-b47b-4536-a737-8e29268b1c28";
-const maintenanceTasksIcon = "https://www.figma.com/api/mcp/asset/54e0c4d7-519b-448f-b1e3-6cbf64bc8ba5";
-const maintenanceUserIcon = "https://www.figma.com/api/mcp/asset/184ac5a6-5f1d-4e66-ba0f-2502351c2730";
-const maintenanceListIcon = "https://www.figma.com/api/mcp/asset/cdf0c906-5825-4a93-8e87-62b13e278382";
-const maintenanceMoneyIcon = "https://www.figma.com/api/mcp/asset/e9268a7f-9269-428d-a498-33ba03565e12";
-
-const aiMechanicIcon = "https://www.figma.com/api/mcp/asset/2277282f-6a56-423d-a502-2f06caf96cdf";
 
 export default function DashboardPage() {
     const { selectedAircraft, setSelectedAircraft, allAircraft } = useAircraft();
@@ -178,13 +161,13 @@ export default function DashboardPage() {
                                 onClick={() => console.log("Menu clicked")}
                                 title="Open menu"
                             >
-                                <img alt="Menu icon" className="h-4 w-4" src={headerMenuIcon} />
+                                <Menu className="h-4 w-4" />
                                 Menu
                             </button>
 
                             {/* Operator/Fleet Info */}
                             <div className="flex items-center gap-2 pr-3 border-r border-[#e5e7eb]">
-                                <img alt="Fleet icon" className="h-4 w-4" src={headerAirlineIcon} />
+                                <Building2 className="h-4 w-4 text-slate-700" />
                                 <div className="text-[14px] text-[#0a0a0a]">
                                     SkyWings Fleet
                                     <div className="text-[12px] text-[#6a7282]">License: Active</div>
@@ -198,15 +181,13 @@ export default function DashboardPage() {
                                     className="flex items-center gap-3 rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] px-4 py-2 hover:bg-gray-100 transition-colors cursor-pointer"
                                     title="Select aircraft"
                                 >
-                                    <img alt="Aircraft icon" className="h-5 w-5" src={headerTailNumberIcon} />
+                                    <Plane className="h-5 w-5 text-slate-700" />
                                     <div className="text-[14px] text-[#0a0a0a]">
                                         {selectedAircraft?.registration}
                                         <div className="text-[12px] text-[#6a7282]">{selectedAircraft?.model}</div>
                                     </div>
-                                    <img
-                                        alt="Dropdown arrow"
+                                    <ChevronDown
                                         className={`h-4 w-4 transition-transform ${showAircraftMenu ? 'rotate-180' : ''}`}
-                                        src={headerChevronIcon}
                                     />
                                 </button>
 
@@ -243,7 +224,7 @@ export default function DashboardPage() {
                                 className="flex h-8 items-center gap-2 rounded-[8px] border border-black/10 bg-white px-3 text-[12px] text-[#0a0a0a] hover:bg-gray-50 active:bg-gray-100 transition-colors whitespace-nowrap"
                                 title="Print maintenance report"
                             >
-                                <img alt="Print icon" className="h-4 w-4" src={headerPrintIcon} />
+                                <Printer className="h-4 w-4" />
                                 Print Report
                             </button>
 
@@ -256,7 +237,7 @@ export default function DashboardPage() {
                                     }`}
                                 title={privacyMode ? "Disable privacy mode" : "Enable privacy mode"}
                             >
-                                <img alt="Privacy icon" className="h-4 w-4" src={headerPrivacyIcon} />
+                                <EyeOff className="h-4 w-4" />
                                 Privacy Mode
                             </button>
 
@@ -267,7 +248,7 @@ export default function DashboardPage() {
                                     className="relative h-8 w-9 rounded-[8px] border border-black/10 bg-white hover:bg-gray-50 active:bg-gray-100 transition-colors"
                                     title="View notifications"
                                 >
-                                    <img alt="Notification bell" className="absolute left-[10px] top-[7px] h-4 w-4" src={headerBellIcon} />
+                                    <Bell className="absolute left-[10px] top-[7px] h-4 w-4" />
                                     <div className="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-[#e7000b] text-[12px] text-white font-semibold">
                                         {notifications.length}
                                     </div>
@@ -318,17 +299,7 @@ export default function DashboardPage() {
                     <div className="rounded-[10px] border border-[#e5e7eb] bg-white px-5 py-5 shadow-sm">
                         <div className="flex items-center justify-between">
                             <div className="rounded-[10px] bg-[#fef2f2] p-2">
-                                <div className="h-5 w-5 relative">
-                                    <div className="absolute inset-[12.44%_8.34%_12.5%_8.26%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiCriticalVector} />
-                                    </div>
-                                    <div className="absolute bottom-[45.83%] left-1/2 right-1/2 top-[37.5%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiCriticalVector2} />
-                                    </div>
-                                    <div className="absolute bottom-[29.17%] left-1/2 right-[49.96%] top-[70.83%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiCriticalVector3} />
-                                    </div>
-                                </div>
+                                <AlertTriangle className="h-5 w-5 text-[#c10007]" />
                             </div>
                             <span className="rounded-[8px] bg-[#ffe2e2] px-2 py-1 text-[12px] text-[#c10007]">Critical</span>
                         </div>
@@ -339,23 +310,7 @@ export default function DashboardPage() {
                     <div className="rounded-[10px] border border-[#e5e7eb] bg-white px-5 py-5 shadow-sm">
                         <div className="flex items-center justify-between">
                             <div className="rounded-[10px] bg-[#fefce8] p-2">
-                                <div className="h-5 w-5 relative">
-                                    <div className="absolute inset-[8.33%_16.67%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiScheduledVector1} />
-                                    </div>
-                                    <div className="absolute inset-[8.33%_16.67%_66.67%_58.33%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiScheduledVector2} />
-                                    </div>
-                                    <div className="absolute inset-[37.5%_58.33%_62.5%_33.33%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiScheduledVector3} />
-                                    </div>
-                                    <div className="absolute inset-[54.17%_33.33%_45.83%_33.33%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiScheduledVector4} />
-                                    </div>
-                                    <div className="absolute inset-[70.83%_33.33%_29.17%_33.33%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiScheduledVector4} />
-                                    </div>
-                                </div>
+                                <CalendarClock className="h-5 w-5 text-[#a65f00]" />
                             </div>
                             <span className="rounded-[8px] bg-[#fef9c2] px-2 py-1 text-[12px] text-[#a65f00]">Scheduled</span>
                         </div>
@@ -366,20 +321,7 @@ export default function DashboardPage() {
                     <div className="rounded-[10px] border border-[#e5e7eb] bg-white px-5 py-5 shadow-sm">
                         <div className="flex items-center justify-between">
                             <div className="rounded-[10px] bg-[#f0fdf4] p-2">
-                                <div className="h-5 w-5 relative">
-                                    <div className="absolute inset-[12.5%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiGoodVector1} />
-                                    </div>
-                                    <div className="absolute bottom-[29.17%] left-3/4 right-1/4 top-[37.5%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiGoodVector2} />
-                                    </div>
-                                    <div className="absolute inset-[20.83%_45.83%_29.17%_54.17%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiGoodVector3} />
-                                    </div>
-                                    <div className="absolute inset-[58.33%_66.67%_29.17%_33.33%]">
-                                        <img alt="" className="block max-w-none size-full" src={kpiGoodVector4} />
-                                    </div>
-                                </div>
+                                <ShieldCheck className="h-5 w-5 text-[#008236]" />
                             </div>
                             <span className="rounded-[8px] bg-[#dcfce7] px-2 py-1 text-[12px] text-[#008236]">Good</span>
                         </div>
@@ -394,7 +336,7 @@ export default function DashboardPage() {
                             <div className="flex items-start justify-between">
                                 <div className="flex items-start gap-4">
                                     <div className="rounded-[14px] bg-gradient-to-br from-[#155dfc] to-[#1447e6] p-3 shadow-lg">
-                                        <img alt="" className="h-6 w-6" src={aircraftLogoVector} />
+                                        <Plane className="h-6 w-6 text-white" />
                                     </div>
                                     <div>
                                         <div className="text-[20px] text-[#0a0a0a]">Aircraft Details</div>
@@ -405,7 +347,7 @@ export default function DashboardPage() {
                                     href={`/app/logs?aircraft=${encodeURIComponent(selectedAircraft?.registration || "")}`}
                                     className="relative h-8 w-[115px] rounded-[8px] border border-black/10 bg-white text-[14px] text-[#0a0a0a] flex items-center justify-center hover:bg-gray-50"
                                 >
-                                    <img alt="" className="absolute left-2 top-[7px] h-4 w-4" src={aircraftDetailsIcon} />
+                                    <FileText className="absolute left-2 top-[7px] h-4 w-4 text-slate-600" />
                                     <span className="ml-4">Full Details</span>
                                 </Link>
                             </div>
@@ -433,7 +375,7 @@ export default function DashboardPage() {
                             <div className="mt-6">
                                 <div className="flex items-center justify-between text-[14px]">
                                     <div className="flex items-center gap-2">
-                                        <img alt="" className="h-4 w-4" src={aircraftHealthIcon} />
+                                        <Activity className="h-4 w-4 text-emerald-600" />
                                         Overall Health Status
                                     </div>
                                     <div className="text-[#00a63e]">95%</div>
@@ -447,28 +389,28 @@ export default function DashboardPage() {
                             <div className="mt-6 grid grid-cols-2 gap-4">
                                 <div className="rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] p-3">
                                     <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-4 w-4" src={aircraftLocationIcon} />
+                                        <MapPin className="h-4 w-4 text-slate-500" />
                                         Location
                                     </div>
                                     <div className="mt-2 text-[14px] text-[#0a0a0a]">JFK International Airport</div>
                                 </div>
                                 <div className="rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] p-3">
                                     <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-4 w-4" src={aircraftStatusIcon} />
+                                        <Gauge className="h-4 w-4 text-slate-500" />
                                         Status
                                     </div>
                                     <div className="mt-2 text-[14px] text-[#0a0a0a]">On Ground</div>
                                 </div>
                                 <div className="rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] p-3">
                                     <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-4 w-4" src={aircraftHoursIcon} />
+                                        <Clock className="h-4 w-4 text-slate-500" />
                                         Total Hours
                                     </div>
                                     <div className="mt-2 text-[14px] text-[#0a0a0a]">24,680 hrs</div>
                                 </div>
                                 <div className="rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] p-3">
                                     <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-4 w-4" src={aircraftCyclesIcon} />
+                                        <RotateCw className="h-4 w-4 text-slate-500" />
                                         Total Cycles
                                     </div>
                                     <div className="mt-2 text-[14px] text-[#0a0a0a]">12,450</div>
@@ -477,7 +419,7 @@ export default function DashboardPage() {
 
                             <div className="mt-6 rounded-[10px] border border-[#e5e7eb] bg-[#f9fafb] p-4">
                                 <div className="flex items-center gap-2 text-[14px] text-[#0a0a0a]">
-                                    <img alt="" className="h-4 w-4" src={aircraftEngineIcon} />
+                                    <Settings className="h-4 w-4 text-slate-600" />
                                     Engine Health
                                 </div>
                                 <div className="mt-4 grid grid-cols-2 gap-4 text-[14px]">
@@ -502,7 +444,7 @@ export default function DashboardPage() {
 
                             <div className="mt-6 rounded-[10px] border border-[#bedbff] bg-[#eff6ff] p-4">
                                 <div className="flex items-center gap-2 text-[14px] text-[#1c398e]">
-                                    <img alt="" className="h-4 w-4" src={aircraftUpcomingIcon} />
+                                    <Calendar className="h-4 w-4 text-[#1c398e]" />
                                     Upcoming Maintenance
                                 </div>
                                 <div className="mt-2 text-[14px] text-[#0a0a0a]">March 15, 2026</div>
@@ -525,7 +467,7 @@ export default function DashboardPage() {
                                     <div key={row.label}>
                                         <div className="flex items-center justify-between text-[14px]">
                                             <div className="flex items-center gap-2">
-                                                <img alt="" className="h-4 w-4" src={systemHealthIcon} />
+                                                <Activity className="h-4 w-4 text-slate-500" />
                                                 {row.label}
                                             </div>
                                             <div className="flex items-center gap-2">
@@ -547,7 +489,7 @@ export default function DashboardPage() {
                     <div className="rounded-[14px] border border-black/10 bg-white p-6 shadow-sm">
                         <div className="flex items-start gap-4">
                             <div className="rounded-[14px] bg-gradient-to-br from-[#f54900] to-[#ca3500] p-3 shadow-lg">
-                                <img alt="" className="h-6 w-6" src={maintenanceLogoVector} />
+                                <Wrench className="h-6 w-6 text-white" />
                             </div>
                             <div>
                                 <div className="text-[20px] text-[#0a0a0a]">Maintenance Details</div>
@@ -557,7 +499,7 @@ export default function DashboardPage() {
 
                         <div className="mt-6">
                             <div className="flex items-center gap-2">
-                                <img alt="" className="h-5 w-5" src={maintenanceCriticalIcon} />
+                                <AlertTriangle className="h-5 w-5 text-[#e7000b]" />
                                 <span className="text-[14px] text-[#0a0a0a]">Critical Alerts</span>
                                 <span className="rounded-[8px] bg-[#e7000b] px-2 py-1 text-[12px] text-white">1</span>
                             </div>
@@ -568,7 +510,7 @@ export default function DashboardPage() {
                                 </div>
                                 <div className="mt-2 text-[12px] text-[#364153]">Seal failure likely within 200 flight hours</div>
                                 <div className="mt-2 flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                    <img alt="" className="h-3 w-3" src={maintenanceTimeIcon} />
+                                    <Clock className="h-3 w-3 text-slate-500" />
                                     Timeframe: 2-3 months
                                 </div>
                                 <div className="mt-3 rounded-[4px] bg-white p-2 text-[12px] text-[#0a0a0a]">
@@ -579,7 +521,7 @@ export default function DashboardPage() {
 
                         <div className="mt-6">
                             <div className="flex items-center gap-2">
-                                <img alt="" className="h-5 w-5" src={maintenanceScheduleIcon} />
+                                <CalendarClock className="h-5 w-5 text-[#a65f00]" />
                                 <span className="text-[14px] text-[#0a0a0a]">Upcoming Scheduled Maintenance</span>
                             </div>
                             <div className="mt-3 space-y-3">
@@ -611,7 +553,7 @@ export default function DashboardPage() {
 
                         <div className="mt-6">
                             <div className="flex items-center gap-2">
-                                <img alt="" className="h-5 w-5" src={maintenanceTasksIcon} />
+                                <ClipboardCheck className="h-5 w-5 text-indigo-600" />
                                 <span className="text-[14px] text-[#0a0a0a]">Recent Maintenance Tasks</span>
                             </div>
                             <div className="mt-3 space-y-3">
@@ -633,7 +575,7 @@ export default function DashboardPage() {
                                         Complete A-Check including visual inspection, lubrication, and minor repairs
                                     </div>
                                     <div className="mt-2 flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-3 w-3" src={maintenanceUserIcon} />
+                                        <User className="h-3 w-3 text-slate-500" />
                                         By: John Anderson
                                     </div>
                                     <div className="mt-3 border-t border-[#e5e7eb] pt-2 text-[12px] text-[#4a5565]">
@@ -667,7 +609,7 @@ export default function DashboardPage() {
                                         Critical avionics software update for FMS and TCAS systems
                                     </div>
                                     <div className="mt-2 flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                        <img alt="" className="h-3 w-3" src={maintenanceUserIcon} />
+                                        <User className="h-3 w-3 text-slate-500" />
                                         By: Sarah Williams
                                     </div>
                                 </div>
@@ -677,14 +619,14 @@ export default function DashboardPage() {
                         <div className="mt-6 grid grid-cols-2 gap-4">
                             <div className="rounded-[10px] border border-[#bedbff] bg-gradient-to-r from-[#eff6ff] to-[#dbeafe] p-3">
                                 <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                    <img alt="" className="h-4 w-4" src={maintenanceListIcon} />
+                                    <ListChecks className="h-4 w-4 text-blue-600" />
                                     Total Tasks
                                 </div>
                                 <div className="mt-2 text-[24px] text-[#0a0a0a]">2</div>
                             </div>
                             <div className="rounded-[10px] border border-[#b9f8cf] bg-gradient-to-r from-[#f0fdf4] to-[#dcfce7] p-3">
                                 <div className="flex items-center gap-2 text-[12px] text-[#4a5565]">
-                                    <img alt="" className="h-4 w-4" src={maintenanceMoneyIcon} />
+                                    <DollarSign className="h-4 w-4 text-emerald-600" />
                                     Total Cost
                                 </div>
                                 <div className="mt-2 text-[24px] text-[#0a0a0a]">$9,700</div>

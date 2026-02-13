@@ -5,29 +5,24 @@
  * specHash: sha256:documentation-page-v2
  */
 
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useRef, useCallback } from "react";
-
-// Figma assets for Documentation Page (node 2:2101)
-const imgIcon = "https://www.figma.com/api/mcp/asset/91894b65-def4-419b-ba05-50aa8ce997c1";
-const imgVector = "https://www.figma.com/api/mcp/asset/96384e1b-be36-46fa-8ee4-f20fb52d2614";
-const imgIcon1 = "https://www.figma.com/api/mcp/asset/3fc64b22-f049-4fde-84f9-35312516aba0";
-const imgIcon2 = "https://www.figma.com/api/mcp/asset/009f48a9-347e-435e-8b18-7659fddd1549";
-const imgIcon3 = "https://www.figma.com/api/mcp/asset/1d55ad69-247a-462a-b2a8-da30cab89dc7";
-const imgIcon4 = "https://www.figma.com/api/mcp/asset/2e291a1d-3d08-4a2e-8747-9acd47b95ee0";
-const imgIcon5 = "https://www.figma.com/api/mcp/asset/8cb066bd-292e-44c5-b36e-57443c6bd426";
-const imgIcon6 = "https://www.figma.com/api/mcp/asset/e5a390b2-4015-4e9f-9c01-71350cbb5b86";
-const imgIcon7 = "https://www.figma.com/api/mcp/asset/f611f83d-0fcb-4ca7-a928-4518be1da012";
-const imgIcon8 = "https://www.figma.com/api/mcp/asset/ca729b02-c7dd-44a6-a06b-6dab7710af95";
-const imgIcon9 = "https://www.figma.com/api/mcp/asset/76daf883-434e-4c16-a09b-fc852f81a05a";
-const imgIcon10 = "https://www.figma.com/api/mcp/asset/35406d2c-d82b-4932-88b4-3f26867349be";
-const imgIcon11 = "https://www.figma.com/api/mcp/asset/64dc51eb-eea4-475a-a4e1-21eb8c6a10a1";
-const imgIcon12 = "https://www.figma.com/api/mcp/asset/9b9df8cb-42e3-4103-80b2-cf5255907a12";
-const imgIcon13 = "https://www.figma.com/api/mcp/asset/9c465959-c5a0-4a85-bd4a-ff737082f05a";
-const imgIcon14 = "https://www.figma.com/api/mcp/asset/cb22b977-535b-4c8a-8fd8-96859ea25832";
-const imgIcon15 = "https://www.figma.com/api/mcp/asset/3c712b2f-0e83-4ab3-b5ed-09e29d7bc3f6";
+import {
+    AlertTriangle,
+    BadgeCheck,
+    Calendar,
+    CheckCircle,
+    ChevronDown,
+    Download,
+    Eye,
+    FileText,
+    Info,
+    Send,
+    Trash2,
+    Upload,
+    User,
+} from "lucide-react";
 
 // Types
 interface MaintenanceFormData {
@@ -318,7 +313,7 @@ export default function DocumentationPage() {
                     </p>
                 </div>
                 <div className="flex h-[34px] items-center gap-2 rounded-lg bg-[#dbeafe] px-4" data-name="Badge" data-node-id="2:2112">
-                    <img src={imgIcon} alt="" className="h-3 w-3" />
+                    <CheckCircle className="h-3 w-3 text-[#1447e6]" aria-hidden="true" />
                     <span className="text-[12px] leading-4 text-[#1447e6]">Official Records</span>
                 </div>
             </div>
@@ -328,7 +323,7 @@ export default function DocumentationPage() {
                 {/* Card Header */}
                 <div className="flex items-center gap-3 border-b border-[#e5e7eb] pb-4" data-name="DocumentationPanel" data-node-id="2:2121">
                     <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-[#dbeafe]">
-                        <img src={imgVector} alt="" className="h-[18px] w-[18px]" />
+                        <FileText className="h-[18px] w-[18px] text-[#1447e6]" aria-hidden="true" />
                     </div>
                     <div>
                         <h2 className="text-[20px] font-bold leading-7 text-[#0a0a0a]">
@@ -345,7 +340,7 @@ export default function DocumentationPage() {
                     {/* Aircraft Information Section */}
                     <div className="flex flex-col gap-4" data-name="Container" data-node-id="2:2131">
                         <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2132">
-                            <img src={imgIcon1} alt="" className="h-5 w-5" />
+                            <FileText className="h-5 w-5 text-[#1447e6]" aria-hidden="true" />
                             <h3 className="text-[18px] font-bold leading-7 text-[#0a0a0a]">
                                 Aircraft Information
                             </h3>
@@ -438,7 +433,7 @@ export default function DocumentationPage() {
                                 <span className={`text-[16px] ${maintenanceForm.maintenanceType ? "text-[#0a0a0a]" : "text-[#6a7282]"}`}>
                                     {maintenanceForm.maintenanceType || "Select maintenance type..."}
                                 </span>
-                                <img src={imgIcon2} alt="" className={`h-5 w-5 transition-transform ${showMaintenanceTypeDropdown ? "rotate-180" : ""}`} />
+                                <ChevronDown className={`h-5 w-5 transition-transform ${showMaintenanceTypeDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                             </button>
                             {showMaintenanceTypeDropdown && (
                                 <div className="absolute top-full left-0 right-0 z-10 mt-1 max-h-60 overflow-auto rounded-[10px] border border-[#e5e7eb] bg-white shadow-lg">
@@ -463,7 +458,7 @@ export default function DocumentationPage() {
                     {/* Technician Information Section */}
                     <div className="flex flex-col gap-4" data-name="Container" data-node-id="2:2170">
                         <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2171">
-                            <img src={imgIcon3} alt="" className="h-5 w-5" />
+                            <User className="h-5 w-5 text-[#1447e6]" aria-hidden="true" />
                             <h3 className="text-[18px] font-bold leading-7 text-[#0a0a0a]">
                                 Technician Information
                             </h3>
@@ -505,7 +500,7 @@ export default function DocumentationPage() {
                                 Technician Certificate Number *
                             </label>
                             <div className="flex items-center gap-2">
-                                <img src={imgIcon4} alt="" className="h-10 w-10" />
+                                <BadgeCheck className="h-10 w-10 text-[#1447e6]" aria-hidden="true" />
                                 <input
                                     type="text"
                                     value={maintenanceForm.techCertNumber}
@@ -520,7 +515,7 @@ export default function DocumentationPage() {
                     {/* Maintenance Date Section */}
                     <div className="flex flex-col gap-4" data-name="Container" data-node-id="2:2196">
                         <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2197">
-                            <img src={imgIcon5} alt="" className="h-5 w-5" />
+                            <Calendar className="h-5 w-5 text-[#1447e6]" aria-hidden="true" />
                             <h3 className="text-[18px] font-bold leading-7 text-[#0a0a0a]">
                                 Maintenance Date
                             </h3>
@@ -537,7 +532,7 @@ export default function DocumentationPage() {
                                     onChange={(e) => handleMaintenanceChange("maintenanceDate", e.target.value)}
                                     className="h-[42px] w-full rounded-[10px] border border-[#d1d5dc] bg-white px-4 pl-10 text-[16px] text-[#0a0a0a] outline-none focus:border-[#1447e6] focus:ring-2 focus:ring-[#1447e6]"
                                 />
-                                <img src={imgIcon6} alt="" className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 pointer-events-none" />
+                                <Calendar className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-[#6a7282] pointer-events-none" aria-hidden="true" />
                             </div>
                         </div>
                     </div>
@@ -554,7 +549,7 @@ export default function DocumentationPage() {
                                 <span>Submitting...</span>
                             ) : (
                                 <>
-                                    <img src={imgIcon7} alt="" className="h-4 w-4" />
+                                    <Send className="h-4 w-4 text-white" aria-hidden="true" />
                                     Submit Documentation
                                 </>
                             )}
@@ -575,7 +570,7 @@ export default function DocumentationPage() {
                 {/* Card Header */}
                 <div className="flex items-center gap-3 border-b border-[#e5e7eb] pb-4" data-name="DocumentationPanel" data-node-id="2:2227">
                     <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-[#dcfce7]">
-                        <img src={imgIcon8} alt="" className="h-6 w-6" />
+                        <Upload className="h-6 w-6 text-[#16a34a]" aria-hidden="true" />
                     </div>
                     <div>
                         <h2 className="text-[20px] font-bold leading-7 text-[#0a0a0a]">
@@ -594,13 +589,13 @@ export default function DocumentationPage() {
                     onDragLeave={handleDragLeave}
                     onDrop={handleDrop}
                     className={`mt-12 flex cursor-pointer flex-col items-center justify-center rounded-[10px] border-[1.6px] border-dashed py-8 transition-colors ${isDragging
-                            ? "border-[#1447e6] bg-[#eff6ff]"
-                            : "border-[#d1d5dc] bg-[#f9fafb] hover:border-[#1447e6] hover:bg-[#eff6ff]"
+                        ? "border-[#1447e6] bg-[#eff6ff]"
+                        : "border-[#d1d5dc] bg-[#f9fafb] hover:border-[#1447e6] hover:bg-[#eff6ff]"
                         }`}
                     data-name="DocumentationPanel"
                     data-node-id="2:2238"
                 >
-                    <img src={imgIcon8} alt="" className="h-12 w-12" />
+                    <Upload className="h-12 w-12 text-[#16a34a]" aria-hidden="true" />
                     <p className="mt-4 text-[18px] leading-7 text-[#364153]">
                         Click to upload or drag and drop
                     </p>
@@ -620,7 +615,7 @@ export default function DocumentationPage() {
                 {/* Uploaded Documents */}
                 <div className="mt-12 flex flex-col gap-4" data-name="DocumentationPanel" data-node-id="2:2248">
                     <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2249">
-                        <img src={imgIcon9} alt="" className="h-5 w-5" />
+                        <FileText className="h-5 w-5 text-[#1447e6]" aria-hidden="true" />
                         <h3 className="text-[16px] font-bold leading-6 text-[#0a0a0a]">
                             Uploaded Documents ({documents.length})
                         </h3>
@@ -634,7 +629,7 @@ export default function DocumentationPage() {
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[10px] border border-[#e5e7eb] bg-white">
-                                        <img src={imgIcon9} alt="" className="h-6 w-6" />
+                                        <FileText className="h-6 w-6 text-[#1447e6]" aria-hidden="true" />
                                     </div>
                                     <div className="flex flex-col gap-1">
                                         <span className="text-[16px] leading-6 text-[#101828]">
@@ -642,7 +637,7 @@ export default function DocumentationPage() {
                                         </span>
                                         <div className="flex items-center gap-4">
                                             <div className="flex items-center gap-1">
-                                                <img src={imgIcon10} alt="" className="h-3 w-3" />
+                                                <Calendar className="h-3 w-3 text-[#6a7282]" aria-hidden="true" />
                                                 <span className="text-[14px] leading-5 text-[#4a5565]">
                                                     {doc.date}
                                                 </span>
@@ -663,7 +658,7 @@ export default function DocumentationPage() {
                                         className="flex h-8 w-9 items-center justify-center rounded-lg hover:bg-[#eff6ff] transition-colors"
                                         title="View"
                                     >
-                                        <img src={imgIcon11} alt="" className="h-4 w-4" />
+                                        <Eye className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                     <button
                                         type="button"
@@ -671,7 +666,7 @@ export default function DocumentationPage() {
                                         className="flex h-8 w-9 items-center justify-center rounded-lg hover:bg-[#eff6ff] transition-colors"
                                         title="Download"
                                     >
-                                        <img src={imgIcon12} alt="" className="h-4 w-4" />
+                                        <Download className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                     <button
                                         type="button"
@@ -679,7 +674,7 @@ export default function DocumentationPage() {
                                         className="flex h-8 w-9 items-center justify-center rounded-lg hover:bg-[#ffe2e2] transition-colors"
                                         title="Delete"
                                     >
-                                        <img src={imgIcon13} alt="" className="h-4 w-4" />
+                                        <Trash2 className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                 </div>
                             </div>
@@ -693,7 +688,7 @@ export default function DocumentationPage() {
                 {/* Card Header */}
                 <div className="flex items-center gap-3 border-b border-[#e5e7eb] pb-4" data-name="DocumentationPanel" data-node-id="2:2376">
                     <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-[#ffe2e2]">
-                        <img src={imgIcon14} alt="" className="h-6 w-6" />
+                        <AlertTriangle className="h-6 w-6 text-[#c10007]" aria-hidden="true" />
                     </div>
                     <div>
                         <h2 className="text-[20px] font-bold leading-7 text-[#0a0a0a]">
@@ -710,7 +705,7 @@ export default function DocumentationPage() {
                     {/* Discrepancy Information Section */}
                     <div className="flex flex-col gap-4" data-name="Container" data-node-id="2:2388">
                         <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2389">
-                            <img src={imgIcon14} alt="" className="h-5 w-5" />
+                            <AlertTriangle className="h-5 w-5 text-[#c10007]" aria-hidden="true" />
                             <h3 className="text-[18px] font-bold leading-7 text-[#0a0a0a]">
                                 Discrepancy Information
                             </h3>
@@ -759,7 +754,7 @@ export default function DocumentationPage() {
                                 <span className={`text-[16px] ${discrepancyForm.referenceManual ? "text-[#0a0a0a]" : "text-[#6a7282]"}`}>
                                     {discrepancyForm.referenceManual || "Select reference manual..."}
                                 </span>
-                                <img src={imgIcon2} alt="" className={`h-5 w-5 transition-transform ${showReferenceManualDropdown ? "rotate-180" : ""}`} />
+                                <ChevronDown className={`h-5 w-5 transition-transform ${showReferenceManualDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                             </button>
                             {showReferenceManualDropdown && (
                                 <div className="absolute top-full left-0 right-0 z-10 mt-1 max-h-60 overflow-auto rounded-[10px] border border-[#e5e7eb] bg-white shadow-lg">
@@ -793,7 +788,7 @@ export default function DocumentationPage() {
                                 <span>Submitting...</span>
                             ) : (
                                 <>
-                                    <img src={imgIcon7} alt="" className="h-4 w-4" />
+                                    <Send className="h-4 w-4 text-white" aria-hidden="true" />
                                     Submit Discrepancy Report
                                 </>
                             )}
@@ -814,7 +809,7 @@ export default function DocumentationPage() {
                 {/* Card Header */}
                 <div className="flex items-center gap-3 border-b border-[#e5e7eb] pb-4" data-name="DocumentationPanel" data-node-id="2:2423">
                     <div className="flex h-12 w-12 items-center justify-center rounded-[10px] bg-[#ffe2e2]">
-                        <img src={imgIcon14} alt="" className="h-6 w-6" />
+                        <AlertTriangle className="h-6 w-6 text-[#c10007]" aria-hidden="true" />
                     </div>
                     <div>
                         <h2 className="text-[20px] font-bold leading-7 text-[#0a0a0a]">
@@ -829,7 +824,7 @@ export default function DocumentationPage() {
                 {/* Reports List */}
                 <div className="mt-12 flex flex-col gap-4" data-name="DocumentationPanel" data-node-id="2:2434">
                     <div className="flex items-center gap-2" data-name="Heading 4" data-node-id="2:2435">
-                        <img src={imgIcon14} alt="" className="h-5 w-5" />
+                        <AlertTriangle className="h-5 w-5 text-[#c10007]" aria-hidden="true" />
                         <h3 className="text-[16px] font-bold leading-6 text-[#0a0a0a]">
                             Discrepancy Reports ({discrepancies.length})
                         </h3>
@@ -843,7 +838,7 @@ export default function DocumentationPage() {
                             >
                                 <div className="flex items-center gap-4">
                                     <div className="flex h-[42px] w-[42px] items-center justify-center rounded-[10px] border border-[#e5e7eb] bg-white">
-                                        <img src={imgIcon14} alt="" className="h-6 w-6" />
+                                        <AlertTriangle className="h-6 w-6 text-[#c10007]" aria-hidden="true" />
                                     </div>
                                     <div className="flex flex-col gap-1">
                                         <span className="text-[16px] leading-6 text-[#101828]">
@@ -851,7 +846,7 @@ export default function DocumentationPage() {
                                         </span>
                                         <div className="flex flex-wrap items-center gap-4">
                                             <div className="flex items-center gap-1">
-                                                <img src={imgIcon10} alt="" className="h-3 w-3" />
+                                                <Calendar className="h-3 w-3 text-[#6a7282]" aria-hidden="true" />
                                                 <span className="text-[14px] leading-5 text-[#4a5565]">
                                                     {report.date}
                                                 </span>
@@ -861,10 +856,10 @@ export default function DocumentationPage() {
                                             </span>
                                             <span
                                                 className={`rounded-lg px-2 py-[3px] text-[12px] leading-4 ${report.status === "Resolved"
-                                                        ? "bg-[#dcfce7] text-[#008236]"
-                                                        : report.status === "In Progress"
-                                                            ? "bg-[#fef9c2] text-[#a65f00]"
-                                                            : "bg-[#dbeafe] text-[#1447e6]"
+                                                    ? "bg-[#dcfce7] text-[#008236]"
+                                                    : report.status === "In Progress"
+                                                        ? "bg-[#fef9c2] text-[#a65f00]"
+                                                        : "bg-[#dbeafe] text-[#1447e6]"
                                                     }`}
                                             >
                                                 {report.status}
@@ -878,7 +873,7 @@ export default function DocumentationPage() {
                                     className="flex h-8 w-9 items-center justify-center rounded-lg hover:bg-[#ffe2e2] transition-colors"
                                     title="Delete"
                                 >
-                                    <img src={imgIcon13} alt="" className="h-4 w-4" />
+                                    <Trash2 className="h-4 w-4" aria-hidden="true" />
                                 </button>
                             </div>
                         ))}
@@ -889,7 +884,7 @@ export default function DocumentationPage() {
             {/* Important Information Card */}
             <div className="rounded-[14px] border border-[#bedbff] bg-[#eff6ff] p-6" data-name="Card" data-node-id="2:2498">
                 <div className="flex gap-3" data-name="DocumentationPanel" data-node-id="2:2499">
-                    <img src={imgIcon15} alt="" className="h-6 w-6" />
+                    <Info className="h-6 w-6 text-[#1c398e]" aria-hidden="true" />
                     <div className="flex flex-col gap-2">
                         <h3 className="text-[16px] font-bold leading-6 text-[#1c398e]">
                             Important Information

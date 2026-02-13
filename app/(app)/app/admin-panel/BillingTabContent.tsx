@@ -1,22 +1,20 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
-
-// Figma assets from node 6:6079
-const imgIconCurrentPlan = "https://www.figma.com/api/mcp/asset/c7d88c3a-b8fb-4564-b441-80ec83e2d1b3";
-const imgIconNextBilling = "https://www.figma.com/api/mcp/asset/c64c1de5-6e5a-4f93-83fa-c3e17e66468f";
-const imgIconTeamMembers = "https://www.figma.com/api/mcp/asset/04e847d5-0aea-4182-a605-f76334a4232a";
-const imgIconCheck = "https://www.figma.com/api/mcp/asset/2310af2b-9bca-4c8c-bb17-7eda83c10fb3";
-const imgIconCheckActive = "https://www.figma.com/api/mcp/asset/997ae211-46bc-483b-8b6d-8b55759a1800";
-const imgIconStarter = "https://www.figma.com/api/mcp/asset/997ae211-46bc-483b-8b6d-8b55759a1800";
-const imgIconPro = "https://www.figma.com/api/mcp/asset/6cab696a-b234-4042-ac6b-bed01f68a846";
-const imgIconEnterprise = "https://www.figma.com/api/mcp/asset/b338ed30-9126-4d7d-a602-593e7050f052";
-const imgIconAddPayment = "https://www.figma.com/api/mcp/asset/0e0e5ad0-a5d5-4bf7-8dda-b6c905966b09";
-const imgIconEdit = "https://www.figma.com/api/mcp/asset/89bad8ef-5d91-4c8d-a97e-272f567aadec";
-const imgIconDownload = "https://www.figma.com/api/mcp/asset/3e80e150-ccab-4bf6-9b90-eb1378fe873d";
-const imgIconHelp = "https://www.figma.com/api/mcp/asset/89d53aad-c55c-41b8-88fb-82ab4a1e818a";
-const imgIconSecure = "https://www.figma.com/api/mcp/asset/e7bb68dd-35ee-4106-9f65-cd2c17e513ef";
+import {
+    BadgeCheck,
+    Building2,
+    Calendar,
+    CheckCircle,
+    CreditCard,
+    Download,
+    HelpCircle,
+    Pencil,
+    PlusCircle,
+    ShieldCheck,
+    Sparkles,
+    Users,
+} from "lucide-react";
 
 type BillingCycle = "monthly" | "annual";
 
@@ -190,7 +188,7 @@ export default function BillingTabContent() {
                             lineHeight: "16px",
                         }}
                     >
-                        <img src={imgIconCheck} alt="" style={{ width: "12px", height: "12px" }} />
+                        <CheckCircle style={{ width: "12px", height: "12px" }} aria-hidden="true" />
                         Active
                     </span>
                 </div>
@@ -208,7 +206,7 @@ export default function BillingTabContent() {
                         }}
                     >
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                            <img src={imgIconCurrentPlan} alt="" style={{ width: "20px", height: "20px" }} />
+                            <CreditCard style={{ width: "20px", height: "20px", color: "#1c398e" }} aria-hidden="true" />
                             <span style={{ fontSize: "14px", lineHeight: "20px", color: "#1c398e" }}>Current Plan</span>
                         </div>
                         <p style={{ fontSize: "24px", lineHeight: "32px", fontWeight: "bold", color: "#1c398e", margin: "0 0 8px 0", textTransform: "capitalize" }}>
@@ -230,7 +228,7 @@ export default function BillingTabContent() {
                         }}
                     >
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                            <img src={imgIconNextBilling} alt="" style={{ width: "20px", height: "20px" }} />
+                            <Calendar style={{ width: "20px", height: "20px", color: "#59168b" }} aria-hidden="true" />
                             <span style={{ fontSize: "14px", lineHeight: "20px", color: "#59168b" }}>Next Billing</span>
                         </div>
                         <p style={{ fontSize: "24px", lineHeight: "32px", fontWeight: "bold", color: "#59168b", margin: "0 0 8px 0" }}>
@@ -252,7 +250,7 @@ export default function BillingTabContent() {
                         }}
                     >
                         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
-                            <img src={imgIconTeamMembers} alt="" style={{ width: "20px", height: "20px" }} />
+                            <Users style={{ width: "20px", height: "20px", color: "#0d542b" }} aria-hidden="true" />
                             <span style={{ fontSize: "14px", lineHeight: "20px", color: "#0d542b" }}>Team Members</span>
                         </div>
                         <p style={{ fontSize: "24px", lineHeight: "32px", fontWeight: "bold", color: "#0d542b", margin: "0 0 8px 0" }}>
@@ -385,11 +383,13 @@ export default function BillingTabContent() {
                                     marginBottom: "16px",
                                 }}
                             >
-                                <img
-                                    src={plan.id === "starter" ? imgIconStarter : plan.id === "professional" ? imgIconPro : imgIconEnterprise}
-                                    alt=""
-                                    style={{ width: "24px", height: "24px" }}
-                                />
+                                {plan.id === "starter" ? (
+                                    <Sparkles style={{ width: "24px", height: "24px", color: "#155dfc" }} aria-hidden="true" />
+                                ) : plan.id === "professional" ? (
+                                    <BadgeCheck style={{ width: "24px", height: "24px", color: "#59168b" }} aria-hidden="true" />
+                                ) : (
+                                    <Building2 style={{ width: "24px", height: "24px", color: "#0a0a0a" }} aria-hidden="true" />
+                                )}
                             </div>
 
                             {/* Plan Name & Tagline */}
@@ -419,7 +419,7 @@ export default function BillingTabContent() {
                             <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
                                 {plan.features.map((feature, idx) => (
                                     <div key={idx} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
-                                        <img src={imgIconCheckActive} alt="" style={{ width: "20px", height: "20px", marginTop: "2px" }} />
+                                        <CheckCircle style={{ width: "20px", height: "20px", marginTop: "2px", color: "#00a63e" }} aria-hidden="true" />
                                         <span style={{ fontSize: "14px", lineHeight: "20px", color: "#0a0a0a" }}>{feature}</span>
                                     </div>
                                 ))}
@@ -485,7 +485,7 @@ export default function BillingTabContent() {
                             cursor: "pointer",
                         }}
                     >
-                        <img src={imgIconAddPayment} alt="" style={{ width: "16px", height: "16px" }} />
+                        <PlusCircle style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                         Add Payment Method
                     </button>
                 </div>
@@ -585,7 +585,7 @@ export default function BillingTabContent() {
                                         cursor: "pointer",
                                     }}
                                 >
-                                    <img src={imgIconEdit} alt="Edit" style={{ width: "16px", height: "16px" }} />
+                                    <Pencil style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                                 </button>
                             </div>
                         </div>
@@ -660,7 +660,9 @@ export default function BillingTabContent() {
                                     width: "fit-content",
                                 }}
                             >
-                                {item.status === "Paid" && <img src={imgIconCheck} alt="" style={{ width: "12px", height: "12px" }} />}
+                                {item.status === "Paid" && (
+                                    <CheckCircle style={{ width: "12px", height: "12px" }} aria-hidden="true" />
+                                )}
                                 {item.status}
                             </span>
                             <button
@@ -680,7 +682,7 @@ export default function BillingTabContent() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <img src={imgIconDownload} alt="" style={{ width: "16px", height: "16px" }} />
+                                <Download style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                                 Download
                             </button>
                         </div>
@@ -711,7 +713,7 @@ export default function BillingTabContent() {
                                 justifyContent: "center",
                             }}
                         >
-                            <img src={imgIconHelp} alt="" style={{ width: "24px", height: "24px" }} />
+                            <HelpCircle style={{ width: "24px", height: "24px" }} aria-hidden="true" />
                         </div>
                         <div>
                             <h4 style={{ fontSize: "18px", lineHeight: "27px", fontWeight: "bold", color: "#0a0a0a", margin: 0 }}>
@@ -765,7 +767,7 @@ export default function BillingTabContent() {
                                 justifyContent: "center",
                             }}
                         >
-                            <img src={imgIconSecure} alt="" style={{ width: "24px", height: "24px" }} />
+                            <ShieldCheck style={{ width: "24px", height: "24px" }} aria-hidden="true" />
                         </div>
                         <div>
                             <h4 style={{ fontSize: "18px", lineHeight: "27px", fontWeight: "bold", color: "#0a0a0a", margin: 0 }}>

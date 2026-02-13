@@ -5,23 +5,22 @@
  * specHash: sha256:maintenance-logs-page-v2
  */
 
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useCallback } from "react";
-
-// Figma assets for Maintenance Logs Page (node 6:3)
-const imgIcon = "https://www.figma.com/api/mcp/asset/26b70c61-de66-4a5a-8c9d-bc7b7fb8bac4"; // Check circle
-const imgIcon1 = "https://www.figma.com/api/mcp/asset/0004aa6d-7855-449b-8d6a-5123feabc517"; // Wrench
-const imgIconAdd = "https://www.figma.com/api/mcp/asset/f611f83d-0fcb-4ca7-a928-4518be1da012"; // Add icon
-const imgIconSearch = "https://www.figma.com/api/mcp/asset/a5ba47cc-4cee-4c7c-88fd-52a18d0db2a6"; // Search
-const imgIconFilter = "https://www.figma.com/api/mcp/asset/009f48a9-347e-435e-8b18-7659fddd1549"; // Filter/chevron
-const imgIconDelete = "https://www.figma.com/api/mcp/asset/9c465959-c5a0-4a85-bd4a-ff737082f05a"; // Delete
-const imgIconEdit = "https://www.figma.com/api/mcp/asset/96384e1b-be36-46fa-8ee4-f20fb52d2614"; // Edit
-const imgIconView = "https://www.figma.com/api/mcp/asset/64dc51eb-eea4-475a-a4e1-21eb8c6a10a1"; // View/eye
-const imgIconClock = "https://www.figma.com/api/mcp/asset/35406d2c-d82b-4932-88b4-3f26867349be"; // Clock
-const imgIconCalendar = "https://www.figma.com/api/mcp/asset/e5a390b2-4015-4e9f-9c01-71350cbb5b86"; // Calendar
-const imgIconUser = "https://www.figma.com/api/mcp/asset/1d55ad69-247a-462a-b2a8-da30cab89dc7"; // User
+import {
+    Calendar,
+    CheckCircle,
+    ChevronDown,
+    Clock,
+    Eye,
+    Pencil,
+    Plus,
+    Search,
+    Trash2,
+    User,
+    Wrench,
+} from "lucide-react";
 
 // Types
 type LogStatus = "COMPLETED" | "IN_PROGRESS" | "SCHEDULED";
@@ -321,7 +320,7 @@ export default function MaintenanceLogsPage() {
                     onClick={() => setShowAddModal(true)}
                     className="flex h-9 items-center gap-2 rounded-lg bg-[#030213] px-4 text-[14px] text-white transition-colors hover:bg-[#1a1a2e]"
                 >
-                    <img src={imgIconAdd} alt="" className="h-4 w-4 brightness-0 invert" />
+                    <Plus className="h-4 w-4 text-white" aria-hidden="true" />
                     Add New Log
                 </button>
             </div>
@@ -330,7 +329,7 @@ export default function MaintenanceLogsPage() {
             <div className="flex items-center gap-4">
                 {/* Search */}
                 <div className="relative flex-1">
-                    <img src={imgIconSearch} alt="" className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 opacity-50" />
+                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6a7282]" aria-hidden="true" />
                     <input
                         type="text"
                         value={searchQuery}
@@ -350,7 +349,7 @@ export default function MaintenanceLogsPage() {
                         className="flex h-10 items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white px-4 text-[14px] hover:border-[#1447e6]"
                     >
                         <span>Status: {statusFilter === "ALL" ? "All" : statusFilter}</span>
-                        <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showFilterDropdown ? "rotate-180" : ""}`} />
+                        <ChevronDown className={`h-4 w-4 transition-transform ${showFilterDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                     </button>
                     {showFilterDropdown && (
                         <div className="absolute right-0 top-full z-10 mt-1 w-40 rounded-lg border border-[#e5e7eb] bg-white shadow-lg">
@@ -389,7 +388,7 @@ export default function MaintenanceLogsPage() {
                         className="flex h-10 items-center gap-2 rounded-lg border border-[#e5e7eb] bg-white px-4 text-[14px] hover:border-[#1447e6]"
                     >
                         <span>Category: {categoryFilter === "ALL" ? "All" : categoryFilter}</span>
-                        <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showCategoryFilterDropdown ? "rotate-180" : ""}`} />
+                        <ChevronDown className={`h-4 w-4 transition-transform ${showCategoryFilterDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                     </button>
                     {showCategoryFilterDropdown && (
                         <div className="absolute right-0 top-full z-10 mt-1 max-h-60 w-48 overflow-auto rounded-lg border border-[#e5e7eb] bg-white shadow-lg">
@@ -435,7 +434,7 @@ export default function MaintenanceLogsPage() {
                 <div className="mt-6 flex flex-col gap-3" data-name="MaintenanceLogsPanel" data-node-id="6:13">
                     {filteredLogs.length === 0 ? (
                         <div className="flex flex-col items-center justify-center py-12">
-                            <img src={imgIcon1} alt="" className="h-12 w-12 opacity-30" />
+                            <Wrench className="h-12 w-12 text-[#9ca3af] opacity-30" aria-hidden="true" />
                             <p className="mt-4 text-[16px] text-[#6a7282]">No maintenance logs found</p>
                             <p className="text-[14px] text-[#9ca3af]">Try adjusting your search or filters</p>
                         </div>
@@ -448,10 +447,9 @@ export default function MaintenanceLogsPage() {
                                 data-node-id="6:14"
                             >
                                 <div className="flex gap-2" data-name="Container" data-node-id="6:16">
-                                    <img
-                                        src={imgIcon}
-                                        alt=""
-                                        className="h-4 w-4 shrink-0 mt-1"
+                                    <CheckCircle
+                                        className="h-4 w-4 shrink-0 mt-1 text-[#00a63e]"
+                                        aria-hidden="true"
                                         data-name="Icon"
                                         data-node-id="6:17"
                                     />
@@ -469,17 +467,17 @@ export default function MaintenanceLogsPage() {
                                         </p>
                                         <div className="flex items-center gap-3 text-[12px] leading-4 text-[#6a7282]" data-name="Container" data-node-id="6:26">
                                             <span className="flex items-center gap-1">
-                                                <img src={imgIconUser} alt="" className="h-3 w-3" />
+                                                <User className="h-3 w-3 text-[#6a7282]" aria-hidden="true" />
                                                 {log.technician}
                                             </span>
                                             <span>•</span>
                                             <span className="flex items-center gap-1">
-                                                <img src={imgIconCalendar} alt="" className="h-3 w-3" />
+                                                <Calendar className="h-3 w-3 text-[#6a7282]" aria-hidden="true" />
                                                 {log.date}
                                             </span>
                                             <span>•</span>
                                             <span className="flex items-center gap-1">
-                                                <img src={imgIconClock} alt="" className="h-3 w-3" />
+                                                <Clock className="h-3 w-3 text-[#6a7282]" aria-hidden="true" />
                                                 {log.duration}
                                             </span>
                                         </div>
@@ -511,7 +509,7 @@ export default function MaintenanceLogsPage() {
                                         className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[#eff6ff]"
                                         title="View Details"
                                     >
-                                        <img src={imgIconView} alt="" className="h-4 w-4" />
+                                        <Eye className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                     {/* Edit Button */}
                                     <button
@@ -519,7 +517,7 @@ export default function MaintenanceLogsPage() {
                                         className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[#eff6ff]"
                                         title="Edit"
                                     >
-                                        <img src={imgIconEdit} alt="" className="h-4 w-4" />
+                                        <Pencil className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                     {/* Delete Button */}
                                     <button
@@ -527,7 +525,7 @@ export default function MaintenanceLogsPage() {
                                         className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[#ffe2e2]"
                                         title="Delete"
                                     >
-                                        <img src={imgIconDelete} alt="" className="h-4 w-4" />
+                                        <Trash2 className="h-4 w-4" aria-hidden="true" />
                                     </button>
                                 </div>
                             </div>
@@ -548,7 +546,7 @@ export default function MaintenanceLogsPage() {
                 {/* Empty State or Tasks */}
                 {upcomingTasks.length === 0 ? (
                     <div className="mt-6 flex flex-col items-center justify-center py-8" data-name="MaintenanceTasksPanel" data-node-id="6:67">
-                        <img src={imgIcon1} alt="" className="h-12 w-12 opacity-30" data-name="Icon" data-node-id="6:68" />
+                        <Wrench className="h-12 w-12 text-[#9ca3af] opacity-30" aria-hidden="true" data-name="Icon" data-node-id="6:68" />
                         <p className="mt-4 text-center text-[16px] leading-6 text-[#6a7282]" data-name="Paragraph" data-node-id="6:70">
                             No upcoming maintenance tasks for N123AB
                         </p>
@@ -572,13 +570,12 @@ export default function MaintenanceLogsPage() {
                                     </div>
                                 </div>
                                 <span
-                                    className={`rounded-lg px-2 py-[3px] text-[12px] ${
-                                        task.priority === "HIGH"
-                                            ? "bg-[#ffe2e2] text-[#e7000b]"
-                                            : task.priority === "MEDIUM"
+                                    className={`rounded-lg px-2 py-[3px] text-[12px] ${task.priority === "HIGH"
+                                        ? "bg-[#ffe2e2] text-[#e7000b]"
+                                        : task.priority === "MEDIUM"
                                             ? "bg-[#fef9c2] text-[#a65f00]"
                                             : "bg-[#dbeafe] text-[#1447e6]"
-                                    }`}
+                                        }`}
                                 >
                                     {task.priority}
                                 </span>
@@ -667,7 +664,7 @@ export default function MaintenanceLogsPage() {
                                         className="flex h-10 items-center justify-between rounded-lg border border-[#e5e7eb] px-3 text-left text-[14px] hover:border-[#1447e6]"
                                     >
                                         <span>{formData.status.replace("_", " ")}</span>
-                                        <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showStatusDropdown ? "rotate-180" : ""}`} />
+                                        <ChevronDown className={`h-4 w-4 transition-transform ${showStatusDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                                     </button>
                                     {showStatusDropdown && (
                                         <div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-[#e5e7eb] bg-white shadow-lg">
@@ -697,7 +694,7 @@ export default function MaintenanceLogsPage() {
                                     className="flex h-10 items-center justify-between rounded-lg border border-[#e5e7eb] px-3 text-left text-[14px] hover:border-[#1447e6]"
                                 >
                                     <span>{formData.category || "Select category..."}</span>
-                                    <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`} />
+                                    <ChevronDown className={`h-4 w-4 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                                 </button>
                                 {showCategoryDropdown && (
                                     <div className="absolute left-0 right-0 top-full z-10 mt-1 max-h-48 overflow-auto rounded-lg border border-[#e5e7eb] bg-white shadow-lg">
@@ -839,7 +836,7 @@ export default function MaintenanceLogsPage() {
                                 }}
                                 className="flex h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-[#030213] text-[14px] text-white transition-colors hover:bg-[#1a1a2e]"
                             >
-                                <img src={imgIconEdit} alt="" className="h-4 w-4 brightness-0 invert" />
+                                <Pencil className="h-4 w-4 text-white" aria-hidden="true" />
                                 Edit Log
                             </button>
                             <button
@@ -928,7 +925,7 @@ export default function MaintenanceLogsPage() {
                                         className="flex h-10 items-center justify-between rounded-lg border border-[#e5e7eb] px-3 text-left text-[14px] hover:border-[#1447e6]"
                                     >
                                         <span>{formData.status.replace("_", " ")}</span>
-                                        <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showStatusDropdown ? "rotate-180" : ""}`} />
+                                        <ChevronDown className={`h-4 w-4 transition-transform ${showStatusDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                                     </button>
                                     {showStatusDropdown && (
                                         <div className="absolute left-0 right-0 top-full z-10 mt-1 rounded-lg border border-[#e5e7eb] bg-white shadow-lg">
@@ -958,7 +955,7 @@ export default function MaintenanceLogsPage() {
                                     className="flex h-10 items-center justify-between rounded-lg border border-[#e5e7eb] px-3 text-left text-[14px] hover:border-[#1447e6]"
                                 >
                                     <span>{formData.category || "Select category..."}</span>
-                                    <img src={imgIconFilter} alt="" className={`h-4 w-4 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`} />
+                                    <ChevronDown className={`h-4 w-4 transition-transform ${showCategoryDropdown ? "rotate-180" : ""}`} aria-hidden="true" />
                                 </button>
                                 {showCategoryDropdown && (
                                     <div className="absolute left-0 right-0 top-full z-10 mt-1 max-h-48 overflow-auto rounded-lg border border-[#e5e7eb] bg-white shadow-lg">

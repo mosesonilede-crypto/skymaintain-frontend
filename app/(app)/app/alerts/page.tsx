@@ -4,15 +4,13 @@
  * Enhanced with Fleet Health Summary Spreadsheet
  */
 
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import React, { useState, useCallback, useMemo, useEffect } from "react";
+import { Info } from "lucide-react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft, Aircraft } from "@/lib/AircraftContext";
-
-// Figma asset icons
-const imgIconInfo = "https://www.figma.com/api/mcp/asset/7b77c949-1221-4774-834e-afe6a67ee8ee";
 
 // Storage keys
 const AI_ALERTS_KEY = "skymaintain.aiPredictedAlerts";
@@ -735,7 +733,7 @@ export default function PredictiveAlertsPage() {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-16 text-center">
-                            <img src={imgIconInfo} alt="" className="mb-4 h-12 w-12 opacity-50" />
+                            <Info className="mb-4 h-12 w-12 text-slate-400" />
                             <p className="text-[16px] leading-[24px] text-[#6a7282]">
                                 No {filter !== "all" ? filter : ""} alerts for {reg}
                             </p>

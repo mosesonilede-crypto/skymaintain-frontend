@@ -5,12 +5,8 @@
  * specHash: sha256:app-dashboard-landing-v1
  */
 
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
-
-// Figma assets for node 2:1304 - Post Login Page
-const imgIconSecure = "https://www.figma.com/api/mcp/asset/a4e08010-b508-4b4a-9d01-d405a215c90f";
-const imgIconView = "https://www.figma.com/api/mcp/asset/8ee4cda1-6031-48f9-9122-7ec4e348b3b1";
+import { Eye, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Dashboard — SkyMaintain",
@@ -65,10 +61,9 @@ export default function AppEntryZeroStatePage() {
                         data-name="Container"
                         data-node-id="2:1314"
                     >
-                        <img
-                            src={imgIconSecure}
-                            alt=""
-                            className="h-6 w-6"
+                        <ShieldCheck
+                            className="h-6 w-6 text-[#155dfc]"
+                            aria-hidden="true"
                             data-name="Icon"
                             data-node-id="2:1315"
                         />
@@ -103,10 +98,9 @@ export default function AppEntryZeroStatePage() {
                         data-name="Container"
                         data-node-id="2:1322"
                     >
-                        <img
-                            src={imgIconView}
-                            alt=""
-                            className="h-6 w-6"
+                        <Eye
+                            className="h-6 w-6 text-[#155dfc]"
+                            aria-hidden="true"
                             data-name="Icon"
                             data-node-id="2:1323"
                         />

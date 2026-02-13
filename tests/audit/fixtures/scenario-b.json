@@ -1,0 +1,41 @@
+{
+    "advisory": {
+        "label": "ADVISORY_ONLY",
+        "advisoryId": "adv_b",
+        "title": "Anomaly detected",
+        "summary": "Vibration pattern suggests early wear.",
+        "confidenceDescriptor": "MEDIUM",
+        "confidenceScore": 0.54,
+        "sourceDataReferences": [
+            {
+                "source": "ACMS Outputs",
+                "referenceId": "ACMS-2026-02-11",
+                "capturedAt": "2026-02-11T00:15:00Z",
+                "units": "ips"
+            }
+        ],
+        "noAutomaticExecutionRights": true,
+        "aircraftId": "N123AB",
+        "component": "Left Engine",
+        "generatedAt": "2026-02-11T00:20:00Z"
+    },
+    "authoritativeSources": [
+        "AMM 72-00-00"
+    ],
+    "acknowledgement": {
+        "acknowledgedBy": "maya.owens",
+        "acknowledgedAt": "2026-02-11T12:00:00Z"
+    },
+    "disposition": "MONITOR",
+    "overrideRationale": "No mandated interval reached; monitor trend until next scheduled check.",
+    "userAction": "record_decision",
+    "canCreateWorkorder": false,
+    "ruleInputs": {
+        "aircraftId": "N123AB",
+        "remainingHours": 4800,
+        "hardTimeThresholdHours": 1000,
+        "remainingCycles": 4100,
+        "hardTimeThresholdCycles": 800,
+        "mandatedIntervalHit": false
+    }
+}

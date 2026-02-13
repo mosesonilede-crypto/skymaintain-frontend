@@ -1,0 +1,2 @@
+scenario,disposition,ruleOutcome,acknowledged
+B,MONITOR,ADVISORY_ONLY,true

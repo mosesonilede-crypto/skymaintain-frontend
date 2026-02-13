@@ -5,44 +5,34 @@
  * specHash: sha256:main-dashboard-v1
  */
 
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Link from "next/link";
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-
-// Figma Assets - Header (node 2:2031)
-const iconMenu = "https://www.figma.com/api/mcp/asset/542ed7a2-ad55-415f-9358-f246586b31df";
-const iconAirline = "https://www.figma.com/api/mcp/asset/e87e5a62-5436-4c63-be75-11b6ee22e13f";
-const iconPlane = "https://www.figma.com/api/mcp/asset/e47837b8-bf06-4b0c-b984-f4130f032772";
-const iconChevron = "https://www.figma.com/api/mcp/asset/a344c574-a320-42c4-bde4-04f857eabd92";
-const iconPrint = "https://www.figma.com/api/mcp/asset/da666a7c-7788-4eb4-b163-421b415d8a11";
-const iconPrivacy = "https://www.figma.com/api/mcp/asset/0f3e56c0-4730-4248-adb5-11db70a87180";
-const iconBell = "https://www.figma.com/api/mcp/asset/af384a32-4270-4bd3-9d1e-e63eceacd2e6";
-
-// Figma Assets - Stats Cards Icons
-const iconAlert = "https://www.figma.com/api/mcp/asset/9128e105-d040-4a6a-8152-f0e26da2c5e8";
-const iconSchedule = "https://www.figma.com/api/mcp/asset/c9ed0a59-d8ea-4f18-aed7-c3ab52e6ee1f";
-const iconHealth = "https://www.figma.com/api/mcp/asset/b0f48e57-c0a8-48d7-80f9-59e9b61b3c0e";
-
-// AI Assistant Button
-const iconAIMechanic = "https://www.figma.com/api/mcp/asset/08664ca8-e181-414c-a9b1-059aeb35b9b4";
-
-// Additional Icons
-const iconAircraft = "https://www.figma.com/api/mcp/asset/e47837b8-bf06-4b0c-b984-f4130f032772";
-const iconExternal = "https://www.figma.com/api/mcp/asset/da666a7c-7788-4eb4-b163-421b415d8a11";
-const iconLocation = "https://www.figma.com/api/mcp/asset/542ed7a2-ad55-415f-9358-f246586b31df";
-const iconClock = "https://www.figma.com/api/mcp/asset/e87e5a62-5436-4c63-be75-11b6ee22e13f";
-const iconEngine = "https://www.figma.com/api/mcp/asset/e47837b8-bf06-4b0c-b984-f4130f032772";
-const iconCalendar = "https://www.figma.com/api/mcp/asset/a344c574-a320-42c4-bde4-04f857eabd92";
-const iconWrench = "https://www.figma.com/api/mcp/asset/da666a7c-7788-4eb4-b163-421b415d8a11";
-const iconChecklist = "https://www.figma.com/api/mcp/asset/0f3e56c0-4730-4248-adb5-11db70a87180";
-const iconUser = "https://www.figma.com/api/mcp/asset/542ed7a2-ad55-415f-9358-f246586b31df";
-const iconDollar = "https://www.figma.com/api/mcp/asset/e87e5a62-5436-4c63-be75-11b6ee22e13f";
-
-// System Health Icons
-const iconGear = "https://www.figma.com/api/mcp/asset/e47837b8-bf06-4b0c-b984-f4130f032772";
+import {
+    Activity,
+    AlertTriangle,
+    Bell,
+    Bot,
+    Calendar,
+    CalendarClock,
+    ChevronDown,
+    ClipboardCheck,
+    Clock,
+    Cog,
+    DollarSign,
+    ExternalLink,
+    EyeOff,
+    MapPin,
+    Menu,
+    Plane,
+    Printer,
+    Settings,
+    User,
+    Wrench,
+    Building2,
+} from "lucide-react";
 
 export default function DashboardPage() {
     const [privacyMode, setPrivacyMode] = useState(false);
@@ -99,7 +89,7 @@ export default function DashboardPage() {
                         data-name="Button"
                         data-node-id="2:2034"
                     >
-                        <img src={iconMenu} alt="" className="h-4 w-4" />
+                        <Menu className="h-4 w-4" aria-hidden="true" />
                         <span>Menu</span>
                     </Link>
 
@@ -110,7 +100,7 @@ export default function DashboardPage() {
                         data-name="Container"
                         data-node-id="2:2040"
                     >
-                        <img src={iconAirline} alt="" className="h-4 w-4" />
+                        <Building2 className="h-4 w-4 text-[#155dfc]" aria-hidden="true" />
                         <div>
                             <p className="text-sm" style={{ color: "#0a0a0a" }}>SkyWings Airlines</p>
                             <p className="text-xs" style={{ color: "#6a7282" }}>License: Active</p>
@@ -127,15 +117,14 @@ export default function DashboardPage() {
                             data-name="Button"
                             data-node-id="2:2054"
                         >
-                            <img src={iconPlane} alt="" className="h-5 w-5" />
+                            <Plane className="h-5 w-5 text-[#155dfc]" aria-hidden="true" />
                             <div className="text-left">
                                 <p className="text-sm" style={{ color: "#0a0a0a" }}>{selectedAircraft.registration}</p>
                                 <p className="text-xs" style={{ color: "#6a7282" }}>{selectedAircraft.type}</p>
                             </div>
-                            <img
-                                src={iconChevron}
-                                alt=""
-                                className={`h-4 w-4 transition-transform ${showAircraftSelector ? 'rotate-180' : ''}`}
+                            <ChevronDown
+                                className={`h-4 w-4 transition-transform ${showAircraftSelector ? "rotate-180" : ""}`}
+                                aria-hidden="true"
                             />
                         </button>
                         {/* Aircraft Dropdown */}
@@ -156,7 +145,7 @@ export default function DashboardPage() {
                                                 backgroundColor: selectedAircraft.registration === aircraft.registration ? "#eff6ff" : "transparent",
                                             }}
                                         >
-                                            <img src={iconPlane} alt="" className="h-4 w-4" />
+                                            <Plane className="h-4 w-4 text-[#155dfc]" aria-hidden="true" />
                                             <div>
                                                 <p className="text-sm" style={{ color: "#0a0a0a" }}>{aircraft.registration}</p>
                                                 <p className="text-xs" style={{ color: "#6a7282" }}>{aircraft.type}</p>
@@ -182,7 +171,7 @@ export default function DashboardPage() {
                         data-name="Button"
                         data-node-id="2:2065"
                     >
-                        <img src={iconPrint} alt="" className="h-4 w-4" />
+                        <Printer className="h-4 w-4" aria-hidden="true" />
                         <span>Print Report</span>
                     </Link>
 
@@ -199,7 +188,7 @@ export default function DashboardPage() {
                         data-name="Button"
                         data-node-id="2:2072"
                     >
-                        <img src={iconPrivacy} alt="" className="h-4 w-4" />
+                        <EyeOff className="h-4 w-4" aria-hidden="true" />
                         <span>Privacy Mode</span>
                     </button>
 
@@ -213,7 +202,7 @@ export default function DashboardPage() {
                             data-name="Button"
                             data-node-id="2:2080"
                         >
-                            <img src={iconBell} alt="" className="h-4 w-4" />
+                            <Bell className="h-4 w-4" aria-hidden="true" />
                             <span
                                 className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full text-xs text-white"
                                 style={{ backgroundColor: "#e7000b" }}
@@ -294,7 +283,7 @@ export default function DashboardPage() {
                                 className="flex h-9 w-9 items-center justify-center rounded-[10px]"
                                 style={{ backgroundColor: "#fef2f2" }}
                             >
-                                <img src={iconAlert} alt="" className="h-5 w-5" />
+                                <AlertTriangle className="h-5 w-5 text-[#f54900]" aria-hidden="true" />
                             </div>
                             <span
                                 className="rounded-lg px-2 py-1 text-xs"
@@ -321,7 +310,7 @@ export default function DashboardPage() {
                                 className="flex h-9 w-9 items-center justify-center rounded-[10px]"
                                 style={{ backgroundColor: "#fefce8" }}
                             >
-                                <img src={iconSchedule} alt="" className="h-5 w-5" />
+                                <CalendarClock className="h-5 w-5 text-[#155dfc]" aria-hidden="true" />
                             </div>
                             <span
                                 className="rounded-lg px-2 py-1 text-xs"
@@ -348,7 +337,7 @@ export default function DashboardPage() {
                                 className="flex h-9 w-9 items-center justify-center rounded-[10px]"
                                 style={{ backgroundColor: "#f0fdf4" }}
                             >
-                                <img src={iconHealth} alt="" className="h-5 w-5" />
+                                <Activity className="h-5 w-5 text-[#00a63e]" aria-hidden="true" />
                             </div>
                             <span
                                 className="rounded-lg px-2 py-1 text-xs"
@@ -382,7 +371,7 @@ export default function DashboardPage() {
                                         className="flex h-12 w-12 items-center justify-center rounded-[10px]"
                                         style={{ backgroundColor: "#eff6ff" }}
                                     >
-                                        <img src={iconAircraft} alt="" className="h-6 w-6" />
+                                        <Plane className="h-6 w-6 text-[#155dfc]" aria-hidden="true" />
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-semibold" style={{ color: "#0a0a0a" }}>
@@ -398,7 +387,7 @@ export default function DashboardPage() {
                                     className="flex h-8 items-center gap-2 rounded-lg border px-3 text-sm"
                                     style={{ borderColor: "rgba(0,0,0,0.1)", color: "#0a0a0a" }}
                                 >
-                                    <img src={iconExternal} alt="" className="h-4 w-4" />
+                                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
                                     Full Details
                                 </Link>
                             </div>
@@ -437,7 +426,7 @@ export default function DashboardPage() {
                             <div className="m-6">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
-                                        <img src={iconHealth} alt="" className="h-4 w-4" />
+                                        <Activity className="h-4 w-4 text-[#00a63e]" aria-hidden="true" />
                                         <span className="text-sm" style={{ color: "#0a0a0a" }}>Overall Health Status</span>
                                     </div>
                                     <span className="text-xl font-semibold" style={{ color: "#008236" }}>
@@ -459,7 +448,7 @@ export default function DashboardPage() {
                             <div className="mx-6 mb-6 grid grid-cols-2 gap-4">
                                 <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                     <div className="flex items-center gap-2">
-                                        <img src={iconLocation} alt="" className="h-4 w-4" />
+                                        <MapPin className="h-4 w-4" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>Location</span>
                                     </div>
                                     <p className="mt-2 text-sm" style={{ color: "#0a0a0a" }}>
@@ -468,14 +457,14 @@ export default function DashboardPage() {
                                 </div>
                                 <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                     <div className="flex items-center gap-2">
-                                        <img src={iconPlane} alt="" className="h-4 w-4" />
+                                        <Plane className="h-4 w-4 text-[#155dfc]" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>Status</span>
                                     </div>
                                     <p className="mt-2 text-sm" style={{ color: "#0a0a0a" }}>On Ground</p>
                                 </div>
                                 <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                     <div className="flex items-center gap-2">
-                                        <img src={iconClock} alt="" className="h-4 w-4" />
+                                        <Clock className="h-4 w-4" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>Total Hours</span>
                                     </div>
                                     <p className="mt-2 text-sm" style={{ color: "#0a0a0a" }}>
@@ -484,7 +473,7 @@ export default function DashboardPage() {
                                 </div>
                                 <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                     <div className="flex items-center gap-2">
-                                        <img src={iconGear} alt="" className="h-4 w-4" />
+                                        <Settings className="h-4 w-4" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>Total Cycles</span>
                                     </div>
                                     <p className="mt-2 text-sm" style={{ color: "#0a0a0a" }}>
@@ -496,7 +485,7 @@ export default function DashboardPage() {
                             {/* Engine Health */}
                             <div className="mx-6 mb-6 rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                 <div className="flex items-center gap-2">
-                                    <img src={iconEngine} alt="" className="h-4 w-4" />
+                                    <Cog className="h-4 w-4" aria-hidden="true" />
                                     <span className="text-sm font-semibold" style={{ color: "#0a0a0a" }}>Engine Health</span>
                                 </div>
                                 <div className="mt-4 grid grid-cols-2 gap-4">
@@ -532,7 +521,7 @@ export default function DashboardPage() {
                                 style={{ backgroundColor: "#eff6ff", border: "1px solid #bfdbfe" }}
                             >
                                 <div className="flex items-center gap-2">
-                                    <img src={iconCalendar} alt="" className="h-4 w-4" />
+                                    <Calendar className="h-4 w-4" aria-hidden="true" />
                                     <span className="text-sm font-semibold" style={{ color: "#1447e6" }}>
                                         Upcoming Maintenance
                                     </span>
@@ -565,7 +554,7 @@ export default function DashboardPage() {
                                     <div key={system.name}>
                                         <div className="flex items-center justify-between">
                                             <div className="flex items-center gap-2">
-                                                <img src={iconGear} alt="" className="h-4 w-4" />
+                                                <Settings className="h-4 w-4" aria-hidden="true" />
                                                 <span className="text-sm" style={{ color: "#0a0a0a" }}>{system.name}</span>
                                             </div>
                                             <div className="flex items-center gap-2">
@@ -605,7 +594,7 @@ export default function DashboardPage() {
                                 className="flex h-12 w-12 items-center justify-center rounded-[10px]"
                                 style={{ backgroundColor: "#fef2f2" }}
                             >
-                                <img src={iconWrench} alt="" className="h-6 w-6" />
+                                <Wrench className="h-6 w-6" aria-hidden="true" />
                             </div>
                             <div>
                                 <h3 className="text-lg font-semibold" style={{ color: "#0a0a0a" }}>
@@ -620,7 +609,7 @@ export default function DashboardPage() {
                         {/* Critical Alerts Section */}
                         <div className="m-6 rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                             <div className="flex items-center gap-2">
-                                <img src={iconAlert} alt="" className="h-5 w-5" />
+                                <AlertTriangle className="h-5 w-5 text-[#f54900]" aria-hidden="true" />
                                 <span className="text-sm font-semibold" style={{ color: "#0a0a0a" }}>Critical Alerts</span>
                                 <span
                                     className="flex h-5 w-5 items-center justify-center rounded-full text-xs text-white"
@@ -645,7 +634,7 @@ export default function DashboardPage() {
                                     Seal failure likely within 200 flight hours
                                 </p>
                                 <div className="mt-2 flex items-center gap-2">
-                                    <img src={iconClock} alt="" className="h-3 w-3" />
+                                    <Clock className="h-3 w-3" aria-hidden="true" />
                                     <span className="text-xs" style={{ color: "#6a7282" }}>Timeframe: 2-3 months</span>
                                 </div>
                                 <div className="mt-2 rounded-lg p-2" style={{ backgroundColor: "#fff7ed" }}>
@@ -660,7 +649,7 @@ export default function DashboardPage() {
                         {/* Upcoming Scheduled Maintenance */}
                         <div className="mx-6 mb-6">
                             <div className="flex items-center gap-2">
-                                <img src={iconCalendar} alt="" className="h-5 w-5" />
+                                <Calendar className="h-5 w-5" aria-hidden="true" />
                                 <span className="text-sm font-semibold" style={{ color: "#0a0a0a" }}>
                                     Upcoming Scheduled Maintenance
                                 </span>
@@ -700,7 +689,7 @@ export default function DashboardPage() {
                         {/* Recent Maintenance Tasks */}
                         <div className="mx-6 mb-6">
                             <div className="flex items-center gap-2">
-                                <img src={iconChecklist} alt="" className="h-5 w-5" />
+                                <ClipboardCheck className="h-5 w-5" aria-hidden="true" />
                                 <span className="text-sm font-semibold" style={{ color: "#0a0a0a" }}>
                                     Recent Maintenance Tasks
                                 </span>
@@ -730,7 +719,7 @@ export default function DashboardPage() {
                                         Complete A-Check including visual inspection, lubrication, and minor repairs
                                     </p>
                                     <div className="mt-2 flex items-center gap-2">
-                                        <img src={iconUser} alt="" className="h-3 w-3" />
+                                        <User className="h-3 w-3" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>By: John Anderson</span>
                                     </div>
                                     <div className="mt-2">
@@ -774,7 +763,7 @@ export default function DashboardPage() {
                                         Critical avionics software update for FMS and TCAS systems
                                     </p>
                                     <div className="mt-2 flex items-center gap-2">
-                                        <img src={iconUser} alt="" className="h-3 w-3" />
+                                        <User className="h-3 w-3" aria-hidden="true" />
                                         <span className="text-xs" style={{ color: "#6a7282" }}>By: Sarah Williams</span>
                                     </div>
                                 </div>
@@ -785,14 +774,14 @@ export default function DashboardPage() {
                         <div className="mx-6 mb-6 grid grid-cols-2 gap-4">
                             <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                 <div className="flex items-center gap-2">
-                                    <img src={iconChecklist} alt="" className="h-4 w-4" />
+                                    <ClipboardCheck className="h-4 w-4" aria-hidden="true" />
                                     <span className="text-xs" style={{ color: "#6a7282" }}>Total Tasks</span>
                                 </div>
                                 <p className="mt-2 text-xl font-semibold" style={{ color: "#0a0a0a" }}>2</p>
                             </div>
                             <div className="rounded-[10px] border p-4" style={{ borderColor: "#e5e7eb" }}>
                                 <div className="flex items-center gap-2">
-                                    <img src={iconDollar} alt="" className="h-4 w-4" />
+                                    <DollarSign className="h-4 w-4" aria-hidden="true" />
                                     <span className="text-xs" style={{ color: "#6a7282" }}>Total Cost</span>
                                 </div>
                                 <p className="mt-2 text-xl font-semibold" style={{ color: "#0a0a0a" }}>
@@ -823,7 +812,7 @@ export default function DashboardPage() {
                 data-node-id="2:2086"
             >
                 <div className="relative">
-                    <img src={iconAIMechanic} alt="" className="h-6 w-6" />
+                    <Bot className="h-6 w-6" aria-hidden="true" />
                     <span
                         className="absolute -right-1 -top-1 h-3 w-3 rounded-full"
                         style={{ backgroundColor: "#22c55e" }}

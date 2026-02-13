@@ -8,9 +8,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import React from "react";
-
-// Figma asset icons - Matches node 2:2711
-const imgIconInfo = "https://www.figma.com/api/mcp/asset/27af8449-ec6b-4894-81b6-c6b124ecc168";
+import { Info } from "lucide-react";
 
 // Storage keys
 const AIRCRAFT_STORAGE_KEY = "skymaintain.selectedAircraft";
@@ -194,11 +192,7 @@ export function PredictiveAlertsPanel({ aircraft }: PredictiveAlertsPanelProps) 
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-8 text-center">
-                        <img
-                            src={imgIconInfo}
-                            alt=""
-                            className="mb-4 h-12 w-12"
-                        />
+                        <Info className="mb-4 h-12 w-12 text-slate-500" />
                         <p className="text-[16px] leading-[24px] text-[#6a7282]">
                             No active alerts for {reg}
                         </p>

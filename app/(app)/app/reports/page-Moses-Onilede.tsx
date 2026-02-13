@@ -5,22 +5,21 @@
  * specHash: sha256:reports-analytics-page-v2
  */
 
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
-
-// Figma assets for Reports Page (node 6:254)
-const imgIconDownload = "https://www.figma.com/api/mcp/asset/9b9df8cb-42e3-4103-80b2-cf5255907a12";
-const imgIconPrint = "https://www.figma.com/api/mcp/asset/dd7a6f2c-00f4-4106-9aba-8cdd665ab0f7";
-const imgIconRefresh = "https://www.figma.com/api/mcp/asset/26b70c61-de66-4a5a-8c9d-bc7b7fb8bac4";
-const imgIconCalendar = "https://www.figma.com/api/mcp/asset/e5a390b2-4015-4e9f-9c01-71350cbb5b86";
-const imgIconChart = "https://www.figma.com/api/mcp/asset/82a52274-7a37-4faa-b558-cb6300079e3a";
-const imgIconExport = "https://www.figma.com/api/mcp/asset/9b9df8cb-42e3-4103-80b2-cf5255907a12";
-const imgIconEdit = "https://www.figma.com/api/mcp/asset/96384e1b-be36-46fa-8ee4-f20fb52d2614";
-const imgIconAlert = "https://www.figma.com/api/mcp/asset/cb22b977-535b-4c8a-8fd8-96859ea25832";
-const imgIconCheck = "https://www.figma.com/api/mcp/asset/26b70c61-de66-4a5a-8c9d-bc7b7fb8bac4";
+import {
+    AlertTriangle,
+    BarChart3,
+    Calendar,
+    CheckCircle,
+    Download,
+    FileDown,
+    Pencil,
+    Printer,
+    RefreshCw,
+} from "lucide-react";
 
 // Types
 interface AircraftData {
@@ -124,7 +123,7 @@ export default function ReportsPage() {
     const handleRefresh = async () => {
         setIsRefreshing(true);
         await new Promise((resolve) => setTimeout(resolve, 1500));
-        
+
         // Simulate data refresh with slight variations
         setSystemHealth((prev) =>
             prev.map((s) => ({
@@ -133,12 +132,12 @@ export default function ReportsPage() {
                 lastUpdated: new Date().toISOString().split("T")[0],
             }))
         );
-        
+
         setAircraftData((prev) => ({
             ...prev,
             healthStatus: calculateOverallHealth(),
         }));
-        
+
         setIsRefreshing(false);
         showNotification("Data refreshed successfully!");
     };
@@ -185,7 +184,7 @@ export default function ReportsPage() {
     // Update system health
     const handleUpdateSystemHealth = () => {
         if (!editingSystem) return;
-        
+
         setSystemHealth((prev) =>
             prev.map((s) =>
                 s.id === editingSystem.id
@@ -246,11 +245,7 @@ export default function ReportsPage() {
                         disabled={isRefreshing}
                         className="flex h-9 items-center gap-2 rounded-lg border border-black/10 bg-white px-4 text-[14px] text-[#0a0a0a] transition-colors hover:bg-[#f9fafb] disabled:opacity-50"
                     >
-                        <img
-                            src={imgIconRefresh}
-                            alt=""
-                            className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
-                        />
+                        <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} aria-hidden="true" />
                         {isRefreshing ? "Refreshing..." : "Refresh Data"}
                     </button>
                     {/* Export Button */}
@@ -258,7 +253,7 @@ export default function ReportsPage() {
                         onClick={() => setShowExportModal(true)}
                         className="flex h-9 items-center gap-2 rounded-lg border border-black/10 bg-white px-4 text-[14px] text-[#0a0a0a] transition-colors hover:bg-[#f9fafb]"
                     >
-                        <img src={imgIconExport} alt="" className="h-4 w-4" />
+                        <FileDown className="h-4 w-4" aria-hidden="true" />
                         Export Report
                     </button>
                     {/* Print Button */}
@@ -266,7 +261,7 @@ export default function ReportsPage() {
                         onClick={handlePrintReport}
                         className="flex h-9 items-center gap-2 rounded-lg bg-[#030213] px-4 text-[14px] text-white transition-colors hover:bg-[#1a1a2e]"
                     >
-                        <img src={imgIconPrint} alt="" className="h-4 w-4 brightness-0 invert" />
+                        <Printer className="h-4 w-4 text-white" aria-hidden="true" />
                         Print Report
                     </button>
                 </div>
@@ -291,7 +286,7 @@ export default function ReportsPage() {
                             className="flex h-8 w-8 items-center justify-center rounded-lg transition-colors hover:bg-[#eff6ff]"
                             title="Edit Aircraft Data"
                         >
-                            <img src={imgIconEdit} alt="" className="h-4 w-4" />
+                            <Pencil className="h-4 w-4" aria-hidden="true" />
                         </button>
                     </div>
 
@@ -439,7 +434,7 @@ export default function ReportsPage() {
                 {/* Health Summary */}
                 <div className="mt-2 flex items-center justify-between rounded-lg bg-[#eff6ff] p-4">
                     <div className="flex items-center gap-2">
-                        <img src={imgIconChart} alt="" className="h-5 w-5" />
+                        <BarChart3 className="h-5 w-5 text-[#1447e6]" aria-hidden="true" />
                         <span className="text-[14px] font-medium text-[#1447e6]">Overall System Health</span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -464,28 +459,28 @@ export default function ReportsPage() {
                         href="/app/logs"
                         className="flex flex-col items-center gap-2 rounded-[10px] bg-[#f9fafb] p-4 transition-all hover:bg-[#eff6ff] hover:shadow-md"
                     >
-                        <img src={imgIconCheck} alt="" className="h-8 w-8" />
+                        <CheckCircle className="h-8 w-8 text-[#00a63e]" aria-hidden="true" />
                         <span className="text-[14px] text-[#0a0a0a]">View Logs</span>
                     </Link>
                     <Link
                         href="/app/alerts"
                         className="flex flex-col items-center gap-2 rounded-[10px] bg-[#f9fafb] p-4 transition-all hover:bg-[#eff6ff] hover:shadow-md"
                     >
-                        <img src={imgIconAlert} alt="" className="h-8 w-8" />
+                        <AlertTriangle className="h-8 w-8 text-[#f54900]" aria-hidden="true" />
                         <span className="text-[14px] text-[#0a0a0a]">View Alerts</span>
                     </Link>
                     <button
                         onClick={() => handleExportData("PDF")}
                         className="flex flex-col items-center gap-2 rounded-[10px] bg-[#f9fafb] p-4 transition-all hover:bg-[#eff6ff] hover:shadow-md"
                     >
-                        <img src={imgIconDownload} alt="" className="h-8 w-8" />
+                        <Download className="h-8 w-8 text-[#1447e6]" aria-hidden="true" />
                         <span className="text-[14px] text-[#0a0a0a]">Export PDF</span>
                     </button>
                     <button
                         onClick={() => handleExportData("Excel")}
                         className="flex flex-col items-center gap-2 rounded-[10px] bg-[#f9fafb] p-4 transition-all hover:bg-[#eff6ff] hover:shadow-md"
                     >
-                        <img src={imgIconExport} alt="" className="h-8 w-8" />
+                        <FileDown className="h-8 w-8 text-[#1447e6]" aria-hidden="true" />
                         <span className="text-[14px] text-[#0a0a0a]">Export Excel</span>
                     </button>
                 </div>
@@ -510,7 +505,7 @@ export default function ReportsPage() {
                                             onChange={(e) => setReportConfig((prev) => ({ ...prev, dateFrom: e.target.value }))}
                                             className="h-10 w-full rounded-lg border border-[#e5e7eb] px-3 pl-10 text-[14px] outline-none focus:border-[#1447e6]"
                                         />
-                                        <img src={imgIconCalendar} alt="" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+                                        <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6a7282]" aria-hidden="true" />
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
@@ -522,7 +517,7 @@ export default function ReportsPage() {
                                             onChange={(e) => setReportConfig((prev) => ({ ...prev, dateTo: e.target.value }))}
                                             className="h-10 w-full rounded-lg border border-[#e5e7eb] px-3 pl-10 text-[14px] outline-none focus:border-[#1447e6]"
                                         />
-                                        <img src={imgIconCalendar} alt="" className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+                                        <Calendar className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6a7282]" aria-hidden="true" />
                                     </div>
                                 </div>
                             </div>
@@ -578,11 +573,10 @@ export default function ReportsPage() {
                                         <button
                                             key={format}
                                             onClick={() => setReportConfig((prev) => ({ ...prev, format }))}
-                                            className={`flex-1 rounded-lg border px-4 py-2 text-[14px] transition-colors ${
-                                                reportConfig.format === format
-                                                    ? "border-[#1447e6] bg-[#eff6ff] text-[#1447e6]"
-                                                    : "border-[#e5e7eb] bg-white text-[#0a0a0a] hover:bg-[#f9fafb]"
-                                            }`}
+                                            className={`flex-1 rounded-lg border px-4 py-2 text-[14px] transition-colors ${reportConfig.format === format
+                                                ? "border-[#1447e6] bg-[#eff6ff] text-[#1447e6]"
+                                                : "border-[#e5e7eb] bg-white text-[#0a0a0a] hover:bg-[#f9fafb]"
+                                                }`}
                                         >
                                             {format}
                                         </button>
@@ -602,7 +596,7 @@ export default function ReportsPage() {
                                     "Generating..."
                                 ) : (
                                     <>
-                                        <img src={imgIconDownload} alt="" className="h-4 w-4 brightness-0 invert" />
+                                        <Download className="h-4 w-4 text-white" aria-hidden="true" />
                                         Generate Report
                                     </>
                                 )}

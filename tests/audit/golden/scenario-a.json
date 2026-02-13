@@ -1,0 +1,9 @@
+{
+    "export": "decision-events",
+    "scenario": "A",
+    "expected": {
+        "disposition": "COMPLY",
+        "ruleOutcome": "ADVISORY_ONLY",
+        "acknowledged": true
+    }
+}

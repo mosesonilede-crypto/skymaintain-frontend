@@ -1,17 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CONTACT_PRICING, CONTACT_DEMO } from "@/lib/routes";
-
-// Figma assets from node 39:11241
-const imgIconCheck = "https://www.figma.com/api/mcp/asset/4b16b27b-4fec-4046-b394-387fb4605baf";
-const imgIconCheckBlue = "https://www.figma.com/api/mcp/asset/9d264107-a78c-4e04-a92d-2d93b7b3210f";
-const imgIconArrowBlue = "https://www.figma.com/api/mcp/asset/a520de0c-7a61-4862-bb23-d535c4e53996";
-const imgVector = "https://www.figma.com/api/mcp/asset/4b44707f-9e75-447c-a275-75115ebe5113";
-const imgVectorLarge = "https://www.figma.com/api/mcp/asset/1b14a41b-514e-4144-86f6-1187d794c459";
-const imgIconArrowWhite = "https://www.figma.com/api/mcp/asset/84309fab-e551-4fa6-a314-bafdcdfe919b";
+import { ArrowRight, CheckCircle, ShieldCheck } from "lucide-react";
 
 type TierId = "starter" | "professional" | "enterprise";
 
@@ -617,14 +609,14 @@ function TierCard({ tier }: { tier: PricingTier }) {
                             height: 24,
                         }}
                     >
-                        <img
-                            src={isPopular ? imgIconCheckBlue : imgIconCheck}
-                            alt=""
+                        <CheckCircle
                             style={{
                                 width: 20,
                                 height: 20,
                                 marginTop: 2,
+                                color: isPopular ? "#155dfc" : "#101828",
                             }}
+                            aria-hidden="true"
                         />
                         <span
                             style={{
@@ -1284,10 +1276,9 @@ export default function SubscriptionBillingPage() {
                                 >
                                     Request Pricing
                                 </span>
-                                <img
-                                    src={imgIconArrowBlue}
-                                    alt=""
-                                    style={{ width: 20, height: 20 }}
+                                <ArrowRight
+                                    style={{ width: 20, height: 20, color: "#155dfc" }}
+                                    aria-hidden="true"
                                 />
                             </button>
 
@@ -1371,10 +1362,9 @@ export default function SubscriptionBillingPage() {
                                     boxSizing: "border-box",
                                 }}
                             >
-                                <img
-                                    src={imgVector}
-                                    alt="SkyMaintain"
-                                    style={{ width: 20, height: 20 }}
+                                <ShieldCheck
+                                    style={{ width: 20, height: 20, color: "#ffffff" }}
+                                    aria-hidden="true"
                                 />
                             </div>
                             <span
@@ -1501,10 +1491,9 @@ export default function SubscriptionBillingPage() {
                                 boxSizing: "border-box",
                             }}
                         >
-                            <img
-                                src={imgVectorLarge}
-                                alt="SkyMaintain"
-                                style={{ width: 28, height: 28 }}
+                            <ShieldCheck
+                                style={{ width: 28, height: 28, color: "#ffffff" }}
+                                aria-hidden="true"
                             />
                         </div>
                         <div>
@@ -1610,10 +1599,9 @@ export default function SubscriptionBillingPage() {
                             >
                                 Get Started
                             </span>
-                            <img
-                                src={imgIconArrowWhite}
-                                alt=""
-                                style={{ width: 16, height: 16 }}
+                            <ArrowRight
+                                style={{ width: 16, height: 16, color: "#ffffff" }}
+                                aria-hidden="true"
                             />
                         </button>
                     </div>

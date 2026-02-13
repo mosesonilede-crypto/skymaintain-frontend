@@ -1,19 +1,16 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import BillingTabContent from "./BillingTabContent";
-
-// Figma assets (node 6:5217)
-const imgManagerAvatar = "https://www.figma.com/api/mcp/asset/2d08efec-b355-4d57-b51a-cf983d796faf";
-const imgIconOverview = "https://www.figma.com/api/mcp/asset/fc58761d-61a3-4dd1-9a60-48f026568c0b";
-const imgIconBilling = "https://www.figma.com/api/mcp/asset/68a035cf-6304-40a2-8708-b1973f7d468a";
-const imgIconAircraft = "https://www.figma.com/api/mcp/asset/03c6bf6e-eba4-40ff-acf5-b00c945a939e";
-const imgIconUsers = "https://www.figma.com/api/mcp/asset/e4238095-c21c-4add-860d-fc0d734d3427";
-const imgIconPlus = "https://www.figma.com/api/mcp/asset/94b4f97f-56d6-49ce-9c94-1f2243115c89";
-const imgIconAircraftEmpty = "https://www.figma.com/api/mcp/asset/1baed7b3-2505-4e05-b801-4a97d1c3f16a";
-const imgIconUserAdd = "https://www.figma.com/api/mcp/asset/afd4825a-63c9-4510-a3ce-719e2a52514e";
+import {
+    CreditCard,
+    LayoutDashboard,
+    Plane,
+    Plus,
+    UserPlus,
+    Users,
+} from "lucide-react";
 
 type DataMode = "mock" | "live" | "hybrid";
 
@@ -515,7 +512,7 @@ export default function AdminPanelPage() {
                         color: activeTab === "overview" ? "#155dfc" : "#4a5565",
                     }}
                 >
-                    <img src={imgIconOverview} alt="" style={{ width: "16px", height: "16px" }} />
+                    <LayoutDashboard style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                     Overview &amp; Management
                 </button>
                 <button
@@ -535,7 +532,7 @@ export default function AdminPanelPage() {
                         color: activeTab === "billing" ? "#155dfc" : "#4a5565",
                     }}
                 >
-                    <img src={imgIconBilling} alt="" style={{ width: "16px", height: "16px" }} />
+                    <CreditCard style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                     Subscription &amp; Billing
                 </button>
             </div>
@@ -607,7 +604,7 @@ export default function AdminPanelPage() {
                                         justifyContent: "center",
                                     }}
                                 >
-                                    <img src={imgIconAircraft} alt="" style={{ width: "24px", height: "24px" }} />
+                                    <Plane style={{ width: "24px", height: "24px" }} aria-hidden="true" />
                                 </div>
                                 <div>
                                     <div style={{ fontSize: "24px", lineHeight: "32px", color: "#0a0a0a" }}>
@@ -641,7 +638,7 @@ export default function AdminPanelPage() {
                                         justifyContent: "center",
                                     }}
                                 >
-                                    <img src={imgIconUsers} alt="" style={{ width: "24px", height: "24px" }} />
+                                    <Users style={{ width: "24px", height: "24px" }} aria-hidden="true" />
                                 </div>
                                 <div>
                                     <div style={{ fontSize: "24px", lineHeight: "32px", color: "#0a0a0a" }}>
@@ -767,14 +764,14 @@ export default function AdminPanelPage() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <img src={imgIconPlus} alt="" style={{ width: "16px", height: "16px" }} />
+                                <Plus style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                                 Add New Aircraft
                             </button>
                         </div>
 
                         {/* Empty state */}
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "48px 0" }}>
-                            <img src={imgIconAircraftEmpty} alt="" style={{ width: "64px", height: "64px", marginBottom: "16px" }} />
+                            <Plane style={{ width: "64px", height: "64px", marginBottom: "16px" }} aria-hidden="true" />
                             <p style={{ fontSize: "16px", lineHeight: "24px", color: "#6a7282", textAlign: "center", margin: 0 }}>
                                 {`Click "Add New Aircraft" to register a new aircraft to the system`}
                             </p>
@@ -817,7 +814,7 @@ export default function AdminPanelPage() {
                                     cursor: "pointer",
                                 }}
                             >
-                                <img src={imgIconUserAdd} alt="" style={{ width: "16px", height: "16px" }} />
+                                <UserPlus style={{ width: "16px", height: "16px" }} aria-hidden="true" />
                                 Add User
                             </button>
                         </div>

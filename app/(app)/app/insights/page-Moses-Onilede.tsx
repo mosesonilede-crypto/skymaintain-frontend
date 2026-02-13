@@ -1,23 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState, useCallback } from "react";
-
-// Figma asset URLs
-const imgIconAI = "https://www.figma.com/api/mcp/asset/f2922ff1-3430-476d-bda0-e8a786c325ee";
-const imgIconAI2 = "https://www.figma.com/api/mcp/asset/18fc8577-9b6d-477b-8d72-02902ec9b3ff";
-const imgIconAI3 = "https://www.figma.com/api/mcp/asset/32b8fdb8-d5cc-47f2-b1fe-17273e2fa8ff";
-const imgIconAI4 = "https://www.figma.com/api/mcp/asset/89bcf5c2-6172-4c96-9d30-3584b40f0243";
-const imgIconAI5 = "https://www.figma.com/api/mcp/asset/5df530f3-762e-473e-bbd4-ce676bd9d07f";
-const imgIconAI6 = "https://www.figma.com/api/mcp/asset/fdfd3641-20fe-4542-aaf7-7807371fbef3";
-const imgIconAI7 = "https://www.figma.com/api/mcp/asset/f09d172c-408c-4e8b-ae17-8400fa2fed54";
-const imgIconAI8 = "https://www.figma.com/api/mcp/asset/0bc9ca5a-5d6e-451b-9967-7815b4992fe6";
-const imgIconAI9 = "https://www.figma.com/api/mcp/asset/a7a6ca8a-c2e8-4a31-afad-37875be08754";
-const imgIconSparkles = "https://www.figma.com/api/mcp/asset/3874b604-cdda-4621-a4f1-42b18f8ee703";
-const imgIconInfo = "https://www.figma.com/api/mcp/asset/22be1235-1328-47cc-b23f-6d3dccf74671";
-const imgIconWarning = "https://www.figma.com/api/mcp/asset/f627c523-1441-4a78-9a6b-fc193af37395";
-const imgIconChart = "https://www.figma.com/api/mcp/asset/ddd64c88-abe5-42b3-a907-1ddd3d604b72";
-const imgIconChevronDown = "https://www.figma.com/api/mcp/asset/2323f58f-40cf-47b8-800e-ac6376202e71";
+import { AlertTriangle, BarChart3, Brain, ChevronDown, Info, Sparkles } from "lucide-react";
 
 // Data types
 interface PredictiveAlert {
@@ -79,23 +63,13 @@ export default function AIInsightsPage() {
                                 }}
                             >
                                 {/* AI Brain Icon */}
-                                <div className="w-6 h-6 relative">
-                                    <img src={imgIconAI} alt="" className="absolute left-0 top-0 w-[10px] h-5" />
-                                    <img src={imgIconAI2} alt="" className="absolute right-0 top-0 w-[10px] h-5" />
-                                    <img src={imgIconAI3} alt="" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-1" />
-                                    <img src={imgIconAI4} alt="" className="absolute left-[6px] top-[5px] w-px h-px" />
-                                    <img src={imgIconAI5} alt="" className="absolute right-[6px] top-[5px] w-px h-px" />
-                                    <img src={imgIconAI6} alt="" className="absolute left-[20px] top-[11px] w-px h-px" />
-                                    <img src={imgIconAI7} alt="" className="absolute left-[3.5px] top-[11px] w-px h-px" />
-                                    <img src={imgIconAI8} alt="" className="absolute left-[4px] bottom-[6px] w-[2px] h-px" />
-                                    <img src={imgIconAI9} alt="" className="absolute right-[4px] bottom-[6px] w-[2px] h-px" />
-                                </div>
+                                <Brain className="w-6 h-6 text-white" aria-hidden="true" />
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-3">
                                     <h2 className="text-xl font-normal text-[#0a0a0a]">AI Predictive Insights</h2>
                                     <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-[#9810fa] text-white text-xs rounded-lg">
-                                        <img src={imgIconSparkles} alt="" className="w-3 h-3" />
+                                        <Sparkles className="w-3 h-3" aria-hidden="true" />
                                         AI-Powered
                                     </span>
                                 </div>
@@ -106,7 +80,7 @@ export default function AIInsightsPage() {
                             onClick={handleModelInfo}
                             className="flex items-center gap-2 px-3 py-1.5 bg-white border border-[rgba(0,0,0,0.1)] rounded-lg text-sm text-[#0a0a0a] hover:bg-[#f9fafb] transition-colors"
                         >
-                            <img src={imgIconInfo} alt="" className="w-4 h-4" />
+                            <Info className="w-4 h-4" aria-hidden="true" />
                             Model Info
                         </button>
                     </div>
@@ -114,7 +88,7 @@ export default function AIInsightsPage() {
                     {/* AI-Generated Predictive Alerts Section */}
                     <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                            <img src={imgIconWarning} alt="" className="w-5 h-5" />
+                            <AlertTriangle className="w-5 h-5 text-[#f54900]" aria-hidden="true" />
                             <span className="text-sm text-[#0a0a0a]">AI-Generated Predictive Alerts</span>
                             <span className="px-2 py-0.5 bg-[#f54900] text-white text-xs rounded-lg">
                                 {criticalCount} Critical
@@ -165,13 +139,12 @@ export default function AIInsightsPage() {
                             className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-[#f9fafb] transition-colors"
                         >
                             <div className="flex items-center gap-2">
-                                <img src={imgIconChart} alt="" className="w-4 h-4" />
+                                <BarChart3 className="w-4 h-4" aria-hidden="true" />
                                 <span className="text-sm text-[#0a0a0a]">Advanced AI Analytics &amp; Visualizations</span>
                             </div>
-                            <img
-                                src={imgIconChevronDown}
-                                alt=""
-                                className={`w-4 h-4 transition-transform ${expandedAnalytics ? 'rotate-180' : ''}`}
+                            <ChevronDown
+                                className={`w-4 h-4 transition-transform ${expandedAnalytics ? "rotate-180" : ""}`}
+                                aria-hidden="true"
                             />
                         </button>
 

@@ -1,11 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import React from "react";
 import Link from "next/link";
-
-const iconSecure = "https://www.figma.com/api/mcp/asset/1919817c-907c-419b-926d-3c7000be0aef";
-const iconView = "https://www.figma.com/api/mcp/asset/641fbafe-09f6-490d-84f8-ddb402e7c844";
+import { Eye, ShieldCheck } from "lucide-react";
 
 interface JunctionCard {
     href: string;
@@ -59,6 +57,14 @@ export default function WelcomePage() {
             action: "View Docs"
         },
         {
+            href: "/app/ingestion-contracts",
+            icon: "🧾",
+            title: "Ingestion Contracts",
+            description: "Review authoritative data intake rules and validation fields",
+            color: "from-indigo-500 to-indigo-600",
+            action: "View Contracts"
+        },
+        {
             href: "/app/settings",
             icon: "⚙️",
             title: "Settings",
@@ -97,7 +103,7 @@ export default function WelcomePage() {
                 {/* Key Features */}
                 <div className="mb-12 grid gap-4 md:grid-cols-2 max-w-[600px] mx-auto">
                     <div className="flex items-center gap-3 rounded-[12px] border border-[#e5e7eb] bg-white px-4 py-4 shadow-sm hover:shadow-md transition-shadow">
-                        <img alt="Secure" className="h-6 w-6" src={iconSecure} />
+                        <ShieldCheck className="h-6 w-6 text-blue-600" />
                         <div>
                             <div className="text-[14px] font-medium leading-[20px] text-[#101828]">Secure by Default</div>
                             <div className="text-[12px] leading-[16px] text-[#4a5565]">
@@ -107,7 +113,7 @@ export default function WelcomePage() {
                     </div>
 
                     <div className="flex items-center gap-3 rounded-[12px] border border-[#e5e7eb] bg-white px-4 py-4 shadow-sm hover:shadow-md transition-shadow">
-                        <img alt="On-Demand" className="h-6 w-6" src={iconView} />
+                        <Eye className="h-6 w-6 text-slate-600" />
                         <div>
                             <div className="text-[14px] font-medium leading-[20px] text-[#101828]">View on Demand</div>
                             <div className="text-[12px] leading-[16px] text-[#4a5565]">Access data when needed</div>

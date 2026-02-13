@@ -3,23 +3,19 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-
-// Figma assets (node 6:5568)
-const imgIconOverview = "https://www.figma.com/api/mcp/asset/f21c5a66-0736-4195-bb71-e7abb4fc6dc1";
-const imgIconBilling = "https://www.figma.com/api/mcp/asset/56560d30-7156-429a-ad5e-6c8edc25ea17";
-const imgVectorAircraft = "https://www.figma.com/api/mcp/asset/f1dc4fed-08cb-43bd-ad83-40707ad2de8c";
-const imgVectorUser1 = "https://www.figma.com/api/mcp/asset/b5fb2a27-9ed1-4ef9-916d-bdd26986a7a9";
-const imgVectorUser2 = "https://www.figma.com/api/mcp/asset/c21141a3-5579-4d7a-85ac-01b80f89f076";
-const imgVectorMaint1 = "https://www.figma.com/api/mcp/asset/0337d9e0-303d-4654-b557-7d447501e801";
-const imgVectorMaint2 = "https://www.figma.com/api/mcp/asset/7590c799-35dd-4d96-9a91-c77dde82ac44";
-const imgVectorMaint3 = "https://www.figma.com/api/mcp/asset/405ac1d4-730d-415e-ba85-f457bc04ff0a";
-const imgVectorCompl1 = "https://www.figma.com/api/mcp/asset/5aab6567-1d75-4752-9d37-5829eb211b3d";
-const imgVectorCompl2 = "https://www.figma.com/api/mcp/asset/3bca070b-78d1-421d-8291-d4f1f2af57eb";
-const imgIconAdd = "https://www.figma.com/api/mcp/asset/5c442fc7-7277-4aa6-a152-772cdec0f364";
-const imgIconClose = "https://www.figma.com/api/mcp/asset/19773ccb-4f3e-4747-be3e-abab34676940";
-const imgIconCheck = "https://www.figma.com/api/mcp/asset/3aaa1073-bc4f-4d38-a6e6-cb360bd4a005";
-const imgIconUserAdd = "https://www.figma.com/api/mcp/asset/6e089679-51f4-4a2a-9346-c85a3ca55e19";
-const imgIconAIMechanic = "https://www.figma.com/api/mcp/asset/9e2006db-be53-408c-8866-ae8f90291f3b";
+import {
+    Bot,
+    Check,
+    CreditCard,
+    LayoutDashboard,
+    Plane,
+    Plus,
+    ShieldCheck,
+    UserPlus,
+    Users,
+    Wrench,
+    X,
+} from "lucide-react";
 
 type DataMode = "mock" | "live" | "hybrid";
 
@@ -546,7 +542,7 @@ export default function RegisterAircraftPage() {
                         fontFamily: "Arial, sans-serif",
                     }}
                 >
-                    <img src={imgIconOverview} alt="" style={{ width: "16px", height: "16px" }} />
+                    <LayoutDashboard size={16} color={activeTab === "overview" ? "#155dfc" : "#4a5565"} />
                     Overview &amp; Management
                 </button>
                 <button
@@ -567,7 +563,7 @@ export default function RegisterAircraftPage() {
                         fontFamily: "Arial, sans-serif",
                     }}
                 >
-                    <img src={imgIconBilling} alt="" style={{ width: "16px", height: "16px" }} />
+                    <CreditCard size={16} color={activeTab === "billing" ? "#155dfc" : "#4a5565"} />
                     Subscription &amp; Billing
                 </button>
             </div>
@@ -633,7 +629,7 @@ export default function RegisterAircraftPage() {
                                 justifyContent: "center",
                             }}
                         >
-                            <img src={imgVectorAircraft} alt="" style={{ width: "18.24px", height: "18.19px" }} />
+                            <Plane size={18} color="#155dfc" />
                         </div>
                         <div>
                             <div style={{ fontSize: "24px", lineHeight: "32px", color: "#0a0a0a", fontFamily: "Arial, sans-serif" }}>
@@ -668,8 +664,7 @@ export default function RegisterAircraftPage() {
                             }}
                         >
                             <div style={{ position: "relative", width: "24px", height: "24px" }}>
-                                <img src={imgVectorUser1} alt="" style={{ position: "absolute", width: "14px", height: "6px", left: "2px", top: "15px" }} />
-                                <img src={imgVectorUser2} alt="" style={{ position: "absolute", width: "8px", height: "8px", left: "5px", top: "3px" }} />
+                                <Users size={18} color="#16a34a" style={{ position: "absolute", left: "3px", top: "3px" }} />
                             </div>
                         </div>
                         <div>
@@ -705,9 +700,7 @@ export default function RegisterAircraftPage() {
                             }}
                         >
                             <div style={{ position: "relative", width: "24px", height: "24px" }}>
-                                <img src={imgVectorMaint1} alt="" style={{ position: "absolute", width: "18px", height: "6px", left: "3px", top: "2px" }} />
-                                <img src={imgVectorMaint2} alt="" style={{ position: "absolute", width: "18px", height: "17px", left: "3px", top: "5px" }} />
-                                <img src={imgVectorMaint3} alt="" style={{ position: "absolute", width: "18px", height: "3px", left: "3px", top: "12px" }} />
+                                <Wrench size={18} color="#7c3aed" style={{ position: "absolute", left: "3px", top: "3px" }} />
                             </div>
                         </div>
                         <div>
@@ -743,8 +736,7 @@ export default function RegisterAircraftPage() {
                             }}
                         >
                             <div style={{ position: "relative", width: "24px", height: "24px" }}>
-                                <img src={imgVectorCompl1} alt="" style={{ position: "absolute", width: "16px", height: "20px", left: "4px", top: "2px" }} />
-                                <img src={imgVectorCompl2} alt="" style={{ position: "absolute", width: "6px", height: "6px", left: "9px", top: "10px" }} />
+                                <ShieldCheck size={18} color="#ea580c" style={{ position: "absolute", left: "3px", top: "3px" }} />
                             </div>
                         </div>
                         <div>
@@ -797,7 +789,7 @@ export default function RegisterAircraftPage() {
                             fontFamily: "Arial, sans-serif",
                         }}
                     >
-                        <img src={imgIconAdd} alt="" style={{ width: "16px", height: "16px" }} />
+                        <Plus size={16} />
                         Add New Aircraft
                     </button>
                 </div>
@@ -836,7 +828,7 @@ export default function RegisterAircraftPage() {
                                 cursor: "pointer",
                             }}
                         >
-                            <img src={imgIconClose} alt="Close" style={{ width: "16px", height: "16px" }} />
+                            <X size={16} />
                         </button>
                     </div>
 
@@ -1592,7 +1584,7 @@ export default function RegisterAircraftPage() {
                                 opacity: submitting ? 0.7 : 1,
                             }}
                         >
-                            <img src={imgIconCheck} alt="" style={{ width: "16px", height: "16px" }} />
+                            <Check size={16} />
                             {submitting ? "Registering..." : "Register Aircraft"}
                         </button>
                     </div>
@@ -1637,7 +1629,7 @@ export default function RegisterAircraftPage() {
                             fontFamily: "Arial, sans-serif",
                         }}
                     >
-                        <img src={imgIconUserAdd} alt="" style={{ width: "16px", height: "16px" }} />
+                        <UserPlus size={16} />
                         Add User
                     </button>
                 </div>
@@ -1801,7 +1793,7 @@ export default function RegisterAircraftPage() {
                                 onClick={() => setIsAddUserOpen(false)}
                                 style={{ background: "none", border: "none", cursor: "pointer", padding: "8px" }}
                             >
-                                <img src={imgIconClose} alt="Close" style={{ width: "16px", height: "16px" }} />
+                                <X size={16} />
                             </button>
                         </div>
 
@@ -1952,7 +1944,7 @@ export default function RegisterAircraftPage() {
                                 onClick={() => setEditingUser(null)}
                                 style={{ background: "none", border: "none", cursor: "pointer", padding: "8px" }}
                             >
-                                <img src={imgIconClose} alt="Close" style={{ width: "16px", height: "16px" }} />
+                                <X size={16} />
                             </button>
                         </div>
 
@@ -2096,7 +2088,7 @@ export default function RegisterAircraftPage() {
                 }}
             >
                 <div style={{ position: "relative", width: "24px", height: "24px" }}>
-                    <img src={imgIconAIMechanic} alt="" style={{ width: "24px", height: "24px" }} />
+                    <Bot size={24} color="#ffffff" />
                     <div
                         style={{
                             position: "absolute",

@@ -1,0 +1,10 @@
+{
+    "export": "decision-events",
+    "scenario": "C",
+    "expected": {
+        "disposition": "NO_ACTION",
+        "ruleOutcome": "ADVISORY_ONLY",
+        "acknowledged": true,
+        "ingestionSuppressed": true
+    }
+}
