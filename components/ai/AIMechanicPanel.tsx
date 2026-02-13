@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Bot } from "lucide-react";
+import { Bot, Info } from "lucide-react";
 
 // Figma asset icons from design node 131:1308
 const imgIconAdvisory = "https://www.figma.com/api/mcp/asset/dec716d7-ff14-4a49-9e48-a2b90f54c1d8";
@@ -732,8 +732,7 @@ export default function AIMechanicPanel({
                     className="flex h-6 w-6 sm:h-7 sm:w-7 flex-shrink-0 items-center justify-center rounded-[10px]"
                     style={{ backgroundColor: "#dbeafe" }}
                 >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={imgIconInfo} alt="" className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#155dfc]" aria-hidden="true" />
                 </div>
                 <div className="flex-1 text-xs sm:text-sm leading-relaxed min-w-0" style={{ color: "#1e2939" }}>
                     <span className="font-bold text-amber-800">
