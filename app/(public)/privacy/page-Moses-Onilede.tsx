@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_GENERAL } from "@/lib/routes";
 
@@ -535,9 +535,12 @@ export default function PrivacyPage(): React.ReactElement {
                             }}
                         >
                             <div className="h-7 w-7 overflow-hidden">
-                                <img
+                                <Image
                                     src={imgVectorLarge}
                                     alt=""
+                                    width={28}
+                                    height={28}
+                                    unoptimized
                                     className="h-full w-full object-contain"
                                 />
                             </div>
@@ -577,9 +580,12 @@ export default function PrivacyPage(): React.ReactElement {
                             <span style={{ color: "#ffffff", fontSize: "14px", lineHeight: "20px" }}>
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowSmall}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 className="h-4 w-4"
                             />
                         </Link>
@@ -601,9 +607,12 @@ export default function PrivacyPage(): React.ReactElement {
                         className="absolute left-1/2 transform -translate-x-1/2 top-0 flex items-center gap-2 rounded-full px-5 py-2.5"
                         style={{ backgroundColor: "#155dfc", height: "40px" }}
                     >
-                        <img
+                        <Image
                             src={imgIconShield}
                             alt=""
+                            width={20}
+                            height={20}
+                            unoptimized
                             className="h-5 w-5"
                         />
                         <span
@@ -770,9 +779,12 @@ export default function PrivacyPage(): React.ReactElement {
                             <span style={{ fontSize: "18px", lineHeight: "28px" }}>
                                 {content.questions_banner.cta_label}
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrow}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 className="h-5 w-5"
                             />
                         </Link>
@@ -798,9 +810,12 @@ export default function PrivacyPage(): React.ReactElement {
                                 }}
                             >
                                 <div className="h-5 w-5 overflow-hidden">
-                                    <img
+                                    <Image
                                         src={imgVector}
                                         alt=""
+                                        width={20}
+                                        height={20}
+                                        unoptimized
                                         className="h-full w-full object-contain"
                                     />
                                 </div>

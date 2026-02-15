@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // Figma assets from node 40:11668
@@ -52,9 +52,12 @@ function AreaCard({ area, position }: { area: AreaOfInterest; position: "left" |
                     height: 40,
                 }}
             >
-                <img
+                <Image
                     src={area.icon}
                     alt=""
+                    width={40}
+                    height={40}
+                    unoptimized
                     style={{ width: 40, height: 40 }}
                 />
                 <h3
@@ -298,9 +301,12 @@ export default function CareersPage() {
                                 transform: "translateX(-50%)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconMail}
                                 alt=""
+                                width={64}
+                                height={64}
+                                unoptimized
                                 style={{ width: 64, height: 64 }}
                             />
                         </div>
@@ -360,9 +366,12 @@ export default function CareersPage() {
                                 padding: 0,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconMailSmall}
                                 alt=""
+                                width={24}
+                                height={24}
+                                unoptimized
                                 style={{ width: 24, height: 24 }}
                             />
                             <span
@@ -423,9 +432,12 @@ export default function CareersPage() {
                                     boxSizing: "border-box",
                                 }}
                             >
-                                <img
+                                <Image
                                     src={imgVector}
                                     alt="SkyMaintain"
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </div>
@@ -553,9 +565,12 @@ export default function CareersPage() {
                                 boxSizing: "border-box",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: 28, height: 28 }}
                             />
                         </div>
@@ -662,9 +677,12 @@ export default function CareersPage() {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: 16, height: 16 }}
                             />
                         </button>

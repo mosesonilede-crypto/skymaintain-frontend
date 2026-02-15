@@ -7,6 +7,7 @@
  * Figma URL: https://www.figma.com/design/qz3ERP8jfbTpTHQrdPSawI/SkyMaintain-Design?node-id=39-10912
  */
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO, CONTACT_GENERAL } from "@/lib/routes";
 
@@ -57,7 +58,7 @@ export default function ContactSkyMaintainPage() {
                             padding: "10px",
                         }}
                     >
-                        <img src={imgVectorLogoHeader} alt="SkyMaintain" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+                        <Image src={imgVectorLogoHeader} alt="SkyMaintain" width={28} height={28} unoptimized style={{ width: "28px", height: "28px", objectFit: "contain" }} />
                     </div>
                     <div>
                         <p style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "24px", lineHeight: "32px", color: "#101828", margin: 0 }}>
@@ -106,7 +107,7 @@ export default function ContactSkyMaintainPage() {
                         <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 400, fontSize: "14px", lineHeight: "20px", color: "#ffffff" }}>
                             Get Started
                         </span>
-                        <img src={imgIconArrow} alt="" style={{ width: "16px", height: "16px" }} />
+                        <Image src={imgIconArrow} alt="" width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                     </button>
                 </div>
             </header>
@@ -162,7 +163,7 @@ export default function ContactSkyMaintainPage() {
                                 margin: 0,
                             }}
                         >
-                            We'd love to hear from you.
+                            We&apos;d love to hear from you.
                         </p>
                     </div>
                 </section>
@@ -198,7 +199,7 @@ export default function ContactSkyMaintainPage() {
                             }}
                         >
                             <div style={{ width: "48px", height: "48px", marginBottom: "48px" }}>
-                                <img src={imgIconChat} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                <Image src={imgIconChat} alt="" width={48} height={48} unoptimized style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                             </div>
                             <h2
                                 style={{
@@ -236,7 +237,7 @@ export default function ContactSkyMaintainPage() {
                                     marginTop: "auto",
                                 }}
                             >
-                                <img src={imgIconEmail} alt="" style={{ width: "16px", height: "16px" }} />
+                                <Image src={imgIconEmail} alt="" width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                                 <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "16px", lineHeight: "24px", color: "#155dfc" }}>
                                     contact@skymaintain.ai
                                 </span>
@@ -257,7 +258,7 @@ export default function ContactSkyMaintainPage() {
                             }}
                         >
                             <div style={{ width: "48px", height: "48px", marginBottom: "48px" }}>
-                                <img src={imgIconEnvelope} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                <Image src={imgIconEnvelope} alt="" width={48} height={48} unoptimized style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                             </div>
                             <h2
                                 style={{
@@ -295,7 +296,7 @@ export default function ContactSkyMaintainPage() {
                                     marginTop: "auto",
                                 }}
                             >
-                                <img src={imgIconEmail} alt="" style={{ width: "16px", height: "16px" }} />
+                                <Image src={imgIconEmail} alt="" width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                                 <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "16px", lineHeight: "24px", color: "#155dfc" }}>
                                     support@skymaintain.ai
                                 </span>
@@ -316,7 +317,7 @@ export default function ContactSkyMaintainPage() {
                             }}
                         >
                             <div style={{ width: "48px", height: "48px", marginBottom: "48px" }}>
-                                <img src={imgIconBriefcase} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                <Image src={imgIconBriefcase} alt="" width={48} height={48} unoptimized style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                             </div>
                             <h2
                                 style={{
@@ -354,7 +355,7 @@ export default function ContactSkyMaintainPage() {
                                     marginTop: "auto",
                                 }}
                             >
-                                <img src={imgIconEmail} alt="" style={{ width: "16px", height: "16px" }} />
+                                <Image src={imgIconEmail} alt="" width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                                 <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "16px", lineHeight: "24px", color: "#155dfc" }}>
                                     partnerships@skymaintain.ai
                                 </span>
@@ -457,7 +458,7 @@ export default function ContactSkyMaintainPage() {
                                 padding: "8px",
                             }}
                         >
-                            <img src={imgVectorLogo} alt="" style={{ width: "20px", height: "20px", objectFit: "contain" }} />
+                            <Image src={imgVectorLogo} alt="" width={20} height={20} unoptimized style={{ width: "20px", height: "20px", objectFit: "contain" }} />
                         </div>
                         <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "18px", lineHeight: "28px", color: "#ffffff" }}>
                             SkyMaintain

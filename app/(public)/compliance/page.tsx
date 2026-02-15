@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image";
 import Link from "next/link";
 
 // Figma assets (node 39:9933)
@@ -168,9 +168,12 @@ export default async function CompliancePage() {
                                 boxShadow: "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: "28px", height: "28px" }}
                             />
                         </div>
@@ -196,9 +199,12 @@ export default async function CompliancePage() {
                         className="flex items-center transition-colors hover:bg-gray-100"
                         style={{ height: "36px", borderRadius: "8px", paddingLeft: "12px", paddingRight: "12px" }}
                     >
-                        <img
+                        <Image
                             src={imgIconArrow}
                             alt=""
+                            width={16}
+                            height={16}
+                            unoptimized
                             style={{ width: "16px", height: "16px" }}
                         />
                         <span
@@ -225,9 +231,12 @@ export default async function CompliancePage() {
                 <div className="relative w-full" style={{ height: "306.6px" }}>
                     {/* Shield Icon - 80px, centered */}
                     <div className="flex justify-center w-full">
-                        <img
+                        <Image
                             src={imgIconShield}
                             alt=""
+                            width={80}
+                            height={80}
+                            unoptimized
                             style={{ width: "80px", height: "80px" }}
                         />
                     </div>
@@ -325,7 +334,7 @@ export default async function CompliancePage() {
                             }}
                         >
                             <div className="flex items-center gap-3">
-                                <img src={imgIconCheck} alt="" style={{ width: "32px", height: "32px" }} />
+                                <Image src={imgIconCheck} alt="" width={32} height={32} unoptimized style={{ width: "32px", height: "32px" }} />
                                 <span className="font-bold" style={{ color: "#101828", fontSize: "18px", lineHeight: "28px" }}>
                                     {payload.keyPrinciples[0]}
                                 </span>
@@ -345,7 +354,7 @@ export default async function CompliancePage() {
                             }}
                         >
                             <div className="flex items-center gap-3">
-                                <img src={imgIconCheck} alt="" style={{ width: "32px", height: "32px" }} />
+                                <Image src={imgIconCheck} alt="" width={32} height={32} unoptimized style={{ width: "32px", height: "32px" }} />
                                 <span className="font-bold" style={{ color: "#101828", fontSize: "18px", lineHeight: "28px" }}>
                                     {payload.keyPrinciples[1]}
                                 </span>
@@ -366,7 +375,7 @@ export default async function CompliancePage() {
                             }}
                         >
                             <div className="flex items-center gap-3">
-                                <img src={imgIconCheck} alt="" style={{ width: "32px", height: "32px" }} />
+                                <Image src={imgIconCheck} alt="" width={32} height={32} unoptimized style={{ width: "32px", height: "32px" }} />
                                 <span className="font-bold" style={{ color: "#101828", fontSize: "18px", lineHeight: "28px" }}>
                                     {payload.keyPrinciples[2]}
                                 </span>
@@ -386,7 +395,7 @@ export default async function CompliancePage() {
                             }}
                         >
                             <div className="flex items-center gap-3">
-                                <img src={imgIconCheck} alt="" style={{ width: "32px", height: "32px" }} />
+                                <Image src={imgIconCheck} alt="" width={32} height={32} unoptimized style={{ width: "32px", height: "32px" }} />
                                 <span className="font-bold" style={{ color: "#101828", fontSize: "18px", lineHeight: "28px" }}>
                                     {payload.keyPrinciples[3]}
                                 </span>
@@ -425,9 +434,12 @@ export default async function CompliancePage() {
                         <div className="flex flex-col items-start" style={{ gap: "16px" }}>
                             {payload.regulatoryAlignmentBullets.map((item, idx) => (
                                 <div key={idx} className="flex items-center" style={{ gap: "12px" }}>
-                                    <img
+                                    <Image
                                         src={imgIconCheckCircle}
                                         alt=""
+                                        width={24}
+                                        height={24}
+                                        unoptimized
                                         style={{ width: "24px", height: "24px" }}
                                     />
                                     <span style={{ color: "#364153", fontSize: "18px", lineHeight: "28px" }}>
@@ -463,9 +475,12 @@ export default async function CompliancePage() {
                             className="absolute flex items-start"
                             style={{ left: "32px", top: "32px", gap: "16px" }}
                         >
-                            <img
+                            <Image
                                 src={imgIconWarning}
                                 alt=""
+                                width={32}
+                                height={32}
+                                unoptimized
                                 style={{ width: "32px", height: "32px" }}
                             />
                             <p
@@ -483,9 +498,12 @@ export default async function CompliancePage() {
                         >
                             {payload.importantNoticeBullets.map((item, idx) => (
                                 <div key={idx} className="flex items-center" style={{ gap: "12px" }}>
-                                    <img
+                                    <Image
                                         src={imgIconXCircle}
                                         alt=""
+                                        width={24}
+                                        height={24}
+                                        unoptimized
                                         style={{ width: "24px", height: "24px" }}
                                     />
                                     <span style={{ color: "#364153", fontSize: "18px", lineHeight: "28px" }}>
@@ -512,9 +530,12 @@ export default async function CompliancePage() {
                         className="absolute"
                         style={{ left: "50%", transform: "translateX(-50%)", top: "40px" }}
                     >
-                        <img
+                        <Image
                             src={imgIconShieldWhite}
                             alt=""
+                            width={64}
+                            height={64}
+                            unoptimized
                             style={{ width: "64px", height: "64px" }}
                         />
                     </div>
@@ -568,9 +589,12 @@ export default async function CompliancePage() {
                             borderRadius: "10px",
                         }}
                     >
-                        <img
+                        <Image
                             src={imgVector}
                             alt="SkyMaintain"
+                            width={20}
+                            height={20}
+                            unoptimized
                             style={{ width: "20px", height: "20px" }}
                         />
                     </div>

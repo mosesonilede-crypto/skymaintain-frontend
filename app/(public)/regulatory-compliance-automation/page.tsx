@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO } from "@/lib/routes";
@@ -57,7 +58,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                         }}
                     >
                         <div className="relative" style={{ width: "28px", height: "28px" }}>
-                            <img alt="Logo" src={imgVector10} className="size-full object-contain" />
+                            <Image alt="Logo" src={imgVector10} width={28} height={28} unoptimized className="size-full object-contain" />
                         </div>
                     </div>
                     <div className="flex flex-col">
@@ -82,7 +83,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                         className="flex items-center gap-2 rounded-lg px-3"
                         style={{ height: "36px" }}
                     >
-                        <img alt="Back" src={imgIcon11} style={{ width: "16px", height: "16px" }} />
+                        <Image alt="Back" src={imgIcon11} width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                         <span style={{ fontSize: "14px", lineHeight: "20px", color: "#364153" }}>Back</span>
                     </button>
                     <Link
@@ -93,7 +94,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                         <span className="text-white" style={{ fontSize: "14px", lineHeight: "20px" }}>
                             Get Started
                         </span>
-                        <img alt="Arrow" src={imgIcon12} style={{ width: "16px", height: "16px" }} />
+                        <Image alt="Arrow" src={imgIcon12} width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                     </Link>
                 </div>
             </header>
@@ -150,7 +151,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                         }}
                     >
                         Automated visibility and tracking tools that help maintenance organizations stay
-                        aligned with regulatory requirementsâ€"without replacing professional judgment.
+                        aligned with regulatory requirements&mdash;without replacing professional judgment.
                     </p>
                 </section>
 
@@ -195,7 +196,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                     className="flex items-center gap-3 rounded-[10px] px-4"
                                     style={{ height: "60px", backgroundColor: "#f0fdf4" }}
                                 >
-                                    <img alt="Check" src={imgIcon} style={{ width: "24px", height: "24px" }} />
+                                    <Image alt="Check" src={imgIcon} width={24} height={24} unoptimized style={{ width: "24px", height: "24px" }} />
                                     <span style={{ fontSize: "18px", lineHeight: "28px", color: "#101828" }}>
                                         {item}
                                     </span>
@@ -254,7 +255,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                         className="flex items-center gap-3 rounded-[10px] px-4 bg-white"
                                         style={{ height: "59.2px", border: "1.6px solid rgba(0,0,0,0.1)" }}
                                     >
-                                        <img alt="Check" src={imgIcon1} style={{ width: "20px", height: "20px" }} />
+                                        <Image alt="Check" src={imgIcon1} width={20} height={20} unoptimized style={{ width: "20px", height: "20px" }} />
                                         <span style={{ fontSize: "16px", lineHeight: "24px", color: "#101828" }}>
                                             {item}
                                         </span>
@@ -297,8 +298,8 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             style={{ border: "1.6px solid rgba(0,0,0,0.1)" }}
                         >
                             <div className="relative" style={{ width: "48px", height: "48px" }}>
-                                <img alt="Vector" src={imgVector} className="absolute" style={{ inset: "20.84% 8.33%", width: "40px", height: "28px" }} />
-                                <img alt="Vector" src={imgVector1} className="absolute" style={{ left: "37.5%", top: "37.5%", width: "12px", height: "12px" }} />
+                                <Image alt="Vector" src={imgVector} width={40} height={28} unoptimized className="absolute" style={{ inset: "20.84% 8.33%", width: "40px", height: "28px" }} />
+                                <Image alt="Vector" src={imgVector1} width={12} height={12} unoptimized className="absolute" style={{ left: "37.5%", top: "37.5%", width: "12px", height: "12px" }} />
                             </div>
                             <h3 className="font-bold" style={{ fontSize: "24px", lineHeight: "32px", color: "#101828" }}>
                                 Improved Compliance Visibility
@@ -315,8 +316,8 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             style={{ border: "1.6px solid rgba(0,0,0,0.1)" }}
                         >
                             <div className="relative" style={{ width: "48px", height: "48px" }}>
-                                <img alt="Vector" src={imgVector2} className="absolute" style={{ inset: "8.33%", width: "40px", height: "40px" }} />
-                                <img alt="Vector" src={imgVector3} className="absolute" style={{ left: "50%", top: "25%", width: "8px", height: "16px" }} />
+                                <Image alt="Vector" src={imgVector2} width={40} height={40} unoptimized className="absolute" style={{ inset: "8.33%", width: "40px", height: "40px" }} />
+                                <Image alt="Vector" src={imgVector3} width={8} height={16} unoptimized className="absolute" style={{ left: "50%", top: "25%", width: "8px", height: "16px" }} />
                             </div>
                             <h3 className="font-bold" style={{ fontSize: "24px", lineHeight: "32px", color: "#101828" }}>
                                 Reduced Administrative Overhead
@@ -332,7 +333,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             style={{ border: "1.6px solid rgba(0,0,0,0.1)" }}
                         >
                             <div className="relative" style={{ width: "48px", height: "48px" }}>
-                                <img alt="Vector" src={imgVector4} className="absolute" style={{ inset: "12.5% 8.33% 16.67%", width: "40px", height: "34px" }} />
+                                <Image alt="Vector" src={imgVector4} width={40} height={34} unoptimized className="absolute" style={{ inset: "12.5% 8.33% 16.67%", width: "40px", height: "34px" }} />
                             </div>
                             <h3 className="font-bold" style={{ fontSize: "24px", lineHeight: "32px", color: "#101828" }}>
                                 Audit-Ready Documentation
@@ -348,10 +349,10 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             style={{ border: "1.6px solid rgba(0,0,0,0.1)" }}
                         >
                             <div className="relative" style={{ width: "48px", height: "48px" }}>
-                                <img alt="Vector" src={imgVector5} className="absolute" style={{ left: "8.33%", top: "62.5%", width: "28px", height: "12px" }} />
-                                <img alt="Vector" src={imgVector6} className="absolute" style={{ left: "20.83%", top: "12.5%", width: "16px", height: "16px" }} />
-                                <img alt="Vector" src={imgVector7} className="absolute" style={{ left: "79.17%", top: "63.04%", width: "6px", height: "12px" }} />
-                                <img alt="Vector" src={imgVector8} className="absolute" style={{ left: "66.67%", top: "13.04%", width: "6px", height: "15px" }} />
+                                <Image alt="Vector" src={imgVector5} width={28} height={12} unoptimized className="absolute" style={{ left: "8.33%", top: "62.5%", width: "28px", height: "12px" }} />
+                                <Image alt="Vector" src={imgVector6} width={16} height={16} unoptimized className="absolute" style={{ left: "20.83%", top: "12.5%", width: "16px", height: "16px" }} />
+                                <Image alt="Vector" src={imgVector7} width={6} height={12} unoptimized className="absolute" style={{ left: "79.17%", top: "63.04%", width: "6px", height: "12px" }} />
+                                <Image alt="Vector" src={imgVector8} width={6} height={15} unoptimized className="absolute" style={{ left: "66.67%", top: "13.04%", width: "6px", height: "15px" }} />
                             </div>
                             <h3 className="font-bold" style={{ fontSize: "24px", lineHeight: "32px", color: "#101828" }}>
                                 Clear Accountability
@@ -374,7 +375,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                     <div className="flex flex-col gap-12 px-6 w-full">
                         {/* Header with Icon */}
                         <div className="flex flex-col items-center gap-4">
-                            <img alt="Shield" src={imgIcon2} style={{ width: "48px", height: "48px" }} />
+                            <Image alt="Shield" src={imgIcon2} width={48} height={48} unoptimized style={{ width: "48px", height: "48px" }} />
                             <h2
                                 className="text-center font-bold"
                                 style={{ fontSize: "36px", lineHeight: "40px", color: "#101828" }}
@@ -405,7 +406,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                     "Reinforces documented, human-approved compliance actions",
                                 ].map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-3" style={{ height: "28px" }}>
-                                        <img alt="Check" src={imgIcon} style={{ width: "24px", height: "24px" }} />
+                                        <Image alt="Check" src={imgIcon} width={24} height={24} unoptimized style={{ width: "24px", height: "24px" }} />
                                         <span style={{ fontSize: "18px", lineHeight: "28px", color: "#364153" }}>
                                             {item}
                                         </span>
@@ -434,7 +435,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                 <section className="flex flex-col gap-12 px-[86px] pt-20 bg-white">
                     {/* Header with Icon */}
                     <div className="flex flex-col items-center gap-4">
-                        <img alt="Users" src={imgIcon3} style={{ width: "48px", height: "48px" }} />
+                        <Image alt="Users" src={imgIcon3} width={48} height={48} unoptimized style={{ width: "48px", height: "48px" }} />
                         <h2
                             className="text-center font-bold"
                             style={{ fontSize: "36px", lineHeight: "40px", color: "#101828" }}
@@ -445,7 +446,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             className="text-center"
                             style={{ fontSize: "20px", lineHeight: "32.5px", color: "#364153", maxWidth: "679px" }}
                         >
-                            SkyMaintain is intentionally designed to supportâ€"not substituteâ€"regulatory
+                            SkyMaintain is intentionally designed to support&mdash;not substitute&mdash;regulatory
                             accountability.
                         </p>
                     </div>
@@ -465,7 +466,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                     className="flex items-center gap-3 rounded-[10px] px-4"
                                     style={{ height: "60px", backgroundColor: "#eff6ff" }}
                                 >
-                                    <img alt="X" src={imgIcon4} style={{ width: "24px", height: "24px" }} />
+                                    <Image alt="X" src={imgIcon4} width={24} height={24} unoptimized style={{ width: "24px", height: "24px" }} />
                                     <span style={{ fontSize: "18px", lineHeight: "28px", color: "#101828" }}>
                                         {item}
                                     </span>
@@ -499,7 +500,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                     <div className="flex flex-col gap-12 px-6 w-full">
                         {/* Header with Icon */}
                         <div className="flex flex-col items-center gap-4">
-                            <img alt="Trust" src={imgIcon5} style={{ width: "48px", height: "48px" }} />
+                            <Image alt="Trust" src={imgIcon5} width={48} height={48} unoptimized style={{ width: "48px", height: "48px" }} />
                             <h2
                                 className="text-center font-bold"
                                 style={{ fontSize: "36px", lineHeight: "40px", color: "#101828" }}
@@ -526,7 +527,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                     "No sale or external monetization of regulatory information",
                                 ].map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-3" style={{ height: "28px" }}>
-                                        <img alt="Check" src={imgIcon6} style={{ width: "24px", height: "24px" }} />
+                                        <Image alt="Check" src={imgIcon6} width={24} height={24} unoptimized style={{ width: "24px", height: "24px" }} />
                                         <span style={{ fontSize: "18px", lineHeight: "28px", color: "#364153" }}>
                                             {item}
                                         </span>
@@ -554,7 +555,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                 <section className="flex flex-col gap-12 px-[86px] pt-20 bg-white">
                     {/* Header with Icon */}
                     <div className="flex flex-col items-center gap-4">
-                        <img alt="Who" src={imgIcon7} style={{ width: "48px", height: "48px" }} />
+                        <Image alt="Who" src={imgIcon7} width={48} height={48} unoptimized style={{ width: "48px", height: "48px" }} />
                         <h2
                             className="text-center font-bold"
                             style={{ fontSize: "36px", lineHeight: "40px", color: "#101828" }}
@@ -587,7 +588,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                     gridColumn: idx === 4 ? "span 1" : undefined,
                                 }}
                             >
-                                <img alt="Building" src={imgIcon8} style={{ width: "24px", height: "24px" }} />
+                                <Image alt="Building" src={imgIcon8} width={24} height={24} unoptimized style={{ width: "24px", height: "24px" }} />
                                 <span
                                     className="font-bold"
                                     style={{
@@ -643,7 +644,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                             style={{ fontSize: "20px", lineHeight: "32.5px", maxWidth: "838px" }}
                         >
                             Discover how structured automation can improve oversight, accountability, and audit
-                            readinessâ€"without sacrificing regulatory integrity.
+                            readiness&mdash;without sacrificing regulatory integrity.
                         </p>
 
                         <div className="flex items-center gap-4">
@@ -658,7 +659,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                 <span style={{ fontSize: "18px", lineHeight: "28px", color: "#00a63e" }}>
                                     Start a Free Trial
                                 </span>
-                                <img alt="Arrow" src={imgIcon9} style={{ width: "20px", height: "20px" }} />
+                                <Image alt="Arrow" src={imgIcon9} width={20} height={20} unoptimized style={{ width: "20px", height: "20px" }} />
                             </Link>
 
                             <Link
@@ -674,7 +675,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                 <span className="text-white" style={{ fontSize: "18px", lineHeight: "28px" }}>
                                     Schedule a Demo
                                 </span>
-                                <img alt="Arrow" src={imgIcon10} style={{ width: "20px", height: "20px" }} />
+                                <Image alt="Arrow" src={imgIcon10} width={20} height={20} unoptimized style={{ width: "20px", height: "20px" }} />
                             </Link>
                         </div>
                     </div>
@@ -697,7 +698,7 @@ export default function RegulatoryComplianceAutomationPage(): React.ReactElement
                                 }}
                             >
                                 <div className="relative" style={{ width: "20px", height: "20px" }}>
-                                    <img alt="Logo" src={imgVector9} className="size-full object-contain" />
+                                    <Image alt="Logo" src={imgVector9} width={20} height={20} unoptimized className="size-full object-contain" />
                                 </div>
                             </div>
                             <span

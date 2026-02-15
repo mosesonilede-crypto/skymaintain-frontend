@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -223,9 +223,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 boxShadow: "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: "28px", height: "28px" }}
                             />
                         </div>
@@ -282,9 +285,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: "16px", height: "16px", position: "absolute", left: "100.14px", top: "10px" }}
                             />
                         </Link>
@@ -394,31 +400,31 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             {/* Icon - 48x48 */}
                             <div className="relative overflow-hidden" style={{ width: "48px", height: "48px" }}>
                                 <div className="absolute" style={{ left: "8.33%", top: "8.3%", right: "50%", bottom: "8.35%" }}>
-                                    <img src={imgIconPredictive} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "50%", top: "8.3%", right: "8.33%", bottom: "8.35%" }}>
-                                    <img src={imgIconPredictive2} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive2} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "37.5%", top: "37.5%", right: "37.5%", bottom: "45.83%" }}>
-                                    <img src={imgIconPredictive3} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive3} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "25.01%", top: "21.35%", right: "73.33%", bottom: "72.92%" }}>
-                                    <img src={imgIconPredictive4} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive4} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "73.33%", top: "21.35%", right: "25.01%", bottom: "72.92%" }}>
-                                    <img src={imgIconPredictive5} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive5} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "14.49%", top: "43.75%", right: "83.08%", bottom: "54.6%" }}>
-                                    <img src={imgIconPredictive6} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive6} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "83.07%", top: "43.75%", right: "14.49%", bottom: "54.6%" }}>
-                                    <img src={imgIconPredictive7} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive7} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "16.8%", top: "72.85%", right: "75%", bottom: "25%" }}>
-                                    <img src={imgIconPredictive8} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive8} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "75%", top: "72.85%", right: "16.8%", bottom: "25%" }}>
-                                    <img src={imgIconPredictive9} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPredictive9} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                             </div>
                             {/* Content */}
@@ -442,9 +448,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 <div className="flex flex-col items-start" style={{ height: "132px", width: "100%", gap: "12px" }}>
                                     {content.features[0]?.bullets.map((bullet, i) => (
                                         <div key={i} className="relative" style={{ height: "24px", width: "100%" }}>
-                                            <img
+                                            <Image
                                                 src={imgIconCheck}
                                                 alt=""
+                                                width={20}
+                                                height={20}
+                                                unoptimized
                                                 style={{ position: "absolute", left: "0", top: "2px", width: "20px", height: "20px" }}
                                             />
                                             <p
@@ -483,13 +492,13 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             {/* Icon - 48x48 */}
                             <div className="relative overflow-hidden" style={{ width: "48px", height: "48px" }}>
                                 <div className="absolute" style={{ left: "12.5%", top: "8.33%", right: "12.5%", bottom: "66.67%" }}>
-                                    <img src={imgIconDatabase} alt="" className="w-full h-full" />
+                                    <Image src={imgIconDatabase} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "12.5%", top: "20.83%", right: "12.5%", bottom: "8.33%" }}>
-                                    <img src={imgIconDatabase2} alt="" className="w-full h-full" />
+                                    <Image src={imgIconDatabase2} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "12.5%", top: "50%", right: "12.5%", bottom: "37.5%" }}>
-                                    <img src={imgIconDatabase3} alt="" className="w-full h-full" />
+                                    <Image src={imgIconDatabase3} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                             </div>
                             {/* Content */}
@@ -513,9 +522,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 <div className="flex flex-col items-start" style={{ height: "96px", width: "100%", gap: "12px" }}>
                                     {content.features[1]?.bullets.map((bullet, i) => (
                                         <div key={i} className="relative" style={{ height: "24px", width: "100%" }}>
-                                            <img
+                                            <Image
                                                 src={imgIconCheck}
                                                 alt=""
+                                                width={20}
+                                                height={20}
+                                                unoptimized
                                                 style={{ position: "absolute", left: "0", top: "2px", width: "20px", height: "20px" }}
                                             />
                                             <p
@@ -554,7 +566,7 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             {/* Icon - 48x48 */}
                             <div className="relative overflow-hidden" style={{ width: "48px", height: "48px" }}>
                                 <div className="absolute" style={{ left: "16.67%", top: "8.33%", right: "16.67%", bottom: "8.32%" }}>
-                                    <img src={imgIconShield} alt="" className="w-full h-full" />
+                                    <Image src={imgIconShield} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                             </div>
                             {/* Content */}
@@ -578,9 +590,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 <div className="flex flex-col items-start" style={{ height: "96px", width: "100%", gap: "12px" }}>
                                     {content.features[2]?.bullets.map((bullet, i) => (
                                         <div key={i} className="relative" style={{ height: "24px", width: "100%" }}>
-                                            <img
+                                            <Image
                                                 src={imgIconCheck}
                                                 alt=""
+                                                width={20}
+                                                height={20}
+                                                unoptimized
                                                 style={{ position: "absolute", left: "0", top: "2px", width: "20px", height: "20px" }}
                                             />
                                             <p
@@ -619,16 +634,16 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             {/* Icon - 48x48 */}
                             <div className="relative overflow-hidden" style={{ width: "48px", height: "48px" }}>
                                 <div className="absolute" style={{ left: "8.33%", top: "62.5%", right: "33.33%", bottom: "12.5%" }}>
-                                    <img src={imgIconPeople} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPeople} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "20.83%", top: "12.5%", right: "45.83%", bottom: "54.17%" }}>
-                                    <img src={imgIconPeople2} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPeople2} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "79.17%", top: "63.04%", right: "8.33%", bottom: "12.5%" }}>
-                                    <img src={imgIconPeople3} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPeople3} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "66.67%", top: "13.04%", right: "20.8%", bottom: "54.67%" }}>
-                                    <img src={imgIconPeople4} alt="" className="w-full h-full" />
+                                    <Image src={imgIconPeople4} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                             </div>
                             {/* Content */}
@@ -652,9 +667,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 <div className="flex flex-col items-start" style={{ height: "96px", width: "100%", gap: "12px" }}>
                                     {content.features[3]?.bullets.map((bullet, i) => (
                                         <div key={i} className="relative" style={{ height: "24px", width: "100%" }}>
-                                            <img
+                                            <Image
                                                 src={imgIconCheck}
                                                 alt=""
+                                                width={20}
+                                                height={20}
+                                                unoptimized
                                                 style={{ position: "absolute", left: "0", top: "2px", width: "20px", height: "20px" }}
                                             />
                                             <p
@@ -693,10 +711,10 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                             {/* Icon - 48x48 */}
                             <div className="relative overflow-hidden" style={{ width: "48px", height: "48px" }}>
                                 <div className="absolute" style={{ left: "12.5%", top: "45.83%", right: "12.5%", bottom: "8.33%" }}>
-                                    <img src={imgIconCloud} alt="" className="w-full h-full" />
+                                    <Image src={imgIconCloud} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                                 <div className="absolute" style={{ left: "29.17%", top: "8.33%", right: "29.17%", bottom: "54.17%" }}>
-                                    <img src={imgIconCloud2} alt="" className="w-full h-full" />
+                                    <Image src={imgIconCloud2} alt="" fill unoptimized className="w-full h-full" sizes="48px" />
                                 </div>
                             </div>
                             {/* Content */}
@@ -720,9 +738,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 <div className="flex flex-col items-start" style={{ height: "132px", width: "100%", gap: "12px" }}>
                                     {content.features[4]?.bullets.map((bullet, i) => (
                                         <div key={i} className="relative" style={{ height: "24px", width: "100%" }}>
-                                            <img
+                                            <Image
                                                 src={imgIconCheck}
                                                 alt=""
+                                                width={20}
+                                                height={20}
+                                                unoptimized
                                                 style={{ position: "absolute", left: "0", top: "2px", width: "20px", height: "20px" }}
                                             />
                                             <p
@@ -791,9 +812,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 >
                                     {content.cta.primary.label}
                                 </span>
-                                <img
+                                <Image
                                     src={imgIconArrowBlue}
                                     alt=""
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: "20px", height: "20px", marginLeft: "8px" }}
                                 />
                             </Link>
@@ -841,9 +865,12 @@ export default function PlatformFeaturesPage(): React.ReactElement {
                                 borderRadius: "10px",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVector}
                                 alt="SkyMaintain"
+                                width={20}
+                                height={20}
+                                unoptimized
                                 style={{ width: "20px", height: "20px" }}
                             />
                         </div>

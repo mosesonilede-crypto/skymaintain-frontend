@@ -1,18 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO } from "@/lib/routes";
 
 // Figma assets from node 39:11398
 const imgIconShield = "https://www.figma.com/api/mcp/asset/912ac0c3-487e-45f6-a5ab-5620a4e97a40";
 const imgIconPlatformSecurity = "https://www.figma.com/api/mcp/asset/571231bf-2299-448e-909d-ffcd7c5b9a8c";
-const imgIconPlatformSecurityAlt = "https://www.figma.com/api/mcp/asset/87aa32f7-1092-455c-8354-c16461c088c0";
 const imgIconCheck = "https://www.figma.com/api/mcp/asset/fb38705f-2f79-48a9-a20d-b2fac0ed1e49";
 const imgIconOperational = "https://www.figma.com/api/mcp/asset/80d4a3d9-ea03-4e8c-a4c4-7431c581e377";
-const imgIconOperationalAlt1 = "https://www.figma.com/api/mcp/asset/2228338c-0c81-47a5-8a15-32f9849021b4";
-const imgIconOperationalAlt2 = "https://www.figma.com/api/mcp/asset/72461d0b-5a3a-4cad-a94e-59e68b1f30eb";
-const imgIconOperationalAlt3 = "https://www.figma.com/api/mcp/asset/f5ffcc18-f775-43bd-bdd6-a7c67d155e52";
 const imgIconCheckAlt = "https://www.figma.com/api/mcp/asset/ac8ffae4-5c10-45fc-8478-685b7b68f449";
 const imgIconSecureDev = "https://www.figma.com/api/mcp/asset/a6ccc1bc-1256-4a2e-b5c5-54d532f66e06";
 const imgIconSecureDevAlt = "https://www.figma.com/api/mcp/asset/a8c2ef5a-8e81-4161-8bc3-5494f90f7634";
@@ -85,7 +81,7 @@ function SecurityCard({ column, index }: { column: SecurityColumn; index: number
                                 display: "flex",
                             }}
                         >
-                            <img src={imgIconPlatformSecurity} alt="" style={{ width: "100%", height: "100%" }} />
+                            <Image src={imgIconPlatformSecurity} alt="" width={40} height={16} unoptimized style={{ width: "100%", height: "100%" }} />
                         </div>
                         <div
                             style={{
@@ -97,19 +93,19 @@ function SecurityCard({ column, index }: { column: SecurityColumn; index: number
                                 display: "flex",
                             }}
                         >
-                            <img src={imgIconPlatformSecurity} alt="" style={{ width: "100%", height: "100%" }} />
+                            <Image src={imgIconPlatformSecurity} alt="" width={40} height={16} unoptimized style={{ width: "100%", height: "100%" }} />
                         </div>
                     </div>
                 )}
                 {index === 1 && (
                     <div style={{ position: "relative", width: 48, height: 48 }}>
-                        <img src={imgIconOperational} alt="" style={{ width: 32, height: 40, marginTop: 4, marginLeft: 8 }} />
+                        <Image src={imgIconOperational} alt="" width={32} height={40} unoptimized style={{ width: 32, height: 40, marginTop: 4, marginLeft: 8 }} />
                     </div>
                 )}
                 {index === 2 && (
                     <div style={{ position: "relative", width: 48, height: 48 }}>
-                        <img src={imgIconSecureDev} alt="" style={{ width: 36, height: 22, marginTop: 22, marginLeft: 6 }} />
-                        <img src={imgIconSecureDevAlt} alt="" style={{ position: "absolute", top: 4, left: 14, width: 20, height: 18 }} />
+                        <Image src={imgIconSecureDev} alt="" width={36} height={22} unoptimized style={{ width: 36, height: 22, marginTop: 22, marginLeft: 6 }} />
+                        <Image src={imgIconSecureDevAlt} alt="" width={20} height={18} unoptimized style={{ position: "absolute", top: 4, left: 14, width: 20, height: 18 }} />
                     </div>
                 )}
             </div>
@@ -148,9 +144,12 @@ function SecurityCard({ column, index }: { column: SecurityColumn; index: number
                             gap: 12,
                         }}
                     >
-                        <img
+                        <Image
                             src={index === 0 ? imgIconCheck : imgIconCheckAlt}
                             alt=""
+                            width={20}
+                            height={20}
+                            unoptimized
                             style={{
                                 width: 20,
                                 height: 20,
@@ -241,9 +240,12 @@ export default function SecurityDataProtectionPage() {
                                 marginBottom: 24,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconShield}
                                 alt="Security"
+                                width={80}
+                                height={80}
+                                unoptimized
                                 style={{ width: 80, height: 80 }}
                             />
                         </div>
@@ -398,9 +400,12 @@ export default function SecurityDataProtectionPage() {
                                 marginBottom: 24,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconKey}
                                 alt="Security Key"
+                                width={64}
+                                height={64}
+                                unoptimized
                                 style={{ width: 64, height: 64 }}
                             />
                         </div>
@@ -464,9 +469,12 @@ export default function SecurityDataProtectionPage() {
                                 >
                                     Start Your Free Trial
                                 </span>
-                                <img
+                                <Image
                                     src={imgIconArrowBlue}
                                     alt=""
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </button>
@@ -551,9 +559,12 @@ export default function SecurityDataProtectionPage() {
                                     boxSizing: "border-box",
                                 }}
                             >
-                                <img
+                                <Image
                                     src={imgVector}
                                     alt="SkyMaintain"
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </div>
@@ -681,9 +692,12 @@ export default function SecurityDataProtectionPage() {
                                 boxSizing: "border-box",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: 28, height: 28 }}
                             />
                         </div>
@@ -790,9 +804,12 @@ export default function SecurityDataProtectionPage() {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: 16, height: 16 }}
                             />
                         </button>

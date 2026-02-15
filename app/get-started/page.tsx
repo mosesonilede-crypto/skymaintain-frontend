@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown, ChevronUp, ArrowRight, Check, Plane, Shield, TrendingDown, DollarSign, Zap, FileCheck, Activity, ClipboardList, Star, ExternalLink, Tag, Home } from "lucide-react";
@@ -271,9 +272,12 @@ export default function GetStartedPage() {
 
                             {/* Right Image */}
                             <div className="relative h-64 md:h-auto">
-                                <img
+                                <Image
                                     src={imgGlobalAeroFleet}
                                     alt="GlobalAero Airlines Fleet"
+                                    fill
+                                    sizes="(min-width: 768px) 50vw, 100vw"
+                                    unoptimized
                                     className="absolute inset-0 h-full w-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -337,9 +341,12 @@ export default function GetStartedPage() {
                                 {/* Image */}
                                 <div className="flex-1">
                                     <div className="relative h-64 w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl lg:h-80">
-                                        <img
+                                        <Image
                                             src={cap.image}
                                             alt={cap.title}
+                                            fill
+                                            sizes="(min-width: 1024px) 50vw, 100vw"
+                                            unoptimized
                                             className="absolute inset-0 h-full w-full object-cover"
                                         />
                                     </div>
@@ -403,9 +410,12 @@ export default function GetStartedPage() {
                         <div className="grid md:grid-cols-2">
                             {/* Left Image */}
                             <div className="relative h-64 md:h-auto">
-                                <img
+                                <Image
                                     src={imgAviationParts}
                                     alt="Aviation Parts and Components"
+                                    fill
+                                    sizes="(min-width: 768px) 50vw, 100vw"
+                                    unoptimized
                                     className="absolute inset-0 h-full w-full object-cover"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />

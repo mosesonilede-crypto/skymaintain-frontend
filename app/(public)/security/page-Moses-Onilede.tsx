@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -151,9 +151,12 @@ function SectionCard({
         >
             {/* Icon */}
             <div className="mb-12">
-                <img
+                <Image
                     src={section.icon}
                     alt=""
+                    width={48}
+                    height={48}
+                    unoptimized
                     className="h-12 w-12"
                 />
             </div>
@@ -177,9 +180,12 @@ function SectionCard({
                     ))
                     : section.bullets.map((b, i) => (
                         <li key={i} className="flex items-start gap-3">
-                            <img
+                            <Image
                                 src={imgIconPlatformSecurity}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 className="mt-0.5 h-5 w-5 shrink-0"
                             />
                             <span
@@ -240,9 +246,12 @@ export default function SecurityPage(): React.ReactElement {
                                     "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 className="h-7 w-7"
                             />
                         </div>
@@ -274,7 +283,7 @@ export default function SecurityPage(): React.ReactElement {
                             style={{ backgroundColor: "#155dfc" }}
                         >
                             Get Started
-                            <img src={imgIconArrowWhite} alt="" className="h-4 w-4" />
+                            <Image src={imgIconArrowWhite} alt="" width={16} height={16} unoptimized className="h-4 w-4" />
                         </Link>
                     </div>
                 </div>
@@ -290,9 +299,12 @@ export default function SecurityPage(): React.ReactElement {
                 <div className="mx-auto max-w-4xl">
                     {/* Shield Icon */}
                     <div className="mb-6 flex justify-center">
-                        <img
+                        <Image
                             src={imgIconShield}
                             alt=""
+                            width={80}
+                            height={80}
+                            unoptimized
                             className="h-20 w-20"
                         />
                     </div>
@@ -363,9 +375,12 @@ export default function SecurityPage(): React.ReactElement {
                 <div className="mx-auto max-w-4xl text-center">
                     {/* Key Icon */}
                     <div className="mb-6 flex justify-center">
-                        <img
+                        <Image
                             src={imgIconKey}
                             alt=""
+                            width={64}
+                            height={64}
+                            unoptimized
                             className="h-16 w-16"
                         />
                     </div>
@@ -389,7 +404,7 @@ export default function SecurityPage(): React.ReactElement {
                             }}
                         >
                             {content.cta.primary.label}
-                            <img src={imgIconArrowBlue} alt="" className="h-5 w-5" />
+                            <Image src={imgIconArrowBlue} alt="" width={20} height={20} unoptimized className="h-5 w-5" />
                         </Link>
                         <Link
                             href={content.cta.secondary.href}
@@ -414,7 +429,7 @@ export default function SecurityPage(): React.ReactElement {
                             className="flex h-9 w-9 items-center justify-center rounded-lg"
                             style={{ backgroundColor: "#155dfc" }}
                         >
-                            <img src={imgVector} alt="SkyMaintain" className="h-5 w-5" />
+                            <Image src={imgVector} alt="SkyMaintain" width={20} height={20} unoptimized className="h-5 w-5" />
                         </div>
                         <span className="text-lg font-bold" style={{ color: "#ffffff" }}>
                             SkyMaintain

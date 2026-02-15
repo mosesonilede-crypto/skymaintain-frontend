@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -155,9 +155,12 @@ function Card({
             }}
         >
             {/* Icon - 48px */}
-            <img
+            <Image
                 src={iconSrc}
                 alt=""
+                width={48}
+                height={48}
+                unoptimized
                 style={{ width: "48px", height: "48px" }}
             />
 
@@ -180,9 +183,12 @@ function Card({
                 <div className="flex flex-col" style={{ gap: "12px" }}>
                     {bullets.map((b, i) => (
                         <div key={i} className="flex items-start" style={{ gap: "12px" }}>
-                            <img
+                            <Image
                                 src={checkIcon}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 style={{ width: "20px", height: "20px", marginTop: "2px", flexShrink: 0 }}
                             />
                             <span
@@ -252,9 +258,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                                 boxShadow: "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: "28px", height: "28px" }}
                             />
                         </div>
@@ -311,9 +320,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: "16px", height: "16px", marginLeft: "4px" }}
                             />
                         </Link>
@@ -335,9 +347,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                 <div className="relative w-full" style={{ height: "306.6px" }}>
                     {/* Shield Icon - 80px, centered */}
                     <div className="flex justify-center w-full">
-                        <img
+                        <Image
                             src={imgIconShield}
                             alt=""
+                            width={80}
+                            height={80}
+                            unoptimized
                             style={{ width: "80px", height: "80px" }}
                         />
                     </div>
@@ -498,9 +513,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                 <div className="relative w-full" style={{ height: "200px" }}>
                     {/* Key Icon - 64px, centered */}
                     <div className="flex justify-center w-full">
-                        <img
+                        <Image
                             src={imgIconKey}
                             alt=""
+                            width={64}
+                            height={64}
+                            unoptimized
                             style={{ width: "64px", height: "64px" }}
                         />
                     </div>
@@ -534,9 +552,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                             >
                                 {doc.cta_strip.primary.label}
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrow}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 style={{ width: "20px", height: "20px", marginLeft: "8px" }}
                             />
                         </Link>
@@ -582,9 +603,12 @@ export default function SecurityDataProtectionPage(): React.ReactElement {
                             borderRadius: "10px",
                         }}
                     >
-                        <img
+                        <Image
                             src={imgVector}
                             alt="SkyMaintain"
+                            width={20}
+                            height={20}
+                            unoptimized
                             style={{ width: "20px", height: "20px" }}
                         />
                     </div>

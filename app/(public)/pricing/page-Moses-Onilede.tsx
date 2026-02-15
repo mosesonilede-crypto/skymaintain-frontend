@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_DEMO, CONTACT_PRICING } from "@/lib/routes";
 
@@ -202,9 +202,12 @@ function TierCard({
                     ))
                     : tier.bullets.map((b, i) => (
                         <li key={i} className="flex items-start gap-3">
-                            <img
+                            <Image
                                 src={isPopular ? imgIconCheckBlue : imgIconCheck}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 className="mt-0.5 h-5 w-5 shrink-0"
                             />
                             <span
@@ -275,9 +278,12 @@ export default function PricingPage(): React.ReactElement {
                                     "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 className="h-7 w-7"
                             />
                         </div>
@@ -309,7 +315,7 @@ export default function PricingPage(): React.ReactElement {
                             style={{ backgroundColor: "#155dfc" }}
                         >
                             Get Started
-                            <img src={imgIconArrowWhite} alt="" className="h-4 w-4" />
+                            <Image src={imgIconArrowWhite} alt="" width={16} height={16} unoptimized className="h-4 w-4" />
                         </Link>
                     </div>
                 </div>
@@ -406,7 +412,7 @@ export default function PricingPage(): React.ReactElement {
                             }}
                         >
                             {content.cta.primary.label}
-                            <img src={imgIconArrowBlue} alt="" className="h-5 w-5" />
+                            <Image src={imgIconArrowBlue} alt="" width={20} height={20} unoptimized className="h-5 w-5" />
                         </Link>
                         <Link
                             href={content.cta.secondary.href}
@@ -431,7 +437,7 @@ export default function PricingPage(): React.ReactElement {
                             className="flex h-9 w-9 items-center justify-center rounded-lg"
                             style={{ backgroundColor: "#155dfc" }}
                         >
-                            <img src={imgVector} alt="SkyMaintain" className="h-5 w-5" />
+                            <Image src={imgVector} alt="SkyMaintain" width={20} height={20} unoptimized className="h-5 w-5" />
                         </div>
                         <span className="text-lg font-bold" style={{ color: "#ffffff" }}>
                             SkyMaintain

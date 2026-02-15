@@ -7,6 +7,7 @@
  * Figma URL: https://www.figma.com/design/qz3ERP8jfbTpTHQrdPSawI/SkyMaintain-Design?node-id=39-11010
  */
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -135,7 +136,7 @@ export default function PlatformFeaturesPage() {
                             padding: "10px",
                         }}
                     >
-                        <img src={imgVectorLogoHeader} alt="SkyMaintain" style={{ width: "28px", height: "28px", objectFit: "contain" }} />
+                        <Image src={imgVectorLogoHeader} alt="SkyMaintain" width={28} height={28} unoptimized style={{ width: "28px", height: "28px", objectFit: "contain" }} />
                     </div>
                     <div>
                         <p style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "24px", lineHeight: "32px", color: "#101828", margin: 0 }}>
@@ -184,7 +185,7 @@ export default function PlatformFeaturesPage() {
                         <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 400, fontSize: "14px", lineHeight: "20px", color: "#ffffff" }}>
                             Get Started
                         </span>
-                        <img src={imgIconArrow} alt="" style={{ width: "16px", height: "16px" }} />
+                        <Image src={imgIconArrow} alt="" width={16} height={16} unoptimized style={{ width: "16px", height: "16px" }} />
                     </button>
                 </div>
             </header>
@@ -275,11 +276,11 @@ export default function PlatformFeaturesPage() {
                                 {/* Icon */}
                                 <div style={{ width: "48px", height: "48px", flexShrink: 0, position: "relative" }}>
                                     {feature.iconParts.length === 1 ? (
-                                        <img src={feature.iconParts[0]} alt="" style={{ width: "48px", height: "48px", objectFit: "contain" }} />
+                                        <Image src={feature.iconParts[0]} alt="" width={48} height={48} unoptimized style={{ width: "48px", height: "48px", objectFit: "contain" }} />
                                     ) : (
                                         <div style={{ width: "48px", height: "48px", position: "relative" }}>
                                             {/* For complex icons, show first part as representative */}
-                                            <img src={feature.iconParts[0]} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+                                            <Image src={feature.iconParts[0]} alt="" width={48} height={48} unoptimized style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                                         </div>
                                     )}
                                 </div>
@@ -318,7 +319,7 @@ export default function PlatformFeaturesPage() {
                                     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                                         {feature.bullets.map((bullet, bulletIdx) => (
                                             <div key={bulletIdx} style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                                                <img src={imgIconCheck} alt="" style={{ width: "20px", height: "20px", flexShrink: 0 }} />
+                                                <Image src={imgIconCheck} alt="" width={20} height={20} unoptimized style={{ width: "20px", height: "20px", flexShrink: 0 }} />
                                                 <span
                                                     style={{
                                                         fontFamily: "Arial, sans-serif",
@@ -384,7 +385,7 @@ export default function PlatformFeaturesPage() {
                             <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 400, fontSize: "18px", lineHeight: "28px", color: "#155dfc" }}>
                                 Start Your Free Trial
                             </span>
-                            <img src={imgIconArrowCta} alt="" style={{ width: "20px", height: "20px" }} />
+                            <Image src={imgIconArrowCta} alt="" width={20} height={20} unoptimized style={{ width: "20px", height: "20px" }} />
                         </button>
                         <button
                             onClick={() => router.push(CONTACT_DEMO)}
@@ -434,7 +435,7 @@ export default function PlatformFeaturesPage() {
                                 padding: "8px",
                             }}
                         >
-                            <img src={imgVectorLogo} alt="" style={{ width: "20px", height: "20px", objectFit: "contain" }} />
+                            <Image src={imgVectorLogo} alt="" width={20} height={20} unoptimized style={{ width: "20px", height: "20px", objectFit: "contain" }} />
                         </div>
                         <span style={{ fontFamily: "Arial, sans-serif", fontWeight: 700, fontSize: "18px", lineHeight: "28px", color: "#ffffff" }}>
                             SkyMaintain

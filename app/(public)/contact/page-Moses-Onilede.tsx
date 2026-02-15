@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { CONTACT_DEMO, CONTACT_GENERAL } from "@/lib/routes";
 
@@ -162,9 +162,12 @@ export default function ContactPage(): React.ReactElement {
                                 boxShadow: "0px 10px 15px rgba(0,0,0,0.1), 0px 4px 6px rgba(0,0,0,0.1)",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: "28px", height: "28px" }}
                             />
                         </div>
@@ -221,9 +224,12 @@ export default function ContactPage(): React.ReactElement {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: "16px", height: "16px", marginLeft: "4px" }}
                             />
                         </Link>
@@ -333,9 +339,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex justify-center"
                                 style={{ left: "32px", top: "32px", width: "278.125px", height: "48px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconGeneral}
                                     alt=""
+                                    width={48}
+                                    height={48}
+                                    unoptimized
                                     style={{ width: "48px", height: "48px" }}
                                 />
                             </div>
@@ -372,9 +381,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex items-center"
                                 style={{ left: "32px", top: "291.99px", width: "278.125px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconEmail}
                                     alt=""
+                                    width={16}
+                                    height={16}
+                                    unoptimized
                                     style={{ width: "16px", height: "16px" }}
                                 />
                                 <a
@@ -409,9 +421,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex justify-center"
                                 style={{ left: "32px", top: "32px", width: "278.138px", height: "48px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconSupport}
                                     alt=""
+                                    width={48}
+                                    height={48}
+                                    unoptimized
                                     style={{ width: "48px", height: "48px" }}
                                 />
                             </div>
@@ -448,9 +463,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex items-center"
                                 style={{ left: "32px", top: "291.99px", width: "278.138px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconEmail}
                                     alt=""
+                                    width={16}
+                                    height={16}
+                                    unoptimized
                                     style={{ width: "16px", height: "16px" }}
                                 />
                                 <a
@@ -485,9 +503,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex justify-center"
                                 style={{ left: "32px", top: "32px", width: "278.125px", height: "48px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconPartnership}
                                     alt=""
+                                    width={48}
+                                    height={48}
+                                    unoptimized
                                     style={{ width: "48px", height: "48px" }}
                                 />
                             </div>
@@ -524,9 +545,12 @@ export default function ContactPage(): React.ReactElement {
                                 className="absolute flex items-center"
                                 style={{ left: "32px", top: "291.99px", width: "278.125px" }}
                             >
-                                <img
+                                <Image
                                     src={imgIconEmail}
                                     alt=""
+                                    width={16}
+                                    height={16}
+                                    unoptimized
                                     style={{ width: "16px", height: "16px" }}
                                 />
                                 <a
@@ -639,9 +663,12 @@ export default function ContactPage(): React.ReactElement {
                             borderRadius: "10px",
                         }}
                     >
-                        <img
+                        <Image
                             src={imgVector}
                             alt="SkyMaintain"
+                            width={20}
+                            height={20}
+                            unoptimized
                             style={{ width: "20px", height: "20px" }}
                         />
                     </div>

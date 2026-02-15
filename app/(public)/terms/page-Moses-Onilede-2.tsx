@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 // Figma asset URLs for node 40:12273
@@ -63,9 +64,12 @@ export default function TermsOfServicePage(): React.ReactElement {
                             padding: 10,
                         }}
                     >
-                        <img
+                        <Image
                             src={imgVectorLarge}
                             alt="SkyMaintain"
+                            width={28}
+                            height={28}
+                            unoptimized
                             style={{ width: 28, height: 28, objectFit: "contain" }}
                         />
                     </div>
@@ -117,9 +121,12 @@ export default function TermsOfServicePage(): React.ReactElement {
                         gap: 8,
                     }}
                 >
-                    <img
+                    <Image
                         src={imgIconArrowLeft}
                         alt=""
+                        width={16}
+                        height={16}
+                        unoptimized
                         style={{ width: 16, height: 16 }}
                     />
                     Back to Home
@@ -145,9 +152,12 @@ export default function TermsOfServicePage(): React.ReactElement {
                 >
                     {/* Scale Icon */}
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                        <img
+                        <Image
                             src={imgIconScale}
                             alt=""
+                            width={80}
+                            height={80}
+                            unoptimized
                             style={{ width: 80, height: 80 }}
                         />
                     </div>
@@ -586,9 +596,12 @@ export default function TermsOfServicePage(): React.ReactElement {
                             gap: 16,
                         }}
                     >
-                        <img
+                        <Image
                             src={imgIconWarning}
                             alt=""
+                            width={32}
+                            height={32}
+                            unoptimized
                             style={{ width: 32, height: 32, flexShrink: 0 }}
                         />
                         <div>
@@ -652,9 +665,12 @@ export default function TermsOfServicePage(): React.ReactElement {
                                 padding: 8,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorSmall}
                                 alt="SkyMaintain"
+                                width={20}
+                                height={20}
+                                unoptimized
                                 style={{ width: 20, height: 20, objectFit: "contain" }}
                             />
                         </div>

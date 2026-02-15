@@ -1,12 +1,12 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 /**
  * @skymain.design
  * fileKey: qz3ERP8jfbTpTHQrdPSawI
  * nodeId: 11-8217
  * specHash: sha256:pre-login-page-v2
  */
+import Image from "next/image";
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { CONTACT_DEMO } from "@/lib/routes";
@@ -106,7 +106,7 @@ export default function PreLoginPage() {
                                             style={{ background: "linear-gradient(135deg, #155dfc 0%, #1447e6 100%)" }}
                                         >
                                             <div className="size-6 overflow-hidden">
-                                                <img alt="" className="size-full" src={imgLoginVector} />
+                                                <Image alt="" width={24} height={24} unoptimized className="size-full" src={imgLoginVector} />
                                             </div>
                                         </div>
                                         <div>
@@ -120,7 +120,7 @@ export default function PreLoginPage() {
                                         className="size-10 rounded-[8px] flex items-center justify-center"
                                         aria-label="Close login"
                                     >
-                                        <img alt="" className="size-5" src={imgLoginClose} />
+                                        <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgLoginClose} />
                                     </button>
                                 </div>
 
@@ -133,7 +133,7 @@ export default function PreLoginPage() {
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[#0a0a0a] text-[14px] leading-[20px]">Email Address</label>
                                         <div className="relative">
-                                            <img alt="" className="absolute left-3 top-2.5 size-4" src={imgLoginEmail} />
+                                            <Image alt="" width={16} height={16} unoptimized className="absolute left-3 top-2.5 size-4" src={imgLoginEmail} />
                                             <input
                                                 type="email"
                                                 value={email}
@@ -147,7 +147,7 @@ export default function PreLoginPage() {
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[#0a0a0a] text-[14px] leading-[20px]">Organization Name</label>
                                         <div className="relative">
-                                            <img alt="" className="absolute left-3 top-2.5 size-4" src={imgLoginOrg} />
+                                            <Image alt="" width={16} height={16} unoptimized className="absolute left-3 top-2.5 size-4" src={imgLoginOrg} />
                                             <input
                                                 type="text"
                                                 value={organization}
@@ -164,7 +164,7 @@ export default function PreLoginPage() {
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[#0a0a0a] text-[14px] leading-[20px]">Password</label>
                                         <div className="relative">
-                                            <img alt="" className="absolute left-3 top-2.5 size-4" src={imgLoginLock} />
+                                            <Image alt="" width={16} height={16} unoptimized className="absolute left-3 top-2.5 size-4" src={imgLoginLock} />
                                             <input
                                                 type={showPassword ? "text" : "password"}
                                                 value={password}
@@ -204,7 +204,7 @@ export default function PreLoginPage() {
                                         className="bg-[#155dfc] text-white text-[14px] rounded-[8px] h-9 flex items-center justify-center gap-2"
                                     >
                                         Sign In
-                                        <img alt="" className="size-4" src={imgLoginArrow} />
+                                        <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgLoginArrow} />
                                     </button>
                                 </form>
 
@@ -229,7 +229,7 @@ export default function PreLoginPage() {
                                             onClick={() => handleDemoAccount("fleet")}
                                             className="w-full h-8 bg-white border border-black/10 rounded-[8px] flex items-center gap-3 px-3 text-[12px] text-[#0a0a0a]"
                                         >
-                                            <img alt="" className="size-3" src={imgLoginDemoA} />
+                                            <Image alt="" width={12} height={12} unoptimized className="size-3" src={imgLoginDemoA} />
                                             Fleet Manager - SkyWings Airlines
                                         </button>
                                         <button
@@ -237,7 +237,7 @@ export default function PreLoginPage() {
                                             onClick={() => handleDemoAccount("maintenance")}
                                             className="w-full h-8 bg-white border border-black/10 rounded-[8px] flex items-center gap-3 px-3 text-[12px] text-[#0a0a0a]"
                                         >
-                                            <img alt="" className="size-3" src={imgLoginDemoB} />
+                                            <Image alt="" width={12} height={12} unoptimized className="size-3" src={imgLoginDemoB} />
                                             Maintenance Engineer - SkyWings
                                         </button>
                                     </div>
@@ -274,7 +274,7 @@ export default function PreLoginPage() {
                                 className="flex items-center gap-2 px-6 py-3 bg-white text-[#8200db] font-bold text-lg rounded-[14px] shadow-2xl hover:bg-gray-50 transition-colors"
                             >
                                 Start Your Free Trial
-                                <img alt="" className="size-5" src={imgIconArrowRightPurple} />
+                                <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconArrowRightPurple} />
                             </Link>
                             <Link
                                 href={CONTACT_DEMO}
@@ -287,15 +287,15 @@ export default function PreLoginPage() {
                         {/* Trial Features */}
                         <div className="flex items-center gap-8 mt-6">
                             <div className="flex items-center gap-2">
-                                <img alt="" className="size-5" src={imgIconCheckPurple} />
+                                <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckPurple} />
                                 <span className="text-sm text-[#e9d4ff]">14-day free trial</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <img alt="" className="size-5" src={imgIconCheckPurple} />
+                                <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckPurple} />
                                 <span className="text-sm text-[#e9d4ff]">No credit card required</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <img alt="" className="size-5" src={imgIconCheckPurple} />
+                                <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckPurple} />
                                 <span className="text-sm text-[#e9d4ff]">Full platform access</span>
                             </div>
                         </div>
@@ -318,7 +318,7 @@ export default function PreLoginPage() {
                         ].map((stat, idx) => (
                             <div key={idx} className="flex flex-col items-center text-center">
                                 <div className="size-12 bg-white/20 rounded-[14px] flex items-center justify-center mb-4">
-                                    <img alt="" className="size-6" src={stat.icon} />
+                                    <Image alt="" width={24} height={24} unoptimized className="size-6" src={stat.icon} />
                                 </div>
                                 <p className="text-4xl font-bold text-white leading-tight">{stat.value}</p>
                                 <p className="text-sm text-[#dbeafe] mt-2">{stat.label}</p>
@@ -352,7 +352,7 @@ export default function PreLoginPage() {
                             >
                                 <div className="flex flex-col h-full">
                                     <div className="size-16 bg-white/20 rounded-[10px] flex items-center justify-center mb-6">
-                                        <img alt="" className="size-8" src={imgIconPlane} />
+                                        <Image alt="" width={32} height={32} unoptimized className="size-8" src={imgIconPlane} />
                                     </div>
                                     <h3 className="text-4xl font-bold text-white mb-6">GlobalAero Airlines</h3>
                                     <p className="text-xl text-[#dbeafe] leading-relaxed mb-8">
@@ -360,30 +360,33 @@ export default function PreLoginPage() {
                                     </p>
                                     <div className="flex gap-6 mb-8">
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheck} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheck} />
                                             <span className="text-sm text-white">500+ Aircraft Fleet</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheck} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheck} />
                                             <span className="text-sm text-white">Global Coverage</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheck} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheck} />
                                             <span className="text-sm text-white">ISO Certified</span>
                                         </div>
                                     </div>
                                     <button className="flex items-center gap-2 px-6 py-2 bg-white text-[#1c398e] font-bold text-sm rounded-lg w-fit">
                                         Learn More
-                                        <img alt="" className="size-4" src={imgIconArrowRightWhite} />
+                                        <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightWhite} />
                                     </button>
                                 </div>
                             </div>
                             {/* Right Image */}
                             <div className="relative h-[480px]">
-                                <img
+                                <Image
                                     alt="GlobalAero Airlines Fleet"
+                                    fill
+                                    unoptimized
                                     className="absolute inset-0 w-full h-full object-cover"
                                     src={imgImageGlobalAeroAirlinesFleet}
+                                    sizes="50vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
                             </div>
@@ -421,7 +424,7 @@ export default function PreLoginPage() {
                         <div className="grid grid-cols-2 gap-12 items-center">
                             <div className="space-y-6">
                                 <div className="size-12 overflow-hidden">
-                                    <img alt="" className="size-full" src={imgVectorBrain1} />
+                                    <Image alt="" width={48} height={48} unoptimized className="size-full" src={imgVectorBrain1} />
                                 </div>
                                 <h3 className="text-3xl font-bold text-[#101828]">AI-Powered Predictive Analytics</h3>
                                 <p className="text-lg text-[#4a5565] leading-relaxed">
@@ -432,12 +435,15 @@ export default function PreLoginPage() {
                                     className="inline-flex items-center gap-2 px-6 py-2 bg-[#155dfc] text-white text-sm rounded-lg"
                                 >
                                     Learn More
-                                    <img alt="" className="size-4" src={imgIconArrowRightBlue} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightBlue} />
                                 </Link>
                             </div>
                             <div className="border-4 border-white rounded-2xl shadow-2xl overflow-hidden">
-                                <img
+                                <Image
                                     alt="AI-Powered Predictive Analytics"
+                                    width={640}
+                                    height={320}
+                                    unoptimized
                                     className="w-full h-80 object-cover"
                                     src={imgImageAiPoweredPredictiveAnalytics}
                                 />
@@ -447,15 +453,18 @@ export default function PreLoginPage() {
                         {/* Feature 2: Regulatory Compliance Automation */}
                         <div className="grid grid-cols-2 gap-12 items-center">
                             <div className="border-4 border-white rounded-2xl shadow-2xl overflow-hidden">
-                                <img
+                                <Image
                                     alt="Regulatory Compliance Automation"
+                                    width={640}
+                                    height={320}
+                                    unoptimized
                                     className="w-full h-80 object-cover"
                                     src={imgImageRegulatoryComplianceAutomation}
                                 />
                             </div>
                             <div className="space-y-6">
                                 <div className="size-12 overflow-hidden">
-                                    <img alt="" className="size-full" src={imgVectorShield} />
+                                    <Image alt="" width={48} height={48} unoptimized className="size-full" src={imgVectorShield} />
                                 </div>
                                 <h3 className="text-3xl font-bold text-[#101828]">Regulatory Compliance Automation</h3>
                                 <p className="text-lg text-[#4a5565] leading-relaxed">
@@ -466,7 +475,7 @@ export default function PreLoginPage() {
                                     className="inline-flex items-center gap-2 px-6 py-2 bg-[#155dfc] text-white text-sm rounded-lg"
                                 >
                                     Learn More
-                                    <img alt="" className="size-4" src={imgIconArrowRightWhite2} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightWhite2} />
                                 </Link>
                             </div>
                         </div>
@@ -475,7 +484,7 @@ export default function PreLoginPage() {
                         <div className="grid grid-cols-2 gap-12 items-center">
                             <div className="space-y-6">
                                 <div className="size-12 overflow-hidden">
-                                    <img alt="" className="size-full" src={imgVectorWifi} />
+                                    <Image alt="" width={48} height={48} unoptimized className="size-full" src={imgVectorWifi} />
                                 </div>
                                 <h3 className="text-3xl font-bold text-[#101828]">Real-Time IoT Monitoring</h3>
                                 <p className="text-lg text-[#4a5565] leading-relaxed">
@@ -486,12 +495,15 @@ export default function PreLoginPage() {
                                     className="inline-flex items-center gap-2 px-6 py-2 bg-[#155dfc] text-white text-sm rounded-lg"
                                 >
                                     Learn More
-                                    <img alt="" className="size-4" src={imgIconArrowRightBlue} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightBlue} />
                                 </Link>
                             </div>
                             <div className="border-4 border-white rounded-2xl shadow-2xl overflow-hidden">
-                                <img
+                                <Image
                                     alt="Real-Time IoT Monitoring"
+                                    width={640}
+                                    height={320}
+                                    unoptimized
                                     className="w-full h-80 object-cover"
                                     src={imgImageRealTimeIoTMonitoring}
                                 />
@@ -501,15 +513,18 @@ export default function PreLoginPage() {
                         {/* Feature 4: Smart Maintenance Workflows */}
                         <div className="grid grid-cols-2 gap-12 items-center">
                             <div className="border-4 border-white rounded-2xl shadow-2xl overflow-hidden">
-                                <img
+                                <Image
                                     alt="Smart Maintenance Workflows"
+                                    width={640}
+                                    height={320}
+                                    unoptimized
                                     className="w-full h-80 object-cover"
                                     src={imgImageSmartMaintenanceWorkflows}
                                 />
                             </div>
                             <div className="space-y-6">
                                 <div className="size-12 overflow-hidden">
-                                    <img alt="" className="size-full" src={imgVectorClipboard} />
+                                    <Image alt="" width={48} height={48} unoptimized className="size-full" src={imgVectorClipboard} />
                                 </div>
                                 <h3 className="text-3xl font-bold text-[#101828]">Smart Maintenance Workflows</h3>
                                 <p className="text-lg text-[#4a5565] leading-relaxed">
@@ -520,7 +535,7 @@ export default function PreLoginPage() {
                                     className="inline-flex items-center gap-2 px-6 py-2 bg-[#155dfc] text-white text-sm rounded-lg"
                                 >
                                     Learn More
-                                    <img alt="" className="size-4" src={imgIconArrowRightWhite2} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightWhite2} />
                                 </Link>
                             </div>
                         </div>
@@ -545,10 +560,10 @@ export default function PreLoginPage() {
                     <div className="grid grid-cols-2 gap-8">
                         {/* Testimonial 1 */}
                         <div className="bg-white border border-black/10 rounded-[14px] p-8">
-                            <img alt="" className="size-12 mb-8" src={imgIconQuote1} />
+                            <Image alt="" width={48} height={48} unoptimized className="size-12 mb-8" src={imgIconQuote1} />
                             <div className="flex gap-1 mb-8">
                                 {[1, 2, 3, 4, 5].map((i) => (
-                                    <img key={i} alt="" className="size-5" src={imgIconStar} />
+                                    <Image key={i} alt="" width={20} height={20} unoptimized className="size-5" src={imgIconStar} />
                                 ))}
                             </div>
                             <p className="text-lg italic text-[#364153] mb-8">
@@ -563,10 +578,10 @@ export default function PreLoginPage() {
 
                         {/* Testimonial 2 */}
                         <div className="bg-white border border-black/10 rounded-[14px] p-8">
-                            <img alt="" className="size-12 mb-8" src={imgIconQuote2} />
+                            <Image alt="" width={48} height={48} unoptimized className="size-12 mb-8" src={imgIconQuote2} />
                             <div className="flex gap-1 mb-8">
                                 {[1, 2, 3, 4, 5].map((i) => (
-                                    <img key={i} alt="" className="size-5" src={imgIconStar2} />
+                                    <Image key={i} alt="" width={20} height={20} unoptimized className="size-5" src={imgIconStar2} />
                                 ))}
                             </div>
                             <p className="text-lg italic text-[#364153] mb-8">
@@ -598,10 +613,13 @@ export default function PreLoginPage() {
                         <div className="grid grid-cols-2">
                             {/* Left Image */}
                             <div className="relative h-[530px]">
-                                <img
+                                <Image
                                     alt="Aviation Parts and Components"
+                                    fill
+                                    unoptimized
                                     className="absolute inset-0 w-full h-full object-cover"
                                     src={imgImageAviationPartsAndComponents}
+                                    sizes="50vw"
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
                                 <span className="absolute top-4 left-4 px-3 py-1 bg-[#f54900] text-white text-xs rounded-lg">
@@ -615,7 +633,7 @@ export default function PreLoginPage() {
                             >
                                 <div className="flex flex-col h-full">
                                     <div className="size-16 bg-white/20 rounded-[10px] flex items-center justify-center mb-6">
-                                        <img alt="" className="size-8" src={imgIconTools} />
+                                        <Image alt="" width={32} height={32} unoptimized className="size-8" src={imgIconTools} />
                                     </div>
                                     <h3 className="text-4xl font-bold text-white mb-6">AeroTech Parts &amp; Supply</h3>
                                     <p className="text-xl text-[#ffedd4] leading-relaxed mb-6">
@@ -623,20 +641,20 @@ export default function PreLoginPage() {
                                     </p>
                                     <div className="flex gap-6 mb-6">
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheckOrange} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckOrange} />
                                             <span className="text-sm text-white">FAA/EASA Certified</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheckOrange} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckOrange} />
                                             <span className="text-sm text-white">24-Hour Shipping</span>
                                         </div>
                                         <div className="flex items-center gap-2">
-                                            <img alt="" className="size-5" src={imgIconCheckOrange} />
+                                            <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconCheckOrange} />
                                             <span className="text-sm text-white">50,000+ Parts</span>
                                         </div>
                                     </div>
                                     <div className="bg-white/10 rounded-[10px] p-3 flex items-center gap-3 mb-6">
-                                        <img alt="" className="size-5" src={imgIconTag} />
+                                        <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconTag} />
                                         <div>
                                             <p className="text-xs text-[#ffedd4]">Special Offer</p>
                                             <p className="text-sm font-bold text-white">15% Off First Order - Use Code: SKYMAINT15</p>
@@ -644,7 +662,7 @@ export default function PreLoginPage() {
                                     </div>
                                     <button className="flex items-center gap-2 px-6 py-2 bg-white text-[#f54900] font-bold text-sm rounded-lg w-fit">
                                         Shop Parts Catalog
-                                        <img alt="" className="size-4" src={imgIconArrowRightOrange} />
+                                        <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightOrange} />
                                     </button>
                                 </div>
                             </div>
@@ -696,7 +714,7 @@ export default function PreLoginPage() {
                                 </p>
                                 <button className="w-full py-2 bg-[#155dfc] text-white text-sm rounded-lg flex items-center justify-center gap-2">
                                     Learn More
-                                    <img alt="" className="size-4" src={imgIconArrowRightWhite2} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightWhite2} />
                                 </button>
                                 <p className="text-xs text-[#6a7282]">
                                     Sponsored content. SkyMaintain does not endorse products.
@@ -718,7 +736,7 @@ export default function PreLoginPage() {
                                 </p>
                                 <Link href="/become-partner" className="w-full py-2 bg-[#4a5565] text-white text-sm rounded-lg flex items-center justify-center gap-2 hover:bg-[#3d4654] transition-colors">
                                     Become a Partner
-                                    <img alt="" className="size-4" src={imgIconArrowRightWhite2} />
+                                    <Image alt="" width={16} height={16} unoptimized className="size-4" src={imgIconArrowRightWhite2} />
                                 </Link>
                             </div>
                         </div>
@@ -768,8 +786,11 @@ export default function PreLoginPage() {
                                 <div key={idx} className="bg-white border border-[#e5e7eb] rounded-[14px] overflow-hidden">
                                     <div className="flex items-center justify-between p-6">
                                         <h3 className="font-bold text-lg text-[#101828]">{faq.question}</h3>
-                                        <img
+                                        <Image
                                             alt=""
+                                            width={20}
+                                            height={20}
+                                            unoptimized
                                             className="size-5 rotate-180"
                                             src={imgIconChevronUp}
                                         />
@@ -795,7 +816,7 @@ export default function PreLoginPage() {
                                 <div key={idx} className="bg-white border border-[#e5e7eb] rounded-[14px]">
                                     <div className="flex items-center justify-between p-6">
                                         <h3 className="font-bold text-lg text-[#101828]">{question}</h3>
-                                        <img alt="" className="size-5" src={imgIconChevronDown} />
+                                        <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconChevronDown} />
                                     </div>
                                 </div>
                             ))}
@@ -819,7 +840,7 @@ export default function PreLoginPage() {
                 >
                     <div className="text-center">
                         <div className="size-20 mx-auto mb-8">
-                            <img alt="" className="size-full" src={imgIconRocket} />
+                            <Image alt="" width={80} height={80} unoptimized className="size-full" src={imgIconRocket} />
                         </div>
                         <h2 className="text-5xl font-bold text-white mb-6 max-w-xl mx-auto leading-tight">
                             Ready to Transform Your Maintenance Operations?
@@ -833,7 +854,7 @@ export default function PreLoginPage() {
                                 className="flex items-center gap-2 px-6 py-3 bg-white text-[#155dfc] text-lg rounded-lg shadow-2xl hover:bg-gray-50 transition-colors"
                             >
                                 Start Your Free Trial
-                                <img alt="" className="size-5" src={imgIconArrowRightPurple} />
+                                <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgIconArrowRightPurple} />
                             </Link>
                             <Link
                                 href={CONTACT_DEMO}
@@ -859,7 +880,7 @@ export default function PreLoginPage() {
                         <div>
                             <div className="flex items-center gap-2 mb-4">
                                 <div className="size-9 bg-[#155dfc] rounded-[10px] flex items-center justify-center">
-                                    <img alt="" className="size-5" src={imgVectorPlane} />
+                                    <Image alt="" width={20} height={20} unoptimized className="size-5" src={imgVectorPlane} />
                                 </div>
                                 <span className="text-lg font-bold text-white">SkyMaintain</span>
                             </div>

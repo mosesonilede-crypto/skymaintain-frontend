@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -208,9 +208,12 @@ export default function AboutPage() {
                                 height: 40,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconMission}
                                 alt=""
+                                width={40}
+                                height={40}
+                                unoptimized
                                 style={{ width: 40, height: 40 }}
                             />
                             <h2
@@ -270,9 +273,12 @@ export default function AboutPage() {
                                 height: 40,
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconApproach}
                                 alt=""
+                                width={40}
+                                height={40}
+                                unoptimized
                                 style={{ width: 40, height: 40 }}
                             />
                             <h2
@@ -325,9 +331,12 @@ export default function AboutPage() {
                                             height: 28,
                                         }}
                                     >
-                                        <img
+                                        <Image
                                             src={imgIconCheckGreen}
                                             alt=""
+                                            width={24}
+                                            height={24}
+                                            unoptimized
                                             style={{
                                                 width: 24,
                                                 height: 24,
@@ -431,9 +440,12 @@ export default function AboutPage() {
                                 >
                                     Start Your Free Trial
                                 </span>
-                                <img
+                                <Image
                                     src={imgIconArrowBlue}
                                     alt=""
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </button>
@@ -518,9 +530,12 @@ export default function AboutPage() {
                                     boxSizing: "border-box",
                                 }}
                             >
-                                <img
+                                <Image
                                     src={imgVector}
                                     alt="SkyMaintain"
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </div>
@@ -648,9 +663,12 @@ export default function AboutPage() {
                                 boxSizing: "border-box",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgVectorLarge}
                                 alt="SkyMaintain"
+                                width={28}
+                                height={28}
+                                unoptimized
                                 style={{ width: 28, height: 28 }}
                             />
                         </div>
@@ -757,9 +775,12 @@ export default function AboutPage() {
                             >
                                 Get Started
                             </span>
-                            <img
+                            <Image
                                 src={imgIconArrowWhite}
                                 alt=""
+                                width={16}
+                                height={16}
+                                unoptimized
                                 style={{ width: 16, height: 16 }}
                             />
                         </button>

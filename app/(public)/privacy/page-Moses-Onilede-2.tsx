@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { CONTACT_DEMO } from "@/lib/routes";
 
@@ -66,9 +67,12 @@ export default function PrivacyPolicyPage(): React.ReactElement {
                             padding: 10,
                         }}
                     >
-                        <img
+                        <Image
                             src={imgVectorLarge}
                             alt="SkyMaintain"
+                            width={28}
+                            height={28}
+                            unoptimized
                             style={{ width: 28, height: 28, objectFit: "contain" }}
                         />
                     </div>
@@ -140,9 +144,12 @@ export default function PrivacyPolicyPage(): React.ReactElement {
                         }}
                     >
                         Get Started
-                        <img
+                        <Image
                             src={imgIconArrowWhite}
                             alt=""
+                            width={16}
+                            height={16}
+                            unoptimized
                             style={{ width: 16, height: 16 }}
                         />
                     </button>
@@ -177,9 +184,12 @@ export default function PrivacyPolicyPage(): React.ReactElement {
                                 padding: "10px 20px",
                             }}
                         >
-                            <img
+                            <Image
                                 src={imgIconPrivacy}
                                 alt=""
+                                width={20}
+                                height={20}
+                                unoptimized
                                 style={{ width: 20, height: 20 }}
                             />
                             <span
@@ -1421,9 +1431,12 @@ export default function PrivacyPolicyPage(): React.ReactElement {
                                 }}
                             >
                                 Contact Us
-                                <img
+                                <Image
                                     src={imgIconArrowBlue}
                                     alt=""
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20 }}
                                 />
                             </button>
@@ -1459,9 +1472,12 @@ export default function PrivacyPolicyPage(): React.ReactElement {
                                     padding: 8,
                                 }}
                             >
-                                <img
+                                <Image
                                     src={imgVectorSmall}
                                     alt="SkyMaintain"
+                                    width={20}
+                                    height={20}
+                                    unoptimized
                                     style={{ width: 20, height: 20, objectFit: "contain" }}
                                 />
                             </div>
