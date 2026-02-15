@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import React, { useMemo, useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
@@ -17,17 +18,20 @@ type Discrepancy = {
     status: "Resolved" | "In Progress";
 };
 
+type DocsData = {
+    uploadedDocs?: UploadedDoc[];
+    discrepancies?: Discrepancy[];
+};
+
 export default function DocumentationPage() {
     const aircraftReg = "N123AB";
     const MANUAL_STORAGE_KEY = "skymaintain.uploadedManuals";
     const DOC_DRAFT_KEY = "skymaintain.documentationDraft";
 
-    const [docsData, setDocsData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [docsData, setDocsData] = useState<DocsData | null>(null);
 
     // Fetch live docs data
     async function fetchDocsData() {
-        setIsLoading(true);
         try {
             const response = await fetch(`/api/docs`);
             if (response.ok) {
@@ -36,8 +40,6 @@ export default function DocumentationPage() {
             }
         } catch (error) {
             console.error("Error fetching docs:", error);
-        } finally {
-            setIsLoading(false);
         }
     }
 
@@ -816,13 +818,3 @@ function UploadIcon() {
     );
 }
 
-function RobotIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="8" width="16" height="12" rx="3" />
-            <path d="M12 4v4" />
-            <circle cx="9" cy="14" r="1" />
-            <circle cx="15" cy="14" r="1" />
-        </svg>
-    );
-}

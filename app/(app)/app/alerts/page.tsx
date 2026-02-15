@@ -29,6 +29,19 @@ interface PredictedAlert {
     recommendedAction?: string;
 }
 
+interface AlertsApiItem {
+    id: string;
+    severity: PredictedAlert["severity"];
+    type: string;
+    recommendation: string;
+    predictedFailureDate: string;
+    confidence: number;
+}
+
+interface AlertsApiResponse {
+    alerts: AlertsApiItem[];
+}
+
 // Mock alert data for demo
 const MOCK_ALERTS: PredictedAlert[] = [
     {
@@ -437,11 +450,6 @@ function getPredictedAlerts(): PredictedAlert[] {
     }
 }
 
-function storePredictedAlerts(alerts: PredictedAlert[]): void {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem(AI_ALERTS_KEY, JSON.stringify(alerts));
-}
-
 function SeverityBadge({ severity }: { severity: PredictedAlert["severity"] }) {
     const styles = {
         critical: "bg-red-100 text-red-700 border-red-200",
@@ -529,11 +537,9 @@ export default function PredictiveAlertsPage() {
     const { selectedAircraft, allAircraft, setSelectedAircraft } = useAircraft();
     const [alerts, setAlerts] = useState<PredictedAlert[]>([]);
     const [filter, setFilter] = useState<"all" | "critical" | "warning" | "info">("all");
-    const [mounted, setMounted] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [isGenerating, setIsGenerating] = useState(false);
     const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
 
     // Generate fleet health data
     const fleetHealthData = useMemo(() => {
@@ -552,12 +558,11 @@ export default function PredictiveAlertsPage() {
     async function fetchAlerts() {
         if (!selectedAircraft?.registration) return;
 
-        setIsLoading(true);
         try {
             const response = await fetch(`/api/alerts/${selectedAircraft.registration}`);
             if (response.ok) {
-                const data = await response.json();
-                const formattedAlerts = data.alerts.map((alert: any) => ({
+                const data: AlertsApiResponse = await response.json();
+                const formattedAlerts = data.alerts.map((alert) => ({
                     id: alert.id,
                     severity: alert.severity,
                     title: alert.type,
@@ -584,21 +589,20 @@ export default function PredictiveAlertsPage() {
                 alertsToShow = alertsToShow.filter(a => a.aircraftRegistration === aircraftRegistration);
             }
             setAlerts(alertsToShow);
-        } finally {
-            setIsLoading(false);
         }
     }
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        setMounted(true);
-        fetchAlerts();
+        void fetchAlerts();
     }, [selectedAircraft?.registration]);
+    /* eslint-enable react-hooks/exhaustive-deps */
 
-    const handleRefreshAlerts = useCallback(async () => {
+    async function handleRefreshAlerts() {
         setIsRefreshing(true);
         await fetchAlerts();
         setIsRefreshing(false);
-    }, [selectedAircraft?.registration]);
+    }
 
     const handleGeneratePredictions = useCallback(() => {
         setIsGenerating(true);
@@ -648,15 +652,6 @@ export default function PredictiveAlertsPage() {
     }), [alerts]);
 
     const reg = selectedAircraft?.registration || "N872LM";
-
-    if (!mounted) {
-        return (
-            <section className="flex flex-col gap-6">
-                <div className="h-8 w-64 animate-pulse rounded bg-slate-100" />
-                <div className="h-64 animate-pulse rounded-xl bg-slate-100" />
-            </section>
-        );
-    }
 
     return (
         <section className="flex flex-col gap-6">

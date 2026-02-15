@@ -57,7 +57,7 @@ function useOutsideClickClose(
         };
 
         window.addEventListener("pointerdown", onPointerDown, { capture: true });
-        return () => window.removeEventListener("pointerdown", onPointerDown, { capture: true } as any);
+        return () => window.removeEventListener("pointerdown", onPointerDown, true);
     }, [isOpen, anchorRef, panelRef, onClose]);
 }
 

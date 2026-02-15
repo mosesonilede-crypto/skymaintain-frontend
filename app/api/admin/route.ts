@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 type AdminKpis = {
     totalAircraft: number;
@@ -76,7 +76,7 @@ function generateMockAdminData(): AdminPanelPayload {
     };
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const adminData = generateMockAdminData();
 

@@ -14,17 +14,24 @@ type PredictiveAlert = {
     recommendedAction: string;
 };
 
+type InsightsData = {
+    predictiveAlert?: {
+        severity: "High" | "Medium" | "Low";
+        type: string;
+        confidence: number;
+        recommendation: string;
+    };
+};
+
 export default function AIInsightsPage() {
     const { selectedAircraft } = useAircraft();
     const [advancedOpen, setAdvancedOpen] = useState(false);
-    const [insightsData, setInsightsData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [insightsData, setInsightsData] = useState<InsightsData | null>(null);
 
     // Fetch live insights data
     async function fetchInsightsData() {
         if (!selectedAircraft?.registration) return;
 
-        setIsLoading(true);
         try {
             const response = await fetch(`/api/insights/${selectedAircraft.registration}`);
             if (response.ok) {
@@ -33,14 +40,14 @@ export default function AIInsightsPage() {
             }
         } catch (error) {
             console.error("Error fetching insights:", error);
-        } finally {
-            setIsLoading(false);
         }
     }
 
+    /* eslint-disable react-hooks/exhaustive-deps */
     useEffect(() => {
-        fetchInsightsData();
+        void fetchInsightsData();
     }, [selectedAircraft?.registration]);
+    /* eslint-enable react-hooks/exhaustive-deps */
 
     const predictiveAlert: PredictiveAlert = useMemo(
         () => insightsData?.predictiveAlert ? {
@@ -250,13 +257,3 @@ function ChevronIcon({ open }: { open: boolean }) {
     );
 }
 
-function RobotIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="8" width="16" height="12" rx="3" />
-            <path d="M12 4v4" />
-            <circle cx="9" cy="14" r="1" />
-            <circle cx="15" cy="14" r="1" />
-        </svg>
-    );
-}

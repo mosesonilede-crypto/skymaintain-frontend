@@ -4,15 +4,39 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/AuthContext";
 
-export function ProtectedRoute({ children }: { children: React.ReactNode }) {
+function normalizeRole(role?: string) {
+    return String(role || "")
+        .trim()
+        .toLowerCase()
+        .replace(/[\s-]+/g, "_");
+}
+
+export function ProtectedRoute({
+    children,
+    requiredRoles,
+    redirectTo = "/signin",
+}: {
+    children: React.ReactNode;
+    requiredRoles?: string[];
+    redirectTo?: string;
+}) {
     const router = useRouter();
-    const { isAuthenticated, isLoading } = useAuth();
+    const { isAuthenticated, isLoading, user } = useAuth();
+
+    const isRoleAllowed =
+        !requiredRoles ||
+        requiredRoles.length === 0 ||
+        requiredRoles.map((role) => normalizeRole(role)).includes(normalizeRole(user?.role));
 
     useEffect(() => {
         if (!isLoading && !isAuthenticated) {
-            router.replace("/signin");
+            router.replace(redirectTo);
+            return;
         }
-    }, [isAuthenticated, isLoading, router]);
+        if (!isLoading && isAuthenticated && !isRoleAllowed) {
+            router.replace(redirectTo);
+        }
+    }, [isAuthenticated, isLoading, isRoleAllowed, redirectTo, router]);
 
     if (isLoading) {
         return (
@@ -26,6 +50,10 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     }
 
     if (!isAuthenticated) {
+        return null;
+    }
+
+    if (!isRoleAllowed) {
         return null;
     }
 

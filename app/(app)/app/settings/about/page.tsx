@@ -174,41 +174,6 @@ async function apiGetAbout(signal?: AbortSignal): Promise<AboutInfo> {
   return normalized;
 }
 
-async function apiPutAbout(payload: AboutInfo): Promise<void> {
-  const mode = getDataMode();
-
-  if (mode === "mock") {
-    await new Promise((r) => setTimeout(r, 140));
-    mockStore = structuredClone(payload);
-    return;
-  }
-
-  const base = getApiBaseUrl();
-  if (!base) {
-    await new Promise((r) => setTimeout(r, 100));
-    mockStore = structuredClone(payload);
-    if (mode === "live") throw new Error("NEXT_PUBLIC_API_BASE_URL is not set (live mode requires backend).");
-    return;
-  }
-
-  const res = await fetch(`${base}/v1/settings/about`, {
-    method: "PUT",
-    credentials: "include",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    if (mode === "hybrid") {
-      mockStore = structuredClone(payload);
-      return;
-    }
-    throw new Error(`PUT /v1/settings/about failed (${res.status})`);
-  }
-
-  if (mode === "hybrid") mockStore = structuredClone(payload);
-}
-
 function StatusDot({ ok }: { ok: boolean }): React.ReactElement {
   return (
     <span

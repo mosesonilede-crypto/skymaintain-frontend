@@ -147,6 +147,7 @@ function mockPayload(): SubscriptionBillingPayload {
 }
 
 async function fetchLive(baseUrl: string): Promise<SubscriptionBillingPayload> {
+    void baseUrl;
     // Use local API endpoint
     const url = "/api/billing";
     const res = await fetch(url, {

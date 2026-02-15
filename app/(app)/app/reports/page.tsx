@@ -1,28 +1,34 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useCallback } from "react";
 import BackToHub from "@/components/app/BackToHub";
 import { useAircraft } from "@/lib/AircraftContext";
 
 type KV = { k: string; v: React.ReactNode };
 type HealthTile = { label: string; value: number };
+type ReportItem = { label: string; value: React.ReactNode };
+type ReportsData = {
+    aircraftOverview?: ReportItem[];
+    maintenanceSummary?: ReportItem[];
+    systemHealth?: HealthTile[];
+};
 
 export default function ReportsAnalyticsPage() {
     const { selectedAircraft } = useAircraft();
     const aircraftReg = selectedAircraft?.registration || "N123AB";
     const model = selectedAircraft?.model || "Boeing 737-800";
-    const [reportsData, setReportsData] = useState<any>(null);
+    const [reportsData, setReportsData] = useState<ReportsData | null>(null);
     const [isLoading, setIsLoading] = useState(false);
 
     // Fetch live reports data
-    async function fetchReportsData() {
+    const fetchReportsData = useCallback(async () => {
         if (!selectedAircraft?.registration) return;
 
         setIsLoading(true);
         try {
             const response = await fetch(`/api/reports/${selectedAircraft.registration}`);
             if (response.ok) {
-                const data = await response.json();
+                const data = (await response.json()) as ReportsData;
                 setReportsData(data);
             }
         } catch (error) {
@@ -30,14 +36,14 @@ export default function ReportsAnalyticsPage() {
         } finally {
             setIsLoading(false);
         }
-    }
+    }, [selectedAircraft?.registration]);
 
     useEffect(() => {
         fetchReportsData();
-    }, [selectedAircraft?.registration]);
+    }, [fetchReportsData]);
 
     const aircraftOverview: KV[] = useMemo(
-        () => reportsData?.aircraftOverview?.map((item: any) => ({
+        () => reportsData?.aircraftOverview?.map((item) => ({
             k: item.label + ":",
             v: item.label.includes("Health") || item.label.includes("Hours") || item.label.includes("Cycles")
                 ? item.value
@@ -53,7 +59,7 @@ export default function ReportsAnalyticsPage() {
     );
 
     const maintenanceSummary: KV[] = useMemo(
-        () => reportsData?.maintenanceSummary?.map((item: any) => ({
+        () => reportsData?.maintenanceSummary?.map((item) => ({
             k: item.label + ":",
             v: item.label.includes("Active") || item.label.includes("Upcoming")
                 ? <CountPill tone={item.label.includes("Active") ? "danger" : "warning"}>{item.value}</CountPill>
@@ -83,10 +89,18 @@ export default function ReportsAnalyticsPage() {
     return (
         <section className="flex flex-col gap-6">
             <BackToHub title="Reports & Analytics" />
-            <div className="pt-1">
+            <div className="pt-1 flex items-center justify-between gap-3">
                 <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
                     Reports &amp; Analytics - {aircraftReg}
                 </h1>
+                {isLoading ? <span className="text-sm text-slate-500">Loading...</span> : null}
+                <button
+                    type="button"
+                    onClick={() => window.print()}
+                    className="inline-flex items-center rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-50"
+                >
+                    Print Report
+                </button>
             </div>
 
             <div className="grid gap-5 lg:grid-cols-2">
@@ -183,16 +197,5 @@ function HealthCard({ label, value }: { label: string; value: number }) {
             <div className="mt-3 text-3xl font-semibold text-emerald-600">{value}</div>
             <div className="text-sm font-semibold text-emerald-600">%</div>
         </div>
-    );
-}
-
-function RobotIcon() {
-    return (
-        <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
-            <rect x="4" y="8" width="16" height="12" rx="3" />
-            <path d="M12 4v4" />
-            <circle cx="9" cy="14" r="1" />
-            <circle cx="15" cy="14" r="1" />
-        </svg>
     );
 }

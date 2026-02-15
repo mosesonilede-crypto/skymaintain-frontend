@@ -4,7 +4,6 @@ import { verifyPayload, verifyTotp } from "@/lib/twoFactor";
 export const runtime = "nodejs";
 
 const COOKIE_NAME = "sm2fa";
-const AUTH_COOKIE = "sm2fa_totp";
 
 type VerifyBody = {
     method: "email" | "sms" | "auth";

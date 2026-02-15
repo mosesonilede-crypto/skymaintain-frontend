@@ -5,9 +5,9 @@
  * specHash: sha256:2fa-page-v2
  */
 
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -387,7 +387,7 @@ export default function TwoFactorPage() {
                         data-name="Container"
                         data-node-id="1:1212"
                     >
-                        <img src={imgIcon} alt="" className="h-10 w-10" data-name="Icon" data-node-id="1:1213" />
+                        <Image src={imgIcon} alt="" width={40} height={40} unoptimized className="h-10 w-10" data-name="Icon" data-node-id="1:1213" />
                     </div>
 
                     {/* Title */}
@@ -433,7 +433,7 @@ export default function TwoFactorPage() {
                             data-name="Button"
                             data-node-id="1:1223"
                         >
-                            <img src={imgIcon1} alt="" className="h-5 w-5" data-name="Icon" data-node-id="1:1224" />
+                            <Image src={imgIcon1} alt="" width={20} height={20} unoptimized className="h-5 w-5" data-name="Icon" data-node-id="1:1224" />
                             <div className="flex flex-1 flex-col items-start" data-name="Container" data-node-id="1:1227">
                                 <span className="text-sm leading-5" style={{ color: "#0a0a0a" }} data-node-id="1:1229">
                                     Email OTP
@@ -443,7 +443,7 @@ export default function TwoFactorPage() {
                                 </span>
                             </div>
                             {method === "email" && (
-                                <img src={imgIcon2} alt="" className="h-5 w-5" data-name="Icon" data-node-id="1:1232" />
+                                <Image src={imgIcon2} alt="" width={20} height={20} unoptimized className="h-5 w-5" data-name="Icon" data-node-id="1:1232" />
                             )}
                         </button>
 
@@ -459,7 +459,7 @@ export default function TwoFactorPage() {
                             data-name="Button"
                             data-node-id="1:1235"
                         >
-                            <img src={imgIcon3} alt="" className="h-5 w-5" data-name="Icon" data-node-id="1:1236" />
+                            <Image src={imgIcon3} alt="" width={20} height={20} unoptimized className="h-5 w-5" data-name="Icon" data-node-id="1:1236" />
                             <div className="flex flex-1 flex-col items-start" data-name="Container" data-node-id="1:1239">
                                 <span className="text-sm leading-5" style={{ color: "#0a0a0a" }} data-node-id="1:1241">
                                     SMS OTP
@@ -469,7 +469,7 @@ export default function TwoFactorPage() {
                                 </span>
                             </div>
                             {method === "sms" && (
-                                <img src={imgIcon2} alt="" className="h-5 w-5" />
+                                <Image src={imgIcon2} alt="" width={20} height={20} unoptimized className="h-5 w-5" />
                             )}
                         </button>
 
@@ -485,7 +485,7 @@ export default function TwoFactorPage() {
                             data-name="Button"
                             data-node-id="1:1244"
                         >
-                            <img src={imgIcon4} alt="" className="h-5 w-5" data-name="Icon" data-node-id="1:1245" />
+                            <Image src={imgIcon4} alt="" width={20} height={20} unoptimized className="h-5 w-5" data-name="Icon" data-node-id="1:1245" />
                             <div className="flex flex-1 flex-col items-start" data-name="Container" data-node-id="1:1249">
                                 <span className="text-sm leading-5" style={{ color: "#0a0a0a" }} data-node-id="1:1251">
                                     Authenticator
@@ -495,7 +495,7 @@ export default function TwoFactorPage() {
                                 </span>
                             </div>
                             {method === "auth" && (
-                                <img src={imgIcon2} alt="" className="h-5 w-5" />
+                                <Image src={imgIcon2} alt="" width={20} height={20} unoptimized className="h-5 w-5" />
                             )}
                         </button>
                     </div>
@@ -580,12 +580,12 @@ export default function TwoFactorPage() {
                             data-name="Container"
                             data-node-id="1:1256"
                         >
-                            <img src={imgIcon5} alt="" className="h-5 w-5" data-name="Icon" data-node-id="1:1257" />
+                            <Image src={imgIcon5} alt="" width={20} height={20} unoptimized className="h-5 w-5" data-name="Icon" data-node-id="1:1257" />
                         </div>
                         <p className="mt-3 text-sm leading-5" style={{ color: "#4a5565" }} data-node-id="1:1261">
                             {method === "auth"
                                 ? "Open your authenticator app to get your code"
-                                : `We sent a code to ${maskedDestination}`}
+                                : `Use the code from your selected verification channel (${maskedDestination})`}
                         </p>
                         {method === "auth" && setupSecret && (
                             <div className="mt-3 rounded-lg bg-gray-100 px-3 py-2 text-xs" style={{ color: "#364153" }}>
@@ -737,7 +737,7 @@ export default function TwoFactorPage() {
                             data-name="Button"
                             data-node-id="1:1287"
                         >
-                            <img src={imgIcon6} alt="" className="h-4 w-4" data-name="Icon" data-node-id="1:1288" />
+                            <Image src={imgIcon6} alt="" width={16} height={16} unoptimized className="h-4 w-4" data-name="Icon" data-node-id="1:1288" />
                             Back to Login
                         </Link>
                     </div>
@@ -754,7 +754,7 @@ export default function TwoFactorPage() {
                     data-node-id="1:1292"
                 >
                     <div className="flex items-start gap-2" data-name="VerificationScreen" data-node-id="1:1293">
-                        <img src={imgIcon7} alt="" className="mt-0.5 h-4 w-4" data-name="Icon" data-node-id="1:1294" />
+                        <Image src={imgIcon7} alt="" width={16} height={16} unoptimized className="mt-0.5 h-4 w-4" data-name="Icon" data-node-id="1:1294" />
                         <p className="text-xs leading-4" style={{ color: "#016630" }} data-node-id="1:1299">
                             <span className="font-bold" data-node-id="1:1298">Security Tip: </span>
                             Never share your verification code with anyone. SkyMaintain staff will never ask for your OTP.

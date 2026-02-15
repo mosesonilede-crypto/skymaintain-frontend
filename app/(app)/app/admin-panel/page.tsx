@@ -81,6 +81,7 @@ function mockPayload(): AdminPanelPayload {
 }
 
 async function fetchLive(baseUrl: string): Promise<AdminPanelPayload> {
+    void baseUrl;
     // Use local API endpoint
     const url = "/api/admin";
     const res = await fetch(url, {

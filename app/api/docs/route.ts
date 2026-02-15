@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 type UploadedDoc = {
     filename: string;
@@ -79,7 +79,7 @@ function generateMockDocumentationData(): DocumentationPayload {
     };
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const docsData = generateMockDocumentationData();
 
