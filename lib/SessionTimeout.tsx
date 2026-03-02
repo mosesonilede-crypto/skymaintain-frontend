@@ -79,6 +79,7 @@ function getLastActivity(): number {
 export function clearSessionData(): void {
     if (typeof window === "undefined") return;
     localStorage.removeItem(LAST_ACTIVITY_KEY);
+    localStorage.removeItem("skymaintain.profile");
 }
 
 interface SessionTimeoutState {

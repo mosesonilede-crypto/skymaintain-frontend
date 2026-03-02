@@ -83,9 +83,8 @@ export default function SidebarProfilePanel({
                 };
                 setProfile(loaded);
                 originalProfile.current = { ...loaded };
-                if (loaded.avatar_url) {
-                    setAvatarPreview(loaded.avatar_url);
-                }
+                // Always sync avatar preview with server state (including clearing it)
+                setAvatarPreview(loaded.avatar_url || null);
                 localStorage.setItem("skymaintain.profile", JSON.stringify(loaded));
             } else if (cachedProfile) {
                 // API failed but we have cached data
@@ -193,7 +192,9 @@ export default function SidebarProfilePanel({
                 return;
             }
             // Use the returned URL (Supabase Storage public URL)
-            const url = data.avatar_url || "";
+            // Append cache-buster to defeat CDN/browser caching of old avatar
+            const rawUrl = data.avatar_url || "";
+            const url = rawUrl ? `${rawUrl.split("?")[0]}?t=${Date.now()}` : "";
             setAvatarPreview(url);
             handleFieldChange("avatar_url", url);
         } catch {
@@ -212,7 +213,24 @@ export default function SidebarProfilePanel({
             });
             if (res.ok) {
                 setAvatarPreview(null);
-                handleFieldChange("avatar_url", "");
+                // Update state directly without triggering hasChanges
+                // (the DELETE already persisted the removal server-side)
+                setProfile((prev) => ({ ...prev, avatar_url: "" }));
+                // Persist removal to localStorage immediately
+                const cached = localStorage.getItem("skymaintain.profile");
+                if (cached) {
+                    try {
+                        const parsed = JSON.parse(cached);
+                        parsed.avatar_url = "";
+                        localStorage.setItem("skymaintain.profile", JSON.stringify(parsed));
+                    } catch { /* ignore */ }
+                }
+                // Notify other components
+                window.dispatchEvent(
+                    new CustomEvent("profile:updated", {
+                        detail: { avatar_url: "" },
+                    })
+                );
             }
         } catch {
             setAvatarError("Failed to remove photo.");

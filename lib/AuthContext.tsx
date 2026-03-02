@@ -120,6 +120,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = async () => {
         setUser(null);
         localStorage.removeItem("SKYMAINTAIN_USER");
+        localStorage.removeItem("skymaintain.profile");
 
         // Destroy server session
         try {

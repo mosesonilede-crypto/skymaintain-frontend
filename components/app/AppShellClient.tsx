@@ -162,8 +162,8 @@ export default function AppShellClient({ children }: AppShellClientProps) {
                 if (!res.ok) return;
                 const data = await res.json();
                 if (cancelled) return;
-                if (data.avatar_url) setProfileAvatar(data.avatar_url);
-                if (data.full_name) setProfileDisplayName(data.full_name);
+                if (data.avatar_url !== undefined) setProfileAvatar(data.avatar_url || "");
+                if (data.full_name !== undefined) setProfileDisplayName(data.full_name || "");
                 try {
                     localStorage.setItem("skymaintain.profile", JSON.stringify(data));
                 } catch { /* quota exceeded — ignore */ }
@@ -341,8 +341,8 @@ export default function AppShellClient({ children }: AppShellClientProps) {
     useEffect(() => {
         const handler = (event: Event) => {
             const detail = (event as CustomEvent<{ full_name?: string; avatar_url?: string }>).detail;
-            if (detail?.full_name) setProfileDisplayName(detail.full_name);
-            if (detail?.avatar_url) setProfileAvatar(detail.avatar_url);
+            if (detail && "full_name" in detail) setProfileDisplayName(detail.full_name || "");
+            if (detail && "avatar_url" in detail) setProfileAvatar(detail.avatar_url || "");
         };
         window.addEventListener("profile:updated", handler);
         return () => window.removeEventListener("profile:updated", handler);
