@@ -1,19 +1,26 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ChevronDown, ChevronUp, ArrowRight, Check, Plane, Shield, TrendingDown, DollarSign, Zap, FileCheck, Activity, ClipboardList, Star, ExternalLink, Tag, Home } from "lucide-react";
 import { startTrialIfMissing } from "@/lib/trial";
 import { useAuth } from "@/lib/AuthContext";
 
-// Image assets — local files downloaded from Figma design
+// Image assets — local files downloaded from Figma design (permanent, no external deps)
 const imgGlobalAeroFleet = "/images/global-aero-fleet.jpg";
-const imgAIPredictive = "/images/ai-predictive-analytics.jpg";
-const imgCompliance = "/images/regulatory-compliance.jpg";
-const imgIoTMonitoring = "/images/iot-monitoring.jpg";
-const imgSmartWorkflows = "/images/smart-workflows.jpg";
+const imgAIPredictive = "/images/ai-predictive-analytics.png";
+const imgCompliance = "/images/regulatory-compliance.png";
+const imgIoTMonitoring = "/images/iot-monitoring.png";
+const imgSmartWorkflows = "/images/smart-workflows.png";
 const imgAviationParts = "/images/aviation-parts.jpg";
+
+/** Reject external/expired URLs — only allow local paths or data URIs */
+function safeImageUrl(url: string | undefined, fallback: string): string {
+    if (!url) return fallback;
+    if (url.startsWith("/") || url.startsWith("data:")) return url;
+    // External URL (e.g. expired Figma MCP link) — use local fallback
+    return fallback;
+}
 
 const imgGlobalAeroFallback = `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-label="GlobalAero Airlines">
@@ -253,8 +260,8 @@ export default function GetStartedPage() {
                     featured: { ...defaultPartnerContent.featured, ...parsed.featured },
                     industry: { ...defaultPartnerContent.industry, ...parsed.industry },
                 });
-                setGlobalAeroSrc(parsed.featured?.imageUrl || defaultPartnerContent.featured.imageUrl);
-                setAeroTechSrc(parsed.industry?.imageUrl || defaultPartnerContent.industry.imageUrl);
+                setGlobalAeroSrc(safeImageUrl(parsed.featured?.imageUrl, defaultPartnerContent.featured.imageUrl));
+                setAeroTechSrc(safeImageUrl(parsed.industry?.imageUrl, defaultPartnerContent.industry.imageUrl));
             } catch {
                 // Ignore malformed storage content
             }
@@ -391,13 +398,11 @@ export default function GetStartedPage() {
 
                             {/* Right Image */}
                             <div className="relative h-64 md:h-auto">
-                                <Image
+                                <img
                                     src={globalAeroSrc}
                                     alt={`${partnerContent.featured.name} Fleet`}
-                                    fill
-                                    sizes="(min-width: 768px) 50vw, 100vw"
-                                    unoptimized
                                     className="absolute inset-0 h-full w-full object-cover"
+                                    loading="lazy"
                                     onError={() => setGlobalAeroSrc(imgGlobalAeroFallback)}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
@@ -454,13 +459,11 @@ export default function GetStartedPage() {
                                 {/* Image */}
                                 <div className="flex-1">
                                     <div className="relative h-64 w-full overflow-hidden rounded-2xl border-4 border-white shadow-2xl lg:h-80">
-                                        <Image
+                                        <img
                                             src={cap.image}
                                             alt={cap.title}
-                                            fill
-                                            sizes="(min-width: 1024px) 50vw, 100vw"
-                                            unoptimized
                                             className="absolute inset-0 h-full w-full object-cover"
+                                            loading="lazy"
                                         />
                                     </div>
                                 </div>
@@ -523,13 +526,11 @@ export default function GetStartedPage() {
                         <div className="grid md:grid-cols-2">
                             {/* Left Image */}
                             <div className="relative h-64 md:h-auto">
-                                <Image
+                                <img
                                     src={aeroTechSrc}
                                     alt={`${partnerContent.industry.name} Partner Image`}
-                                    fill
-                                    sizes="(min-width: 768px) 50vw, 100vw"
-                                    unoptimized
                                     className="absolute inset-0 h-full w-full object-cover"
+                                    loading="lazy"
                                     onError={() => setAeroTechSrc(imgAviationPartsFallback)}
                                 />
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
