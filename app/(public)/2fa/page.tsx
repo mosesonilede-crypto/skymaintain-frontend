@@ -72,6 +72,21 @@ export default function TwoFactorPage() {
     // Flag: when true, the useEffect below will navigate to /app/welcome
     const [readyToNavigate, setReadyToNavigate] = React.useState(false);
 
+    // Check if MFA setup is required by the organization
+    const [mfaSetupRequired, setMfaSetupRequired] = React.useState(false);
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            const flag = window.sessionStorage.getItem("skymaintain.mfaSetupRequired");
+            if (flag === "1") {
+                setMfaSetupRequired(true);
+                // Auto-switch to authenticator method since user needs to set up TOTP
+                setMethod("authenticator");
+                // Clear the flag after reading
+                window.sessionStorage.removeItem("skymaintain.mfaSetupRequired");
+            }
+        }
+    }, []);
+
     React.useEffect(() => {
         mountedRef.current = true;
         return () => { mountedRef.current = false; };
@@ -356,6 +371,21 @@ export default function TwoFactorPage() {
                 <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
                     <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Two-Factor Authentication</h1>
                     <p className="mt-2 text-sm text-slate-600">Verify your identity to continue (email OTP or authenticator).</p>
+
+                    {mfaSetupRequired && (
+                        <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
+                            <div className="flex items-start gap-3">
+                                <span className="mt-0.5 text-amber-600 text-lg">⚠</span>
+                                <div>
+                                    <div className="text-sm font-semibold text-amber-800">MFA Required by Your Organization</div>
+                                    <p className="mt-1 text-xs text-amber-700">
+                                        Your organization requires all members to set up multi-factor authentication.
+                                        Please use the Authenticator method below to complete your enrollment.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="mt-6">
                         <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">

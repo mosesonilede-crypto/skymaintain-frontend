@@ -1217,6 +1217,12 @@ export default function AdminPanelPage() {
     const [submitting, setSubmitting] = useState<boolean>(false);
     const isAircraftLimitError = submitError.toLowerCase().includes("aircraft limit reached");
     const isTeamLimitError = userFormError.toLowerCase().includes("team member limit reached");
+
+    // MFA enforcement state
+    const [mfaEnforced, setMfaEnforced] = useState(false);
+    const [mfaToggling, setMfaToggling] = useState(false);
+    const [mfaStats, setMfaStats] = useState<{ adoption: number; percent: number } | null>(null);
+
     const shouldBlock = authLoading || !canAccessAdminPanel;
 
     useEffect(() => {
@@ -1258,6 +1264,32 @@ export default function AdminPanelPage() {
         return () => {
             cancelled = true;
         };
+    }, []);
+
+    // Fetch MFA enforcement policy on mount
+    useEffect(() => {
+        let cancelled = false;
+        async function fetchMfaPolicy() {
+            try {
+                const res = await fetch("/api/admin/mfa-policy", {
+                    method: "GET",
+                    headers: { Accept: "application/json" },
+                    credentials: "include",
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!cancelled) {
+                    setMfaEnforced(data.mfa_enforced ?? false);
+                    if (data.two_factor_adoption !== undefined) {
+                        setMfaStats({ adoption: data.two_factor_adoption, percent: data.two_factor_percent ?? 0 });
+                    }
+                }
+            } catch {
+                // non-critical — leave defaults
+            }
+        }
+        fetchMfaPolicy();
+        return () => { cancelled = true; };
     }, []);
 
     useEffect(() => {
@@ -1645,6 +1677,69 @@ export default function AdminPanelPage() {
                             </div>
                             <div className="mt-2 text-xs text-slate-500">{Math.round(pct)}% used</div>
                         </div>
+                    </div>
+
+                    {/* MFA Enforcement */}
+                    <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-5">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <div className="text-sm font-semibold text-slate-900">Enforce Multi-Factor Authentication</div>
+                                <div className="mt-1 text-xs text-slate-500">
+                                    Require all organization members to enable 2FA before accessing the platform
+                                </div>
+                            </div>
+                            <button
+                                type="button"
+                                disabled={mfaToggling}
+                                onClick={async () => {
+                                    setMfaToggling(true);
+                                    try {
+                                        const res = await fetch("/api/admin/mfa-policy", {
+                                            method: "PATCH",
+                                            headers: { "Content-Type": "application/json" },
+                                            credentials: "include",
+                                            body: JSON.stringify({ mfa_enforced: !mfaEnforced }),
+                                        });
+                                        if (!res.ok) throw new Error("Failed to update MFA policy");
+                                        const data = await res.json();
+                                        setMfaEnforced(data.mfa_enforced ?? !mfaEnforced);
+                                    } catch {
+                                        // revert on failure — state unchanged
+                                    } finally {
+                                        setMfaToggling(false);
+                                    }
+                                }}
+                                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-300 focus:ring-offset-2 ${
+                                    mfaEnforced ? "bg-slate-900" : "bg-slate-200"
+                                } ${mfaToggling ? "opacity-50 cursor-not-allowed" : ""}`}
+                                role="switch"
+                                aria-checked={mfaEnforced}
+                                aria-label="Toggle MFA enforcement"
+                            >
+                                <span
+                                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                                        mfaEnforced ? "translate-x-5" : "translate-x-0"
+                                    }`}
+                                />
+                            </button>
+                        </div>
+                        {mfaStats && (
+                            <div className="mt-3 flex items-center gap-3">
+                                <div className="text-xs text-slate-500">
+                                    2FA Adoption: <span className="font-medium text-slate-700">{mfaStats.adoption} members ({mfaStats.percent}%)</span>
+                                </div>
+                                {mfaEnforced && mfaStats.percent < 100 && (
+                                    <span className="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+                                        Not all members enrolled
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        {mfaEnforced && (
+                            <div className="mt-3 rounded-xl bg-slate-50 p-3 text-xs text-slate-600">
+                                Members without 2FA will be prompted to set it up on their next login.
+                            </div>
+                        )}
                     </div>
                 </section>
             </div>

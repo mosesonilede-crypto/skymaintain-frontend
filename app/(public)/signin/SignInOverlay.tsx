@@ -57,7 +57,8 @@ async function loginRequest(payload: { email: string; password: string; orgName:
             return { ok: false as const, error: text || `Login failed (${res.status})` };
         }
 
-        return { ok: true as const };
+        const data = await res.json().catch(() => ({}));
+        return { ok: true as const, mfa_setup_required: !!data.mfa_setup_required };
     } catch (e) {
         return { ok: false as const, error: e instanceof Error ? e.message : "Network error" };
     }
@@ -112,6 +113,11 @@ export default function SignInOverlay() {
         if (!result.ok) {
             setError(result.error || "Sign in failed.");
             return;
+        }
+
+        // If org enforces MFA and user hasn't set it up, flag it for the 2FA page
+        if (result.mfa_setup_required && typeof window !== "undefined") {
+            window.sessionStorage.setItem("skymaintain.mfaSetupRequired", "1");
         }
 
         const trimmedEmail = email.trim();
