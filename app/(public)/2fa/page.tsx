@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import * as React from "react";
 import { useAuth, type UserRole } from "@/lib/AuthContext";
 import { resolveSessionRole } from "@/lib/auth/roles";
@@ -46,8 +45,7 @@ function HelpCenterFab() {
 }
 
 export default function TwoFactorPage() {
-    const router = useRouter();
-    const { user, login, isAuthenticated } = useAuth();
+    const { user, login } = useAuth();
 
     const [method, setMethod] = React.useState<"email" | "authenticator">("email");
     const [email, setEmail] = React.useState("");
@@ -72,6 +70,18 @@ export default function TwoFactorPage() {
     // Flag: when true, the useEffect below will navigate to /app/welcome
     const [readyToNavigate, setReadyToNavigate] = React.useState(false);
 
+    // Navigate to /app/welcome ONLY after login() has created the session.
+    // Use window.location.href (hard navigation) instead of router.push
+    // to avoid the client-side state race between AuthContext.setUser()
+    // and ProtectedRoute seeing isAuthenticated=false. A full page load
+    // guarantees the browser sends the freshly-set sm_session cookie and
+    // AuthProvider initialises from localStorage synchronously.
+    React.useEffect(() => {
+        if (readyToNavigate) {
+            window.location.href = "/app/welcome";
+        }
+    }, [readyToNavigate]);
+
     // Check if MFA setup is required by the organization
     const [mfaSetupRequired, setMfaSetupRequired] = React.useState(false);
     React.useEffect(() => {
@@ -91,13 +101,6 @@ export default function TwoFactorPage() {
         mountedRef.current = true;
         return () => { mountedRef.current = false; };
     }, []);
-
-    // Navigate to /app/welcome ONLY after AuthContext has committed the user
-    React.useEffect(() => {
-        if (readyToNavigate && isAuthenticated) {
-            router.push("/app/welcome");
-        }
-    }, [readyToNavigate, isAuthenticated, router]);
 
     React.useEffect(() => {
         if (user?.email) {
@@ -351,10 +354,10 @@ export default function TwoFactorPage() {
                 return;
             }
 
-            // Instead of router.push immediately (which can race with setUser
-            // inside login()), signal a useEffect to navigate AFTER React has
-            // committed the auth state. This prevents ProtectedRoute from
-            // seeing isAuthenticated=false and redirecting to /signin.
+            // Trigger hard navigation via useEffect. Using window.location.href
+            // (not router.push) guarantees the browser sends the freshly-set
+            // sm_session cookie on a full page load, avoiding the client-side
+            // state race that caused ProtectedRoute to redirect to /signin.
             if (mountedRef.current) setReadyToNavigate(true);
         } catch (verifyError) {
             if (mountedRef.current) setError(verifyError instanceof Error ? verifyError.message : "Verification failed.");
